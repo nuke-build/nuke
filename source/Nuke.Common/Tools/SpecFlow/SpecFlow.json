@@ -74,6 +74,7 @@
             "name": "ProjectFile",
             "type": "string",
             "format": "{value}",
+            "position": 1,
             "help": "A path of the project file containing the *.feature files. Required."
           },
           {
@@ -98,6 +99,7 @@
             "name": "ProjectFile",
             "type": "string",
             "format": "{value}",
+            "position": 1,
             "help": "A path of the project file containing the *.feature files. Required."
           },
           {
@@ -146,6 +148,7 @@
             "name": "Target",
             "type": "string",
             "format": "{value}",
+            "position": 1,
             "help": "The assembly or test profile (<c>.srprofile</c> file) to be tested."
           },
           {
@@ -168,12 +171,14 @@
             "type": "string",
             "format": "{value}",
             "secret": true,
+            "position": 1,
             "help": "The license key you received when you purchased SpecFlow+."
           },
           {
             "name": "IssuedTo",
             "type": "string",
             "format": "{value}",
+            "position": 2,
             "help": "The name of the licensee. If you purchased your SpecFlow+ license online via SWREG, this is the email address you used to purchase the license. If you purchased SpecFlow+ directly from TechTalk, this is the value in the email you received containing your license information."
           }
         ]

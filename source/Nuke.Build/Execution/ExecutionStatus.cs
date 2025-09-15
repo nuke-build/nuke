@@ -5,18 +5,17 @@
 using System;
 using System.Linq;
 
-namespace Nuke.Common.Execution
+namespace Nuke.Common.Execution;
+
+public enum ExecutionStatus
 {
-    public enum ExecutionStatus
-    {
-        None,
-        Scheduled,
-        NotRun,
-        Skipped,
-        Succeeded,
-        Failed,
-        Running,
-        Aborted,
-        Collective
-    }
+    None,
+    Scheduled,
+    NotRun,
+    Skipped,
+    Succeeded,
+    Failed,
+    Running,
+    Aborted,
+    Collective
 }

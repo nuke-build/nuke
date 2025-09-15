@@ -8,11 +8,10 @@ using JetBrains.Annotations;
 using Nuke.Common;
 using Nuke.Common.IO;
 
-namespace Nuke.Components
+namespace Nuke.Components;
+
+[PublicAPI]
+public interface IHazArtifacts : INukeBuild
 {
-    [PublicAPI]
-    public interface IHazArtifacts : INukeBuild
-    {
-        AbsolutePath ArtifactsDirectory => RootDirectory / "artifacts";
-    }
+    AbsolutePath ArtifactsDirectory => RootDirectory / "artifacts";
 }

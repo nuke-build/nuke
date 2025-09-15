@@ -6,35 +6,34 @@ using System;
 using System.Linq;
 using JetBrains.Annotations;
 
-namespace Nuke.Common
+namespace Nuke.Common;
+
+[PublicAPI]
+[AttributeUsage(AttributeTargets.Class)]
+public class DisableDefaultOutputAttribute : Attribute
 {
-    [PublicAPI]
-    [AttributeUsage(AttributeTargets.Class)]
-    public class DisableDefaultOutputAttribute : Attribute
+    public DisableDefaultOutputAttribute(params DefaultOutput[] disabledOutputs)
     {
-        public DisableDefaultOutputAttribute(params DefaultOutput[] disabledOutputs)
-        {
-            DisabledOutputs = disabledOutputs.Length > 0
-                ? disabledOutputs
-                : Enum.GetValues(typeof(DefaultOutput)).Cast<DefaultOutput>().ToArray();
-        }
-
-        public DefaultOutput[] DisabledOutputs { get; }
-
-        public virtual bool IsApplicable(INukeBuild build)
-        {
-            return true;
-        }
+        DisabledOutputs = disabledOutputs.Length > 0
+            ? disabledOutputs
+            : Enum.GetValues(typeof(DefaultOutput)).Cast<DefaultOutput>().ToArray();
     }
 
-    public enum DefaultOutput
+    public DefaultOutput[] DisabledOutputs { get; }
+
+    public virtual bool IsApplicable(INukeBuild build)
     {
-        Logo,
-        TargetHeader,
-        TargetCollapse,
-        ErrorsAndWarnings,
-        TargetOutcome,
-        BuildOutcome,
-        Timestamps
+        return true;
     }
+}
+
+public enum DefaultOutput
+{
+    Logo,
+    TargetHeader,
+    TargetCollapse,
+    ErrorsAndWarnings,
+    TargetOutcome,
+    BuildOutcome,
+    Timestamps
 }

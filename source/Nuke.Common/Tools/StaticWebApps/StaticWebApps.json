@@ -69,6 +69,7 @@
             "name": "SslKey",
             "type": "string",
             "format": "--ssl-key {value}",
+            "secret": false,
             "help": "SSL key (.key) to use for serving HTTPS"
           },
           {

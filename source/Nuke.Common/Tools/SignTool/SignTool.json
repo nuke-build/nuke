@@ -157,8 +157,7 @@
           {
             "name": "AuthenticatedAttributes",
             "type": "Dictionary<string, string>",
-            "format": "/sa {value}",
-            "itemFormat": "{key} {value}",
+            "format": "/sa {key} {value}",
             "help": "Specify an OID and value to be included as an authenticated attribute in the signature. The value will be encoded as an ASN1 UTF8 string. This option may be given multiple times."
           },
           {
@@ -279,6 +278,7 @@
             "name": "Files",
             "type": "List<string>",
             "format": "{value}",
+            "position": -1,
             "help": "Files to sign."
           }
         ]

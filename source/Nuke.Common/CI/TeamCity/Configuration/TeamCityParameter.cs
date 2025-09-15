@@ -6,10 +6,9 @@ using System;
 using System.Linq;
 using JetBrains.Annotations;
 
-namespace Nuke.Common.CI.TeamCity.Configuration
+namespace Nuke.Common.CI.TeamCity.Configuration;
+
+[PublicAPI]
+public abstract class TeamCityParameter : ConfigurationEntity
 {
-    [PublicAPI]
-    public abstract class TeamCityParameter : ConfigurationEntity
-    {
-    }
 }

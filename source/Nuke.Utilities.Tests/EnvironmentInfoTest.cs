@@ -8,16 +8,15 @@ using FluentAssertions;
 using Nuke.Common.IO;
 using Xunit;
 
-namespace Nuke.Common.Tests
+namespace Nuke.Common.Tests;
+
+public class EnvironmentInfoTest
 {
-    public class EnvironmentInfoTest
+    [Fact]
+    public void TestPaths()
     {
-        [Fact]
-        public void TestPaths()
-        {
-            var paths = EnvironmentInfo.Paths;
-            paths.Should().HaveCountGreaterThan(1);
-            paths.Should().OnlyContain(x => PathConstruction.HasPathRoot(x));
-        }
+        var paths = EnvironmentInfo.Paths;
+        paths.Should().HaveCountGreaterThan(1);
+        paths.Should().OnlyContain(x => PathConstruction.HasPathRoot(x));
     }
 }

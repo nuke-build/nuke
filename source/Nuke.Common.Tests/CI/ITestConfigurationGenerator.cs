@@ -7,10 +7,9 @@ using System.IO;
 using System.Linq;
 using Nuke.Common.CI;
 
-namespace Nuke.Common.Tests.CI
+namespace Nuke.Common.Tests.CI;
+
+public interface ITestConfigurationGenerator : IConfigurationGenerator
 {
-    public interface ITestConfigurationGenerator : IConfigurationGenerator
-    {
-        StreamWriter Stream { set; }
-    }
+    StreamWriter Stream { set; }
 }

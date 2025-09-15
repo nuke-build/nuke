@@ -6,13 +6,12 @@ using System;
 using System.Linq;
 using JetBrains.Annotations;
 
-namespace Nuke.Common.CI.GitLab
+namespace Nuke.Common.CI.GitLab;
+
+[PublicAPI]
+public enum GitLabProjectVisibility
 {
-    [PublicAPI]
-    public enum GitLabProjectVisibility
-    {
-        Private,
-        Internal,
-        Public
-    }
+    Private,
+    Internal,
+    Public
 }

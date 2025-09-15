@@ -7,11 +7,10 @@ using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Common.IO;
 
-namespace Nuke.Components
+namespace Nuke.Components;
+
+[PublicAPI]
+public interface IHazReports : IHazArtifacts
 {
-    [PublicAPI]
-    public interface IHazReports : IHazArtifacts
-    {
-        AbsolutePath ReportDirectory => ArtifactsDirectory / "reports";
-    }
+    AbsolutePath ReportDirectory => ArtifactsDirectory / "reports";
 }

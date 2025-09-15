@@ -8,16 +8,15 @@ using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Common.Tooling;
 
-namespace Nuke.Common.Execution
+namespace Nuke.Common.Execution;
+
+[PublicAPI]
+public class CheckPathEnvironmentVariableAttribute : BuildExtensionAttributeBase, IOnBuildInitialized
 {
-    [PublicAPI]
-    public class CheckPathEnvironmentVariableAttribute : BuildExtensionAttributeBase, IOnBuildInitialized
+    public void OnBuildInitialized(
+        IReadOnlyCollection<ExecutableTarget> executableTargets,
+        IReadOnlyCollection<ExecutableTarget> executionPlan)
     {
-        public void OnBuildInitialized(
-            IReadOnlyCollection<ExecutableTarget> executableTargets,
-            IReadOnlyCollection<ExecutableTarget> executionPlan)
-        {
-            ProcessTasks.CheckPathEnvironmentVariable();
-        }
+        ProcessTasks.CheckPathEnvironmentVariable();
     }
 }

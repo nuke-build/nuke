@@ -8,30 +8,29 @@ using JetBrains.Annotations;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 
-namespace Nuke.Common.CI.AppVeyor.Configuration
+namespace Nuke.Common.CI.AppVeyor.Configuration;
+
+[PublicAPI]
+public class AppVeyorBranches : ConfigurationEntity
 {
-    [PublicAPI]
-    public class AppVeyorBranches : ConfigurationEntity
+    public string[] Only { get; set; }
+    public string[] Except { get; set; }
+
+    public override void Write(CustomFileWriter writer)
     {
-        public string[] Only { get; set; }
-        public string[] Except { get; set; }
-
-        public override void Write(CustomFileWriter writer)
+        if (Only.Length > 0)
         {
-            if (Only.Length > 0)
+            using (writer.WriteBlock("only:"))
             {
-                using (writer.WriteBlock("only:"))
-                {
-                    Only.ForEach(x => writer.WriteLine($"- {x}"));
-                }
+                Only.ForEach(x => writer.WriteLine($"- {x}"));
             }
+        }
 
-            if (Except.Length > 0)
+        if (Except.Length > 0)
+        {
+            using (writer.WriteBlock("except:"))
             {
-                using (writer.WriteBlock("except:"))
-                {
-                    Except.ForEach(x => writer.WriteLine($"- {x}"));
-                }
+                Except.ForEach(x => writer.WriteLine($"- {x}"));
             }
         }
     }

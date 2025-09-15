@@ -8,14 +8,13 @@ using JetBrains.Annotations;
 
 // ReSharper disable InconsistentNaming
 
-namespace Nuke.Common.CI.TravisCI
+namespace Nuke.Common.CI.TravisCI;
+
+[PublicAPI]
+public enum TravisCIEventType
 {
-    [PublicAPI]
-    public enum TravisCIEventType
-    {
-        push,
-        pull_request,
-        api,
-        cron
-    }
+    push,
+    pull_request,
+    api,
+    cron
 }

@@ -5,74 +5,62 @@
 using System;
 using System.IO;
 using System.Linq;
-using JetBrains.Annotations;
 using Nuke.Common.CI.TeamCity;
 using Nuke.Common.IO;
 using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 
-namespace Nuke.Common.Tools.ReSharper
+namespace Nuke.Common.Tools.ReSharper;
+
+partial class ReSharperTasks
 {
-    partial class ReSharperTasks
+    public const string ReSharperPluginLatest = "latest";
+
+    protected override T PreProcess<T>(T options)
     {
-        public const string ReSharperPluginLatest = "latest";
+        options = options.SetProcessToolPath(GetToolPath(options));
+        if (options is not ReSharperSettingsBase { Plugins.Count: > 0, Plugins: var plugins })
+            return options;
 
-        private static void PreProcess<T>(ref T toolSettings) where T : ReSharperSettingsBase
-        {
-            if (toolSettings.Plugins.Count == 0)
-                return;
+        var wave = GetWave().NotNull("wave != null");
+        var shadowDirectory = NukeBuild.TemporaryDirectory / $"ReSharper-{wave}-{GetHash()}";
 
-            var wave = GetWave(toolSettings).NotNull("wave != null");
-            var shadowDirectory = GetShadowDirectory(toolSettings, wave);
+        ((AbsolutePath)options.ProcessToolPath).Parent.Copy(
+            target: shadowDirectory,
+            policy: ExistsPolicy.MergeAndOverwriteIfNewer);
 
-            FileSystemTasks.CopyDirectoryRecursively(
-                Path.GetDirectoryName(toolSettings.ProcessToolPath).NotNull(),
-                shadowDirectory,
-                DirectoryExistsPolicy.Merge,
-                FileExistsPolicy.OverwriteIfNewer);
+        DownloadPlugins();
 
-            toolSettings.Plugins
-                .Select(x => (Plugin: x.Key, Version: x.Value == ReSharperPluginLatest ? null : x.Value))
-                .ForEach(x => HttpTasks.HttpDownloadFile(
-                    $"http://resharper-plugins.jetbrains.com/dotnet/api/v2/curated-feeds/Wave_v{wave}.0/Packages(Id='{x.Plugin}',Version='{x.Version}')/Download",
-                    Path.Combine(shadowDirectory, $"{x.Plugin}.nupkg")));
+        return options
+            .SetProcessToolPath(shadowDirectory / Path.GetFileName(options.ProcessToolPath));
 
-            toolSettings = toolSettings.SetProcessToolPath(Path.Combine(shadowDirectory, Path.GetFileName(toolSettings.ProcessToolPath)));
-        }
-
-        [CanBeNull]
-        private static string GetWave(ReSharperSettingsBase toolSettings)
-        {
-            return Directory.GetParent(toolSettings.ProcessToolPath)
+        string GetWave() =>
+            Directory.GetParent(options.ProcessToolPath)
                 .DescendantsAndSelf(x => x.Parent)
                 .Select(x => Path.Combine(x.FullName, "jetbrains.resharper.globaltools.nuspec"))
                 .Where(File.Exists)
                 .Select(x => new FileInfo(x).Directory.NotNull().Name)
                 .Select(x => $"{x[2]}{x[3]}{x[5]}")
                 .SingleOrDefault();
-        }
 
-        [CanBeNull]
-        private static IProcess StartProcess(ReSharperSettingsBase toolSettings)
-        {
-            return ProcessTasks.StartProcess(toolSettings);
-        }
+        string GetHash() =>
+            options.ProcessToolPath
+                .Concat(plugins.Select(x => x.Key + x.Value))
+                .OrderBy(x => x).JoinComma()
+                .GetMD5Hash()[..4];
 
-        private static void PostProcess(ReSharperInspectCodeSettings toolSettings)
-        {
-            TeamCity.Instance?.ImportData(TeamCityImportType.ReSharperInspectCode, toolSettings.Output);
-        }
-
-        private static string GetShadowDirectory(ReSharperSettingsBase toolSettings, string wave)
-        {
-            var hashCode = toolSettings.ProcessToolPath.Concat(toolSettings.Plugins.Select(x => x.Key + x.Value)).OrderBy(x => x).JoinCommaSpace().GetMD5Hash();
-            return Path.Combine(NukeBuild.TemporaryDirectory, $"ReSharper-{wave}-{hashCode.Substring(startIndex: 0, length: 4)}");
-        }
+        void DownloadPlugins() =>
+            plugins
+                .Select(x => (Plugin: x.Key, Version: x.Value == ReSharperPluginLatest ? null : x.Value))
+                .ForEach(x => HttpTasks.HttpDownloadFile(
+                    $"http://resharper-plugins.jetbrains.com/dotnet/api/v2/curated-feeds/Wave_v{wave}.0/Packages(Id='{x.Plugin}',Version='{x.Version}')/Download",
+                    shadowDirectory / $"{x.Plugin}.nupkg"));
     }
 
-    partial class ReSharperSettingsBase
+    protected override void PostProcess(ToolOptions options)
     {
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? ProcessTasks.DefaultLogger;
+        if (options is ReSharperInspectCodeSettings inspectCodeOptions)
+            TeamCity.Instance?.ImportData(TeamCityImportType.ReSharperInspectCode, inspectCodeOptions.Output);
     }
 }

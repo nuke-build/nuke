@@ -5,11 +5,10 @@
 using System;
 using System.Linq;
 
-namespace Nuke.CodeGeneration.Writers
+namespace Nuke.CodeGeneration.Writers;
+
+public interface IWriter
 {
-    public interface IWriter
-    {
-        void WriteLine(string text);
-        void WriteBlock(Action action);
-    }
+    void WriteLine(string text);
+    void WriteBlock(Action action);
 }

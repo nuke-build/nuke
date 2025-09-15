@@ -1,0 +1,42 @@
+﻿[
+  {
+    IsEmpty: false,
+    Unreleased: true,
+    Notes: [
+      - Changed something,
+      
+    ],
+    StartIndex: 6,
+    EndIndex: 8
+  },
+  {
+    IsEmpty: false,
+    Unreleased: false,
+    Version: 1.0.0,
+    Notes: [
+      - Some text that spans,
+        multiple lines,
+      - A text on a single line,
+      ,
+      - Added something,
+      - Fixed something,
+      
+    ],
+    StartIndex: 9,
+    EndIndex: 16
+  },
+  {
+    IsEmpty: false,
+    Unreleased: false,
+    Version: 0.1.0,
+    Notes: [
+      - Added something,
+      ,
+      - Fixed something,
+      ,
+      Some text at the end of the changelog
+    ],
+    StartIndex: 17,
+    EndIndex: 22
+  }
+]

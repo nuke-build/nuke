@@ -4,10 +4,9 @@
 
 using Nuke.Common.Execution;
 
-namespace Nuke.Common.CI.SpaceAutomation
+namespace Nuke.Common.CI.SpaceAutomation;
+
+public partial class SpaceAutomation
 {
-    public partial class SpaceAutomation
-    {
-        internal override string OutputTemplate => Logging.StandardOutputTemplate;
-    }
+    internal override string OutputTemplate => Logging.StandardOutputTemplate;
 }

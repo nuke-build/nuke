@@ -10,28 +10,27 @@ using Nuke.Common.Tooling;
 using Nuke.Common.Tools.DotNet;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
 
-namespace Nuke.Components
+namespace Nuke.Components;
+
+[PublicAPI]
+public interface IRestore : IHazSolution, INukeBuild
 {
-    [PublicAPI]
-    public interface IRestore : IHazSolution, INukeBuild
-    {
-        Target Restore => _ => _
-            .Executes(() =>
-            {
-                DotNetRestore(_ => _
-                    .Apply(RestoreSettingsBase)
-                    .Apply(RestoreSettings));
-            });
+    Target Restore => _ => _
+        .Executes(() =>
+        {
+            DotNetRestore(_ => _
+                .Apply(RestoreSettingsBase)
+                .Apply(RestoreSettings));
+        });
 
-        sealed Configure<DotNetRestoreSettings> RestoreSettingsBase => _ => _
-            .SetProjectFile(Solution)
-            .SetIgnoreFailedSources(IgnoreFailedSources);
-        // RestorePackagesWithLockFile
-        // .SetProperty("RestoreLockedMode", true));
+    sealed Configure<DotNetRestoreSettings> RestoreSettingsBase => _ => _
+        .SetProjectFile(Solution)
+        .SetIgnoreFailedSources(IgnoreFailedSources);
+    // RestorePackagesWithLockFile
+    // .SetProperty("RestoreLockedMode", true));
 
-        Configure<DotNetRestoreSettings> RestoreSettings => _ => _;
+    Configure<DotNetRestoreSettings> RestoreSettings => _ => _;
 
-        [Parameter("Ignore unreachable sources during " + nameof(Restore))]
-        bool IgnoreFailedSources => TryGetValue<bool?>(() => IgnoreFailedSources) ?? false;
-    }
+    [Parameter("Ignore unreachable sources during " + nameof(Restore))]
+    bool IgnoreFailedSources => TryGetValue<bool?>(() => IgnoreFailedSources) ?? false;
 }

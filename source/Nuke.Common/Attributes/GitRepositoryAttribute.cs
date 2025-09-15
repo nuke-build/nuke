@@ -8,18 +8,17 @@ using System.Reflection;
 using JetBrains.Annotations;
 using Nuke.Common.ValueInjection;
 
-namespace Nuke.Common.Git
+namespace Nuke.Common.Git;
+
+/// <summary>
+/// Injects an instance of <see cref="GitRepository"/> based on the local repository.
+/// </summary>
+[PublicAPI]
+[UsedImplicitly(ImplicitUseKindFlags.Default)]
+public class GitRepositoryAttribute : ValueInjectionAttributeBase
 {
-    /// <summary>
-    /// Injects an instance of <see cref="GitRepository"/> based on the local repository.
-    /// </summary>
-    [PublicAPI]
-    [UsedImplicitly(ImplicitUseKindFlags.Default)]
-    public class GitRepositoryAttribute : ValueInjectionAttributeBase
+    public override object GetValue(MemberInfo member, object instance)
     {
-        public override object GetValue(MemberInfo member, object instance)
-        {
-            return GitRepository.FromLocalDirectory(Build.RootDirectory);
-        }
+        return GitRepository.FromLocalDirectory(Build.RootDirectory);
     }
 }

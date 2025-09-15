@@ -8,27 +8,26 @@ using JetBrains.Annotations;
 using Nuke.Common.Tooling;
 using Nuke.Common.Utilities.Net;
 
-namespace Nuke.Common.Tools.Discord
+namespace Nuke.Common.Tools.Discord;
+
+[PublicAPI]
+public static class DiscordTasks
 {
-    [PublicAPI]
-    public static class DiscordTasks
+    public static void SendDiscordMessage(Configure<DiscordMessage> configurator, string webhook)
     {
-        public static void SendDiscordMessage(Configure<DiscordMessage> configurator, string webhook)
-        {
-            SendDiscordMessageAsync(configurator, webhook).Wait();
-        }
+        SendDiscordMessageAsync(configurator, webhook).Wait();
+    }
 
-        public static async Task SendDiscordMessageAsync(Configure<DiscordMessage> configurator, string webhook)
-        {
-            var message = configurator(new DiscordMessage());
+    public static async Task SendDiscordMessageAsync(Configure<DiscordMessage> configurator, string webhook)
+    {
+        var message = configurator(new DiscordMessage());
 
-            using var client = new HttpClient();
+        using var client = new HttpClient();
 
-            var response = await client.CreateRequest(HttpMethod.Post, webhook)
-                .WithJsonContent(message)
-                .GetResponseAsync();
+        var response = await client.CreateRequest(HttpMethod.Post, webhook)
+            .WithJsonContent(message)
+            .GetResponseAsync();
 
-            response.AssertSuccessfulStatusCode();
-        }
+        response.AssertSuccessfulStatusCode();
     }
 }

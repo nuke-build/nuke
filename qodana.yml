@@ -1,6 +1,13 @@
 version: "1.0"
 
-linter: jetbrains/qodana-dotnet:2023.1-eap
+linter: jetbrains/qodana-dotnet:latest
+failThreshold: 0
 
-dot-net:
+dotnet:
   solution: nuke-common.sln
+
+exclude:
+  - name: CheckNamespace
+  - name: All
+    paths:
+      - source/Nuke.Build/Execution/Extensions/execution-plan.html

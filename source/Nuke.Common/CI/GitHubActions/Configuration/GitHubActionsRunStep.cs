@@ -9,29 +9,28 @@ using JetBrains.Annotations;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 
-namespace Nuke.Common.CI.GitHubActions.Configuration
+namespace Nuke.Common.CI.GitHubActions.Configuration;
+
+[PublicAPI]
+public class GitHubActionsRunStep : GitHubActionsStep
 {
-    [PublicAPI]
-    public class GitHubActionsRunStep : GitHubActionsStep
+    public string BuildCmdPath { get; set; }
+    public string[] InvokedTargets { get; set; }
+    public Dictionary<string, string> Imports { get; set; }
+
+    public override void Write(CustomFileWriter writer)
     {
-        public string BuildCmdPath { get; set; }
-        public string[] InvokedTargets { get; set; }
-        public Dictionary<string, string> Imports { get; set; }
+        writer.WriteLine("- name: " + $"Run: {InvokedTargets.JoinCommaSpace()}".SingleQuote());
+        writer.WriteLine($"  run: ./{BuildCmdPath} {InvokedTargets.JoinSpace()}");
 
-        public override void Write(CustomFileWriter writer)
+        if (Imports.Count > 0)
         {
-            writer.WriteLine("- name: " + $"Run: {InvokedTargets.JoinCommaSpace()}".SingleQuote());
-            writer.WriteLine($"  run: ./{BuildCmdPath} {InvokedTargets.JoinSpace()}");
-
-            if (Imports.Count > 0)
+            using (writer.Indent())
             {
+                writer.WriteLine("env:");
                 using (writer.Indent())
                 {
-                    writer.WriteLine("env:");
-                    using (writer.Indent())
-                    {
-                        Imports.ForEach(x => writer.WriteLine($"{x.Key}: {x.Value}"));
-                    }
+                    Imports.ForEach(x => writer.WriteLine($"{x.Key}: {x.Value}"));
                 }
             }
         }

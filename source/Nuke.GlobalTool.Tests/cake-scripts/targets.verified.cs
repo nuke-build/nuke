@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -15,10 +15,7 @@ using Nuke.Common.Tools.GitVersion;
 using Nuke.Common.Tools.SignTool;
 using Nuke.Common.Utilities.Collections;
 using Nuke.Common;
-using Nuke.Common;
-using Nuke.Common.IO;
 using Nuke.Common.Tools.DotNet;
-using Nuke.Common.IO;
 using Nuke.Common.Tools.MSBuild;
 using Nuke.Common.Tools.SignTool;
 using Nuke.Common.Tools.NuGet;
@@ -26,10 +23,7 @@ using Nuke.Common.IO;
 using Nuke.Common.IO;
 using Nuke.Common;
 using static Nuke.Common.ControlFlow;
-using static Nuke.Common.Logger;
-using static Nuke.Common.IO.CompressionTasks;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
-using static Nuke.Common.IO.FileSystemTasks;
 using static Nuke.Common.Tools.MSBuild.MSBuildTasks;
 using static Nuke.Common.Tools.SignTool.SignToolTasks;
 using static Nuke.Common.Tools.NuGet.NuGetTasks;
@@ -46,6 +40,7 @@ class Build : NukeBuild
         System.Console.WriteLine();
     });
 
+
     Target B => _ => _
         .DependsOn(A)
         .DependentFor(A)
@@ -53,6 +48,7 @@ class Build : NukeBuild
     {
         System.Console.WriteLine();
     });
+
 
     Target C_1 => _ => _
         .DependsOn(B)

@@ -2,26 +2,23 @@
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
+using System;
 using Nuke.Common.Tooling;
 
-namespace Nuke.Common.Tools.Codecov
-{
-    partial class CodecovSettings
-    {
-        private string GetProcessToolPath()
-        {
-            return CodecovTasks.GetToolPath(Framework);
-        }
-    }
+namespace Nuke.Common.Tools.Codecov;
 
-    partial class CodecovTasks
+partial class CodecovTasks
+{
+    protected override string GetToolPath(ToolOptions options = null)
     {
-        internal static string GetToolPath(string framework = null)
-        {
-            return NuGetToolPathResolver.GetPackageExecutable(
-                packageId: "Codecov.Tool",
-                packageExecutable: "codecov.dll",
-                framework: framework);
-        }
+        return NuGetToolPathResolver.GetPackageExecutable(
+            packageId: PackageId,
+            packageExecutable: EnvironmentInfo.Platform switch
+            {
+                PlatformFamily.Windows => "codecov.exe",
+                PlatformFamily.OSX => "codecov-macos",
+                PlatformFamily.Linux => "codecov-linux",
+                _ => throw new ArgumentOutOfRangeException()
+            });
     }
 }

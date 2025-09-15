@@ -7,20 +7,19 @@ using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Common.Utilities;
 
-namespace Nuke.Common.CI.GitHubActions.Configuration
-{
-    [PublicAPI]
-    public class GitHubActionsScheduledTrigger : GitHubActionsDetailedTrigger
-    {
-        public string Cron { get; set; }
+namespace Nuke.Common.CI.GitHubActions.Configuration;
 
-        public override void Write(CustomFileWriter writer)
+[PublicAPI]
+public class GitHubActionsScheduledTrigger : GitHubActionsDetailedTrigger
+{
+    public string Cron { get; set; }
+
+    public override void Write(CustomFileWriter writer)
+    {
+        writer.WriteLine("schedule:");
+        using (writer.Indent())
         {
-            writer.WriteLine("schedule:");
-            using (writer.Indent())
-            {
-                writer.WriteLine($"- cron: '{Cron}'");
-            }
+            writer.WriteLine($"- cron: '{Cron}'");
         }
     }
 }

@@ -5,9 +5,8 @@
 using System;
 using System.Linq;
 
-namespace Nuke.Common
+namespace Nuke.Common;
+
+internal static class NukeBuild
 {
-    internal static class NukeBuild
-    {
-    }
 }

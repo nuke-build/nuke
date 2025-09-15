@@ -10,27 +10,26 @@ using NuGet.Versioning;
 using Nuke.Common.Utilities;
 using Nuke.Common.ValueInjection;
 
-namespace Nuke.Common.Tooling
+namespace Nuke.Common.Tooling;
+
+[PublicAPI]
+public class LatestNuGetVersionAttribute : ValueInjectionAttributeBase
 {
-    [PublicAPI]
-    public class LatestNuGetVersionAttribute : ValueInjectionAttributeBase
+    private readonly string _packageId;
+
+    public LatestNuGetVersionAttribute(string packageId)
     {
-        private readonly string _packageId;
+        _packageId = packageId;
+    }
 
-        public LatestNuGetVersionAttribute(string packageId)
-        {
-            _packageId = packageId;
-        }
+    public bool IncludePrerelease { get; set; }
+    public bool IncludeUnlisted { get; set; }
 
-        public bool IncludePrerelease { get; set; }
-        public bool IncludeUnlisted { get; set; }
-
-        public override object GetValue(MemberInfo member, object instance)
-        {
-            var version = NuGetVersionResolver.GetLatestVersion(_packageId, IncludePrerelease, IncludeUnlisted).GetAwaiter().GetResult();
-            return member.GetMemberType() == typeof(string)
-                ? version
-                : NuGetVersion.Parse(version);
-        }
+    public override object GetValue(MemberInfo member, object instance)
+    {
+        var version = NuGetVersionResolver.GetLatestVersion(_packageId, IncludePrerelease, IncludeUnlisted).GetAwaiter().GetResult();
+        return member.GetMemberType() == typeof(string)
+            ? version
+            : NuGetVersion.Parse(version);
     }
 }

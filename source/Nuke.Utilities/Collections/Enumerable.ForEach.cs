@@ -7,37 +7,36 @@ using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
 
-namespace Nuke.Common.Utilities.Collections
+namespace Nuke.Common.Utilities.Collections;
+
+public static partial class EnumerableExtensions
 {
-    public static partial class EnumerableExtensions
+    /// <summary>
+    /// Executes an action for all elements.
+    /// </summary>
+    public static void ForEach<T>(this IEnumerable<T> enumerable, [InstantHandle] Action<T> action)
     {
-        /// <summary>
-        /// Executes an action for all elements.
-        /// </summary>
-        public static void ForEach<T>(this IEnumerable<T> enumerable, [InstantHandle] Action<T> action)
-        {
-            foreach (var item in enumerable)
-                action(item);
-        }
+        foreach (var item in enumerable)
+            action(item);
+    }
 
-        /// <summary>
-        /// Executes an action for all elements with corresponding index.
-        /// </summary>
-        public static void ForEach<T>(this IEnumerable<T> enumerable, [InstantHandle] Action<T, int> action)
-        {
-            enumerable.Select((x, i) => new { x, i }).ForEach(x => action(x.x, x.i));
-        }
+    /// <summary>
+    /// Executes an action for all elements with corresponding index.
+    /// </summary>
+    public static void ForEach<T>(this IEnumerable<T> enumerable, [InstantHandle] Action<T, int> action)
+    {
+        enumerable.Select((x, i) => new { x, i }).ForEach(x => action(x.x, x.i));
+    }
 
-        /// <summary>
-        /// Lazily executes an action for all elements.
-        /// </summary>
-        public static IEnumerable<T> ForEachLazy<T>(this IEnumerable<T> enumerable, [InstantHandle] Action<T> action)
+    /// <summary>
+    /// Lazily executes an action for all elements.
+    /// </summary>
+    public static IEnumerable<T> ForEachLazy<T>(this IEnumerable<T> enumerable, [InstantHandle] Action<T> action)
+    {
+        foreach (var item in enumerable)
         {
-            foreach (var item in enumerable)
-            {
-                action(item);
-                yield return item;
-            }
+            action(item);
+            yield return item;
         }
     }
 }

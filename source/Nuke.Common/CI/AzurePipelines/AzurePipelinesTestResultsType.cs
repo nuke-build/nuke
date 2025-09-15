@@ -6,15 +6,14 @@ using System;
 using System.Linq;
 using JetBrains.Annotations;
 
-namespace Nuke.Common.CI.AzurePipelines
+namespace Nuke.Common.CI.AzurePipelines;
+
+[PublicAPI]
+public enum AzurePipelinesTestResultsType
 {
-    [PublicAPI]
-    public enum AzurePipelinesTestResultsType
-    {
-        JUnit,
-        NUnit,
-        VSTest,
-        XUnit,
-        CTest
-    }
+    JUnit,
+    NUnit,
+    VSTest,
+    XUnit,
+    CTest
 }

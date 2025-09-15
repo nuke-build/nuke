@@ -1,0 +1,14 @@
+﻿[
+  {
+    IsEmpty: false,
+    Unreleased: true,
+    Notes: [
+      ### Added,
+      - Some text that spans,
+        multiple lines,
+      - A text on a single line
+    ],
+    StartIndex: 2,
+    EndIndex: 6
+  }
+]

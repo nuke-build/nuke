@@ -7,49 +7,48 @@ using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
 
-namespace Nuke.Common.Utilities.Collections
+namespace Nuke.Common.Utilities.Collections;
+
+public static partial class EnumerableExtensions
 {
-    public static partial class EnumerableExtensions
+    public static Dictionary<TKey, TValue> ToDictionary<T, TKey, TValue>(
+        this IEnumerable<T> enumerable,
+        [InstantHandle] Func<T, TKey> keySelector,
+        [InstantHandle] Func<T, TValue> valueSelector,
+        IEqualityComparer<TKey> comparer = null,
+        Func<ArgumentException, TKey, Exception> exceptionFactory = null)
     {
-        public static Dictionary<TKey, TValue> ToDictionary<T, TKey, TValue>(
-            this IEnumerable<T> enumerable,
-            [InstantHandle] Func<T, TKey> keySelector,
-            [InstantHandle] Func<T, TValue> valueSelector,
-            IEqualityComparer<TKey> comparer = null,
-            Func<ArgumentException, TKey, Exception> exceptionFactory = null)
-        {
-            var list = enumerable.ToList();
-            var dictionary = new Dictionary<TKey, TValue>(list.Count, comparer);
+        var list = enumerable.ToList();
+        var dictionary = new Dictionary<TKey, TValue>(list.Count, comparer);
 
-            foreach (var item in list)
+        foreach (var item in list)
+        {
+            var key = keySelector.Invoke(item);
+            try
             {
-                var key = keySelector.Invoke(item);
-                try
-                {
-                    dictionary.Add(key, valueSelector.Invoke(item));
-                }
-                catch (ArgumentException exception) when (exceptionFactory != null)
-                {
-                    throw exceptionFactory.Invoke(exception, key);
-                }
+                dictionary.Add(key, valueSelector.Invoke(item));
             }
-
-            return dictionary;
+            catch (ArgumentException exception) when (exceptionFactory != null)
+            {
+                throw exceptionFactory.Invoke(exception, key);
+            }
         }
 
-        public static Dictionary<TKey, TValue> ToDictionarySafe<T, TKey, TValue>(
-            this IEnumerable<T> enumerable,
-            [InstantHandle] Func<T, TKey> keySelector,
-            [InstantHandle] Func<T, TValue> valueSelector,
-            string duplicationMessage)
-        {
-            var groups = enumerable.ToLookup(keySelector.Invoke, valueSelector.Invoke);
-            Assert.True(
-                groups.All(x => x.Count() == 1),
-                new[] { $"{duplicationMessage.TrimEnd(":")}:" }
-                    .Concat(groups.Where(x => x.Count() > 1).Select(x => $" - {x.Key}"))
-                    .JoinNewLine());
-            return groups.ToDictionary(x => x.Key, x => x.Single());
-        }
+        return dictionary;
+    }
+
+    public static Dictionary<TKey, TValue> ToDictionarySafe<T, TKey, TValue>(
+        this IEnumerable<T> enumerable,
+        [InstantHandle] Func<T, TKey> keySelector,
+        [InstantHandle] Func<T, TValue> valueSelector,
+        string duplicationMessage)
+    {
+        var groups = enumerable.ToLookup(keySelector.Invoke, valueSelector.Invoke);
+        Assert.True(
+            groups.All(x => x.Count() == 1),
+            new[] { $"{duplicationMessage.TrimEnd(":")}:" }
+                .Concat(groups.Where(x => x.Count() > 1).Select(x => $" - {x.Key}"))
+                .JoinNewLine());
+        return groups.ToDictionary(x => x.Key, x => x.Single());
     }
 }

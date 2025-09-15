@@ -9,35 +9,34 @@ using JetBrains.Annotations;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 
-namespace Nuke.Common.CI.SpaceAutomation.Configuration
+namespace Nuke.Common.CI.SpaceAutomation.Configuration;
+
+[PublicAPI]
+public class SpaceAutomationContainer : ConfigurationEntity
 {
-    [PublicAPI]
-    public class SpaceAutomationContainer : ConfigurationEntity
+    public string Image { get; set; }
+    public SpaceAutomationResources Resources { get; set; }
+    public Dictionary<string, string> Imports { get; set; }
+    public string BuildScript { get; set; }
+    public string[] InvokedTargets { get; set; }
+    public bool Submodules { get; set; }
+
+    public override void Write(CustomFileWriter writer)
     {
-        public string Image { get; set; }
-        public SpaceAutomationResources Resources { get; set; }
-        public Dictionary<string, string> Imports { get; set; }
-        public string BuildScript { get; set; }
-        public string[] InvokedTargets { get; set; }
-        public bool Submodules { get; set; }
-
-        public override void Write(CustomFileWriter writer)
+        using (writer.WriteBlock($"container({Image.DoubleQuote()})"))
         {
-            using (writer.WriteBlock($"container({Image.DoubleQuote()})"))
+            Resources.Write(writer);
+            Imports.ForEach(x => writer.WriteLine($"{x.Key} = {x.Value}"));
+
+            using (writer.WriteBlock("shellScript"))
             {
-                Resources.Write(writer);
-                Imports.ForEach(x => writer.WriteLine($"{x.Key} = {x.Value}"));
+                var scriptContent = new List<string>();
+                if (Submodules)
+                    scriptContent.Add("git submodule update --init --recursive");
 
-                using (writer.WriteBlock("shellScript"))
-                {
-                    var scriptContent = new List<string>();
-                    if (Submodules)
-                        scriptContent.Add("git submodule update --init --recursive");
+                scriptContent.Add($"./{BuildScript} {InvokedTargets.JoinSpace()}");
 
-                    scriptContent.Add($"./{BuildScript} {InvokedTargets.JoinSpace()}");
-
-                    writer.WriteArray("content", scriptContent.ToArray());
-                }
+                writer.WriteArray("content", scriptContent.ToArray());
             }
         }
     }

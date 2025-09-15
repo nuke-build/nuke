@@ -4,19 +4,18 @@
 
 using Newtonsoft.Json.Linq;
 
-namespace Nuke.Common.Utilities
-{
-    public static partial class JObjectExtensions
-    {
-        public static JEnumerable<T> GetChildren<T>(this JObject jobject, string name)
-            where T : JToken
-        {
-            return jobject.GetPropertyValue<JArray>(name).Children<T>();
-        }
+namespace Nuke.Common.Utilities;
 
-        public static JEnumerable<JObject> GetChildren(this JObject jobject, string name)
-        {
-            return jobject.GetChildren<JObject>(name);
-        }
+public static partial class JObjectExtensions
+{
+    public static JEnumerable<T> GetChildren<T>(this JObject jobject, string name)
+        where T : JToken
+    {
+        return jobject.GetPropertyValue<JArray>(name).Children<T>();
+    }
+
+    public static JEnumerable<JObject> GetChildren(this JObject jobject, string name)
+    {
+        return jobject.GetChildren<JObject>(name);
     }
 }

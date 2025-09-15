@@ -8,11 +8,10 @@ using JetBrains.Annotations;
 using Nuke.Common;
 using Nuke.Common.Git;
 
-namespace Nuke.Components
+namespace Nuke.Components;
+
+[PublicAPI]
+public interface IHazGitRepository : INukeBuild
 {
-    [PublicAPI]
-    public interface IHazGitRepository : INukeBuild
-    {
-        [GitRepository] [Required] GitRepository GitRepository => TryGetValue(() => GitRepository);
-    }
+    [GitRepository] [Required] GitRepository GitRepository => TryGetValue(() => GitRepository);
 }

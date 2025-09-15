@@ -6,14 +6,13 @@ using System;
 using System.Linq;
 using JetBrains.Annotations;
 
-namespace Nuke.Common
+namespace Nuke.Common;
+
+[PublicAPI]
+public enum Verbosity
 {
-    [PublicAPI]
-    public enum Verbosity
-    {
-        Verbose,
-        Normal,
-        Minimal,
-        Quiet
-    }
+    Verbose,
+    Normal,
+    Minimal,
+    Quiet
 }

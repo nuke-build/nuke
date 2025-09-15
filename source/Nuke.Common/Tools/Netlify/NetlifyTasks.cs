@@ -3,19 +3,24 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
 
-namespace Nuke.Common.Tools.Netlify
+namespace Nuke.Common.Tools.Netlify;
+
+partial class NetlifyTasks
 {
-    partial class NetlifyTasks
+    protected override object GetResult<T>(ToolOptions options, IReadOnlyCollection<Output> output)
     {
-        private static string GetResult(IProcess process, NetlifySitesCreateSettings toolSettings)
+        if (options is NetlifySitesCreateSettings)
         {
-            return process.Output.EnsureOnlyStd().Select(x => x.Text)
+            return output.EnsureOnlyStd().Select(x => x.Text)
                 .Single(x => x.Contains("Site ID:"))
                 .SplitSpace().Last();
         }
+
+        return null;
     }
 }

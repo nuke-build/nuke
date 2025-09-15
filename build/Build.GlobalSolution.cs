@@ -12,9 +12,9 @@ using Nuke.Common.Git;
 using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
 using Nuke.Common.Tools.GitHub;
+using Nuke.Common.Utilities;
 using Nuke.Utilities.Text.Yaml;
 using static Nuke.Common.ControlFlow;
-using static Nuke.Common.IO.FileSystemTasks;
 using static Nuke.Common.ProjectModel.SolutionModelTasks;
 using static Nuke.Common.Tools.Git.GitTasks;
 
@@ -27,7 +27,10 @@ partial class Build
     AbsolutePath ExternalRepositoriesFile => ExternalRepositoriesDirectory / "repositories.yml";
 
     IEnumerable<Nuke.Common.ProjectModel.Solution> ExternalSolutions
-        => ExternalRepositoriesDirectory.GlobFiles("*/*.sln").Select(x => ParseSolution(x));
+        => ExternalRepositories
+            .Select(x => ExternalRepositoriesDirectory / x.GetGitHubName())
+            .Select(x => x.GlobFiles("*.sln").Single())
+            .Select(x => x.ReadSolution());
 
     IEnumerable<GitRepository> ExternalRepositories
         => ExternalRepositoriesFile.ReadYaml<string[]>().Select(x => GitRepository.FromUrl(x));
@@ -58,23 +61,21 @@ partial class Build
             var global = CreateSolution(
                 solutionFile: GlobalSolution,
                 solutions: new[] { Solution }.Concat(ExternalSolutions),
-                folderNameProvider: x => x == Solution ? null : x.Name);
+                folderNameProvider: x => x.Name.TrimStart("nuke-"));
             global.Save();
 
             if ((RootDirectory / $"{Solution.FileName}.DotSettings").FileExists())
             {
-                CopyFile(
-                    source: RootDirectory / $"{Solution.FileName}.DotSettings",
+                (RootDirectory / $"{Solution.FileName}.DotSettings").Copy(
                     target: RootDirectory / $"{global.FileName}.DotSettings",
-                    FileExistsPolicy.Overwrite);
+                    policy: ExistsPolicy.FileOverwrite);
             }
 
             if ((RootDirectory / $"{Solution.FileName}.DotSettings.user").FileExists())
             {
-                CopyFile(
-                    source: RootDirectory / $"{Solution.FileName}.DotSettings.user",
+                (RootDirectory / $"{Solution.FileName}.DotSettings.user").Copy(
                     target: RootDirectory / $"{global.FileName}.DotSettings.user",
-                    FileExistsPolicy.Overwrite);
+                    policy: ExistsPolicy.FileOverwrite);
             }
         });
 }

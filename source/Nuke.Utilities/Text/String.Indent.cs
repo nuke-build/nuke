@@ -4,14 +4,13 @@
 
 using JetBrains.Annotations;
 
-namespace Nuke.Common.Utilities
+namespace Nuke.Common.Utilities;
+
+public static partial class StringExtensions
 {
-    public static partial class StringExtensions
+    [Pure]
+    public static string Indent(this string text, int count)
     {
-        [Pure]
-        public static string Indent(this string text, int count)
-        {
-            return ' '.Repeat(count) + text;
-        }
+        return ' '.Repeat(count) + text;
     }
 }

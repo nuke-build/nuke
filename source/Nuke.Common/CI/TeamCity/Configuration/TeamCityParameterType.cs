@@ -6,14 +6,13 @@ using System;
 using System.Linq;
 using JetBrains.Annotations;
 
-namespace Nuke.Common.CI.TeamCity.Configuration
+namespace Nuke.Common.CI.TeamCity.Configuration;
+
+[PublicAPI]
+public enum TeamCityParameterType
 {
-    [PublicAPI]
-    public enum TeamCityParameterType
-    {
-        Select,
-        Text,
-        Password,
-        Checkbox
-    }
+    Select,
+    Text,
+    Password,
+    Checkbox
 }

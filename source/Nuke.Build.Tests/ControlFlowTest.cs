@@ -9,24 +9,23 @@ using Xunit;
 
 // ReSharper disable ArgumentsStyleLiteral
 
-namespace Nuke.Common.Tests
+namespace Nuke.Common.Tests;
+
+public class ControlFlowTest
 {
-    public class ControlFlowTest
+    [Fact]
+    public void Test()
     {
-        [Fact]
-        public void Test()
+        var executions = 0;
+
+        void OnSecondExecution()
         {
-            var executions = 0;
-
-            void OnSecondExecution()
-            {
-                executions++;
-                if (executions != 2)
-                    throw new Exception(executions.ToString());
-            }
-
-            ControlFlow.ExecuteWithRetry(OnSecondExecution);
-            executions.Should().Be(2);
+            executions++;
+            if (executions != 2)
+                throw new Exception(executions.ToString());
         }
+
+        ControlFlow.ExecuteWithRetry(OnSecondExecution);
+        executions.Should().Be(2);
     }
 }

@@ -5,21 +5,12 @@
 using System;
 using Nuke.Common.Tooling;
 
-namespace Nuke.Common.Tools.PowerShell
-{
-    partial class PowerShellTasks
-    {
-        internal static string GetToolPath()
-        {
-            return ToolPathResolver.GetPathExecutable(EnvironmentInfo.IsWin ? "powershell" : "pwsh");
-        }
-    }
+namespace Nuke.Common.Tools.PowerShell;
 
-    partial class PowerShellSettings
+partial class PowerShellTasks
+{
+    protected override string GetToolPath(ToolOptions options = null)
     {
-        private string GetProcessToolPath()
-        {
-            return PowerShellTasks.GetToolPath();
-        }
+        return ToolPathResolver.GetPathExecutable(EnvironmentInfo.IsWin ? "powershell" : "pwsh");
     }
 }

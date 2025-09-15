@@ -7,12 +7,11 @@ using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Common;
 
-namespace Nuke.Components
+namespace Nuke.Components;
+
+[PublicAPI]
+public interface IHazConfiguration : INukeBuild
 {
-    [PublicAPI]
-    public interface IHazConfiguration : INukeBuild
-    {
-        [Parameter] Configuration Configuration => TryGetValue(() => Configuration) ??
-                                                   (IsLocalBuild ? Configuration.Debug : Configuration.Release);
-    }
+    [Parameter] Configuration Configuration => TryGetValue(() => Configuration) ??
+                                               (IsLocalBuild ? Configuration.Debug : Configuration.Release);
 }

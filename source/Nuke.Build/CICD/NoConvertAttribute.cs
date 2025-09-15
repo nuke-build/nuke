@@ -5,10 +5,9 @@
 using System;
 using System.Linq;
 
-namespace Nuke.Common.CI
+namespace Nuke.Common.CI;
+
+[AttributeUsage(AttributeTargets.Property)]
+public class NoConvertAttribute : Attribute
 {
-    [AttributeUsage(AttributeTargets.Property)]
-    public class NoConvertAttribute : Attribute
-    {
-    }
 }

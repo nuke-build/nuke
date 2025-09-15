@@ -7,12 +7,11 @@ using System.Linq;
 using System.Reflection;
 using Nuke.Common.ValueInjection;
 
-namespace Nuke.Common.Tooling
-{
-    public abstract class ToolInjectionAttributeBase : ValueInjectionAttributeBase
-    {
-        public override bool SuppressWarnings => true;
+namespace Nuke.Common.Tooling;
 
-        public abstract ToolRequirement GetRequirement(MemberInfo member);
-    }
+public abstract class ToolInjectionAttributeBase : ValueInjectionAttributeBase
+{
+    public override bool SuppressWarnings => true;
+
+    public abstract ToolRequirement GetRequirement(MemberInfo member);
 }

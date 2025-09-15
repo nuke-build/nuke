@@ -9,30 +9,29 @@ using System.Linq;
 using Nuke.Common.IO;
 using Serilog;
 
-namespace Nuke.Common.Execution
+namespace Nuke.Common.Execution;
+
+internal class HandleReSharperSurrogateArgumentsAttribute : BuildExtensionAttributeBase, IOnBuildCreated
 {
-    internal class HandleReSharperSurrogateArgumentsAttribute : BuildExtensionAttributeBase, IOnBuildCreated
+    private AbsolutePath ReSharperSurrogateFile => Constants.GetReSharperSurrogateFile(Build.RootDirectory);
+
+    public void OnBuildCreated(IReadOnlyCollection<ExecutableTarget> executableTargets)
     {
-        private AbsolutePath ReSharperSurrogateFile => Constants.GetReSharperSurrogateFile(Build.RootDirectory);
+        if (!ReSharperSurrogateFile.Exists())
+            return;
 
-        public void OnBuildCreated(IReadOnlyCollection<ExecutableTarget> executableTargets)
+        var argumentLines = ReSharperSurrogateFile.ReadAllLines();
+        var lastWriteTime = File.GetLastWriteTime(ReSharperSurrogateFile);
+
+        Assert.HasSingleItem(argumentLines, $"{ReSharperSurrogateFile} must have only one single line");
+        ReSharperSurrogateFile.DeleteFile();
+        if (lastWriteTime.AddMinutes(value: 1) < DateTime.Now)
         {
-            if (!ReSharperSurrogateFile.Exists())
-                return;
-
-            var argumentLines = ReSharperSurrogateFile.ReadAllLines();
-            var lastWriteTime = File.GetLastWriteTime(ReSharperSurrogateFile);
-
-            Assert.HasSingleItem(argumentLines, $"{ReSharperSurrogateFile} must have only one single line");
-            ReSharperSurrogateFile.DeleteFile();
-            if (lastWriteTime.AddMinutes(value: 1) < DateTime.Now)
-            {
-                Log.Warning("Last write time of {File} was {LastWriteTime}. Skipping ...", ReSharperSurrogateFile, lastWriteTime);
-                return;
-            }
-
-            var arguments = argumentLines.Single();
-            EnvironmentInfo.ArgumentParser = new ArgumentParser(arguments);
+            Log.Warning("Last write time of {File} was {LastWriteTime}. Skipping ...", ReSharperSurrogateFile, lastWriteTime);
+            return;
         }
+
+        var arguments = argumentLines.Single();
+        EnvironmentInfo.ArgumentParser = new ArgumentParser(arguments);
     }
 }

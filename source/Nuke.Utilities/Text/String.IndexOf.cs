@@ -5,18 +5,17 @@
 using JetBrains.Annotations;
 using System.Text.RegularExpressions;
 
-namespace Nuke.Common.Utilities
+namespace Nuke.Common.Utilities;
+
+public static partial class StringExtensions
 {
-    public static partial class StringExtensions
+    /// <summary>
+    /// Returns the first index of a given regular expression.
+    /// </summary>
+    [Pure]
+    public static int IndexOfRegex(this string text, [RegexPattern] string expression)
     {
-        /// <summary>
-        /// Returns the first index of a given regular expression.
-        /// </summary>
-        [Pure]
-        public static int IndexOfRegex(this string text, [RegexPattern] string expression)
-        {
-            var regex = new Regex(expression, RegexOptions.Compiled);
-            return regex.Match(text).Index;
-        }
+        var regex = new Regex(expression, RegexOptions.Compiled);
+        return regex.Match(text).Index;
     }
 }

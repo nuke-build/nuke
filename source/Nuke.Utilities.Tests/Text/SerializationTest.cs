@@ -12,61 +12,60 @@ using Nuke.Common.Utilities;
 using Nuke.Utilities.Text.Yaml;
 using Xunit;
 
-namespace Nuke.Common.Tests
+namespace Nuke.Common.Tests;
+
+public class SerializationTest
 {
-    public class SerializationTest
+    [Fact]
+    public void JsonTest()
     {
-        [Fact]
-        public void JsonTest()
-        {
-            var data = CreateData("Json");
-            var content = data.ToJson();
-            var copy = content.GetJson<Data>();
+        var data = CreateData("Json");
+        var content = data.ToJson();
+        var copy = content.GetJson<Data>();
 
-            copy.Should().BeEquivalentTo(data);
-        }
+        copy.Should().BeEquivalentTo(data);
+    }
 
-        [Fact]
-        public void YamlTest()
-        {
-            var data = CreateData("Yaml");
-            var content = data.ToYaml();
-            var copy = content.GetYaml<Data>();
+    [Fact]
+    public void YamlTest()
+    {
+        var data = CreateData("Yaml");
+        var content = data.ToYaml();
+        var copy = content.GetYaml<Data>();
 
-            copy.Should().BeEquivalentTo(data);
-        }
+        copy.Should().BeEquivalentTo(data);
+    }
 
-        [Fact]
-        public void XmlTest()
-        {
-            var data = CreateData("Xml");
-            var content = data.ToXml();
-            var copy = content.GetXml<Data>();
+    [Fact]
+    public void XmlTest()
+    {
+        var data = CreateData("Xml");
+        var content = data.ToXml();
+        var copy = content.GetXml<Data>();
 
-            copy.Should().BeEquivalentTo(data);
-        }
+        copy.Should().BeEquivalentTo(data);
+    }
 
-        private static Data CreateData(string name)
-        {
-            return new Data
-                   {
-                       String = name,
-                       Number = 5,
-                       Boolean = true,
-                       Nested = new Data
-                                {
-                                    Boolean = false
-                                }
-                   };
-        }
+    private static Data CreateData(string name)
+    {
+        return new Data
+               {
+                   String = name,
+                   Number = 5,
+                   Boolean = true,
+                   Nested = new Data
+                            {
+                                Boolean = false
+                            }
+               };
+    }
 
-        public class Data
-        {
-            public string String { get; set; }
-            public int Number { get; set; }
-            public bool Boolean { get; set; }
+    public class Data
+    {
+        public string String { get; set; }
+        public int Number { get; set; }
+        public bool Boolean { get; set; }
 
-            public Data Nested { get; set; }
-        }
+        public Data Nested { get; set; }
     }
 }

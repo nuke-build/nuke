@@ -7,26 +7,25 @@ using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Common.Utilities;
 
-namespace Nuke.Common.CI.TeamCity.Configuration
+namespace Nuke.Common.CI.TeamCity.Configuration;
+
+[PublicAPI]
+public class TeamCitySnapshotDependency : TeamCityDependency
 {
-    [PublicAPI]
-    public class TeamCitySnapshotDependency : TeamCityDependency
+    public TeamCityBuildType BuildType { get; set; }
+    public TeamCityDependencyFailureAction FailureAction { get; set; }
+    public TeamCityDependencyFailureAction CancelAction { get; set; }
+
+    public override void Write(CustomFileWriter writer)
     {
-        public TeamCityBuildType BuildType { get; set; }
-        public TeamCityDependencyFailureAction FailureAction { get; set; }
-        public TeamCityDependencyFailureAction CancelAction { get; set; }
+        static string FormatAction(TeamCityDependencyFailureAction action)
+            => "FailureAction." +
+               action.ToString().SplitCamelHumps().JoinUnderscore().ToUpperInvariant();
 
-        public override void Write(CustomFileWriter writer)
+        using (writer.WriteBlock($"snapshot({BuildType.Id})"))
         {
-            static string FormatAction(TeamCityDependencyFailureAction action)
-                => "FailureAction." +
-                   action.ToString().SplitCamelHumps().JoinUnderscore().ToUpperInvariant();
-
-            using (writer.WriteBlock($"snapshot({BuildType.Id})"))
-            {
-                writer.WriteLine($"onDependencyFailure = {FormatAction(FailureAction)}");
-                writer.WriteLine($"onDependencyCancel = {FormatAction(CancelAction)}");
-            }
+            writer.WriteLine($"onDependencyFailure = {FormatAction(FailureAction)}");
+            writer.WriteLine($"onDependencyCancel = {FormatAction(CancelAction)}");
         }
     }
 }

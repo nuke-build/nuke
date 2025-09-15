@@ -8,19 +8,18 @@ using System.Linq;
 using Nuke.Common.Execution;
 using Nuke.Common.IO;
 
-namespace Nuke.Common.CI
+namespace Nuke.Common.CI;
+
+public interface IConfigurationGenerator
 {
-    public interface IConfigurationGenerator
-    {
-        string Id { get; }
-        string DisplayName { get; }
-        string HostName { get; }
+    string Id { get; }
+    string DisplayName { get; }
+    string HostName { get; }
 
-        bool AutoGenerate { get; }
-        Type HostType { get; }
-        IEnumerable<AbsolutePath> GeneratedFiles { get; }
+    bool AutoGenerate { get; }
+    Type HostType { get; }
+    IEnumerable<AbsolutePath> GeneratedFiles { get; }
 
-        void Generate(IReadOnlyCollection<ExecutableTarget> executableTargets);
-        void SerializeState();
-    }
+    void Generate(IReadOnlyCollection<ExecutableTarget> executableTargets);
+    void SerializeState();
 }

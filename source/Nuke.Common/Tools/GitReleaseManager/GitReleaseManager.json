@@ -172,6 +172,13 @@
       "type": "string",
       "format": "--logFilePath {value}",
       "help": "Path to where log file should be created. Defaults is <em>logging to console</em>."
+    },
+    {
+      "name": "Token",
+      "type": "string",
+      "format": "--token {value}",
+      "secret": true,
+      "help": "The access token to access GitHub with."
     }
   ]
 }

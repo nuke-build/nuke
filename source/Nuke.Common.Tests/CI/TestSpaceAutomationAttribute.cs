@@ -7,20 +7,19 @@ using System.IO;
 using System.Linq;
 using Nuke.Common.CI.SpaceAutomation;
 
-namespace Nuke.Common.Tests.CI
+namespace Nuke.Common.Tests.CI;
+
+public class TestSpaceAutomationAttribute : SpaceAutomationAttribute, ITestConfigurationGenerator
 {
-    public class TestSpaceAutomationAttribute : SpaceAutomationAttribute, ITestConfigurationGenerator
+    public TestSpaceAutomationAttribute(string jobName, string image)
+        : base(jobName, image)
     {
-        public TestSpaceAutomationAttribute(string jobName, string image)
-            : base(jobName, image)
-        {
-        }
+    }
 
-        public StreamWriter Stream { get; set; }
+    public StreamWriter Stream { get; set; }
 
-        protected override StreamWriter CreateStream()
-        {
-            return Stream;
-        }
+    protected override StreamWriter CreateStream()
+    {
+        return Stream;
     }
 }

@@ -9,14 +9,13 @@ using System.Reflection;
 using Nuke.Common.Execution;
 using Nuke.Common.Utilities.Collections;
 
-namespace Nuke.Common.CI
+namespace Nuke.Common.CI;
+
+public class BuildServerConfigurationGenerationAttributeBase : BuildExtensionAttributeBase
 {
-    public class BuildServerConfigurationGenerationAttributeBase : BuildExtensionAttributeBase
+    protected static IEnumerable<IConfigurationGenerator> GetGenerators(INukeBuild build)
     {
-        protected static IEnumerable<IConfigurationGenerator> GetGenerators(INukeBuild build)
-        {
-            return build.GetType().GetCustomAttributes<ConfigurationAttributeBase>()
-                .ForEachLazy(x => x.Build = build);
-        }
+        return build.GetType().GetCustomAttributes<ConfigurationAttributeBase>()
+            .ForEachLazy(x => x.Build = build);
     }
 }

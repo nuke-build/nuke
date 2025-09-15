@@ -3,205 +3,148 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using Nuke.CodeGeneration.Model;
 using Nuke.CodeGeneration.Writers;
 using Nuke.Common.Utilities;
+using Nuke.Common.Utilities.Collections;
 
 // ReSharper disable UnusedMethodReturnValue.Local
 
-namespace Nuke.CodeGeneration.Generators
+namespace Nuke.CodeGeneration.Generators;
+
+public static class TaskGenerator
 {
-    public static class TaskGenerator
+    public static void Run(Tool tool, ToolWriter toolWriter)
     {
-        public static void Run(Tool tool, ToolWriter toolWriter)
+        if (tool.Tasks.Count == 0 && !tool.CustomExecutable && tool.PathExecutable == null && tool.NuGetPackageId == null)
+            return;
+
+        var baseClasses = new[]
         {
-            if (tool.Tasks.Count == 0 && !tool.CustomExecutable && tool.PathExecutable == null && tool.NuGetPackageId == null)
-                return;
+            "ToolTasks",
+            tool.PathExecutable?.Apply(_ => "IRequirePathTool"),
+            tool.NuGetPackageId?.Apply(_ => "IRequireNuGetPackage"),
+            tool.AptGetPackageId?.Apply(_ => "IRequireAptGetPackage"),
+            tool.NpmPackageId?.Apply(_ => "IRequireNpmPackage"),
+        }.WhereNotNull();
 
-            toolWriter
-                .WriteSummary(tool)
-                .WriteLine("[PublicAPI]")
-                .WriteLine("[ExcludeFromCodeCoverage]")
-                .WriteLineIfTrue(tool.NuGetPackageId != null, $"[NuGetPackageRequirement({tool.Name}PackageId)]")
-                .WriteLineIfTrue(tool.NpmPackageId != null, $"[NpmPackageRequirement({tool.Name}PackageId)]")
-                .WriteLineIfTrue(tool.AptGetPackageId != null, $"[AptGetPackageRequirement({tool.Name}PackageId)]")
-                .WriteLineIfTrue(tool.PathExecutable != null, $"[PathToolRequirement({tool.Name}PathExecutable)]")
-                .WriteLine($"public partial class {tool.GetClassName()}")
-                .WriteLineIfTrue(tool.NuGetPackageId != null, "    : IRequireNuGetPackage")
-                .WriteLineIfTrue(tool.NpmPackageId != null, "    : IRequireNpmPackage")
-                .WriteLineIfTrue(tool.AptGetPackageId != null, "    : IRequireAptGetPackage")
-                .WriteLineIfTrue(tool.PathExecutable != null, "    : IRequirePathTool")
-                .WriteBlock(w =>
-                {
-                    w
-                        .WriteLineIfTrue(tool.NuGetPackageId != null, $"public const string {tool.Name}PackageId = {tool.NuGetPackageId.DoubleQuote()};")
-                        .WriteLineIfTrue(tool.NpmPackageId != null, $"public const string {tool.Name}PackageId = {tool.NpmPackageId.DoubleQuote()};")
-                        .WriteLineIfTrue(tool.AptGetPackageId != null, $"public const string {tool.Name}PackageId = {tool.AptGetPackageId.DoubleQuote()};")
-                        .WriteLineIfTrue(tool.PathExecutable != null, $"public const string {tool.Name}PathExecutable = {tool.PathExecutable.DoubleQuote()};")
-                        .WriteToolPath()
-                        .WriteToolLogger()
-                        .WriteGenericTask();
-
-                    tool.Tasks.ForEach(x => new TaskWriter(x, toolWriter)
-                        .WriteToolSettingsTask()
-                        .WriteConfiguratorTask()
-                        .WriteCombinatorialConfiguratorTask());
-                });
-        }
-
-        private static void WriteGenericTask(this ToolWriter writer)
-        {
-            var tool = writer.Tool;
-            var parameters = new[]
-                             {
-                                 "ref ArgumentStringHandler arguments",
-                                 "string workingDirectory = null",
-                                 "IReadOnlyDictionary<string, string> environmentVariables = null",
-                                 "int? timeout = null",
-                                 "bool? logOutput = null",
-                                 "bool? logInvocation = null",
-                                 "Action<OutputType, string> customLogger = null"
-                             };
-            var arguments = new[]
-                            {
-                                $"{tool.Name}Path",
-                                "ref arguments",
-                                "workingDirectory",
-                                "environmentVariables",
-                                "timeout",
-                                "logOutput",
-                                "logInvocation",
-                                $"customLogger ?? {tool.Name}Logger"
-                            };
-            writer
-                .WriteSummary(tool)
-                .WriteObsoleteAttributeWhenObsolete(tool)
-                .WriteLine($"public static IReadOnlyCollection<Output> {tool.Name}({parameters.JoinCommaSpace()})")
-                .WriteBlock(w => w
-                    .WriteLine($"using var process = ProcessTasks.StartProcess({arguments.JoinCommaSpace()});")
-                    .WriteLine("process.AssertZeroExitCode();")
-                    .WriteLine("return process.Output;"));
-        }
-
-        private static TaskWriter WriteToolSettingsTask(this TaskWriter writer)
-        {
-            var task = writer.Task;
-            var returnType = task.HasReturnValue()
-                ? $"({task.ReturnType} Result, IReadOnlyCollection<Output> Output)"
-                : "IReadOnlyCollection<Output>";
-
-            return writer
-                .WriteSummary(task)
-                .WriteRemarks(task)
-                .WriteObsoleteAttributeWhenObsolete(task)
-                .WriteLine($"public static {returnType} {task.GetTaskMethodName()}({task.SettingsClass.Name} toolSettings = null)")
-                .WriteBlock(w => w
-                    .WriteLine($"toolSettings = toolSettings ?? new {task.SettingsClass.Name}();")
-                    .WriteLineIfTrue(task.PreProcess, "PreProcess(ref toolSettings);")
-                    .WriteLine($"using var process = {GetProcessStart(task)};")
-                    .WriteLine(GetProcessAssertion(task))
-                    .WriteLineIfTrue(task.PostProcess, "PostProcess(toolSettings);")
-                    .WriteLine(task.HasReturnValue()
-                        ? "return (GetResult(process, toolSettings), process.Output);"
-                        : "return process.Output;"));
-        }
-
-        private static TaskWriter WriteConfiguratorTask(this TaskWriter writer)
-        {
-            var task = writer.Task;
-            var returnType = task.HasReturnValue()
-                ? $"({task.ReturnType} Result, IReadOnlyCollection<Output> Output)"
-                : "IReadOnlyCollection<Output>";
-
-            return writer
-                .WriteSummary(task)
-                .WriteRemarks(task)
-                .WriteObsoleteAttributeWhenObsolete(task)
-                .WriteLine($"public static {returnType} {task.GetTaskMethodName()}(Configure<{task.SettingsClass.Name}> configurator)")
-                .WriteBlock(w => w
-                    .WriteLine($"return {task.GetTaskMethodName()}(configurator(new {task.SettingsClass.Name}()));"));
-        }
-
-        private static TaskWriter WriteCombinatorialConfiguratorTask(this TaskWriter writer)
-        {
-            var task = writer.Task;
-
-            var returnType = !task.HasReturnValue()
-                ? $"IEnumerable<({task.SettingsClass.Name} Settings, IReadOnlyCollection<Output> Output)>"
-                : $"IEnumerable<({task.SettingsClass.Name} Settings, {task.ReturnType} Result, IReadOnlyCollection<Output> Output)>";
-
-            var parameters = new[]
-                             {
-                                 $"CombinatorialConfigure<{task.SettingsClass.Name}> configurator",
-                                 "int degreeOfParallelism = 1",
-                                 "bool completeOnFailure = false"
-                             }.JoinCommaSpace();
-
-            return writer
-                .WriteSummary(task)
-                .WriteRemarks(task)
-                .WriteObsoleteAttributeWhenObsolete(task)
-                .WriteLine($"public static {returnType} {task.GetTaskMethodName()}({parameters})")
-                .WriteBlock(w => w
-                    .WriteLine(
-                        $"return configurator.Invoke({task.GetTaskMethodName()}, {task.Tool.Name}Logger, degreeOfParallelism, completeOnFailure);"));
-        }
-
-        private static string GetProcessStart(Task task)
-        {
-            return !task.CustomStart
-                ? "ProcessTasks.StartProcess(toolSettings)"
-                : "StartProcess(toolSettings)";
-        }
-
-        private static string GetProcessAssertion(Task task)
-        {
-            return !task.CustomAssertion
-                ? "process.AssertZeroExitCode();"
-                : "AssertProcess(process, toolSettings);";
-        }
-
-        private static ToolWriter WriteToolPath(this ToolWriter writer)
-        {
-            var tool = writer.Tool;
-            var resolvers = new List<string>();
-
-            if (tool.NuGetPackageId != null && tool.PackageExecutable != null)
+        toolWriter
+            .WriteSummary(tool)
+            .WriteLine("[PublicAPI]")
+            .WriteLine("[ExcludeFromCodeCoverage]")
+            .WriteLineIfTrue(tool.NuGetPackageId != null && tool.PackageExecutable == null, "[NuGetTool(Id = PackageId)]")
+            .WriteLineIfTrue(tool.NuGetPackageId != null && tool.PackageExecutable != null, "[NuGetTool(Id = PackageId, Executable = PackageExecutable)]")
+            .WriteLineIfTrue(tool.NpmPackageId != null && tool.PackageExecutable != null, "[NpmTool(Id = PackageId, Executable = PackageExecutable)]")
+            .WriteLineIfTrue(tool.AptGetPackageId != null, "[AptGetTool(Id = PackageId)]")
+            .WriteLineIfTrue(tool.PathExecutable != null, "[PathTool(Executable = PathExecutable)]")
+            .WriteLine($"public partial class {tool.GetClassName()} : {baseClasses.JoinCommaSpace()}")
+            .WriteBlock(w =>
             {
-                resolvers.Add("NuGetToolPathResolver.GetPackageExecutable(" +
-                              $"{tool.NuGetPackageId.DoubleQuote()}, " +
-                              $"{tool.PackageExecutable.DoubleQuote()})");
-            }
+                w
+                    .WriteLine($"public static string {tool.Name}Path {{ get => new {tool.GetClassName()}().GetToolPathInternal(); set => new {tool.GetClassName()}().SetToolPath(value); }}")
+                    .WriteLineIfTrue(tool.NuGetPackageId != null, $"public const string PackageId = {tool.NuGetPackageId.DoubleQuote()};")
+                    .WriteLineIfTrue(tool.PackageExecutable != null, $"public const string PackageExecutable = {tool.PackageExecutable.DoubleQuote()};")
+                    .WriteLineIfTrue(tool.NpmPackageId != null, $"public const string PackageId = {tool.NpmPackageId.DoubleQuote()};")
+                    .WriteLineIfTrue(tool.AptGetPackageId != null, $"public const string PackageId = {tool.AptGetPackageId.DoubleQuote()};")
+                    .WriteLineIfTrue(tool.PathExecutable != null, $"public const string PathExecutable = {tool.PathExecutable.DoubleQuote()};")
+                    .WriteGenericTask();
 
-            if (tool.NpmPackageId != null && tool.PackageExecutable != null)
-            {
-                resolvers.Add($"NpmToolPathResolver.GetNpmExecutable({tool.PackageExecutable.DoubleQuote()})");
-            }
+                tool.Tasks.ForEach(x => new TaskWriter(x, toolWriter)
+                    .WriteToolSettingsTask()
+                    .WriteConfiguratorTask()
+                    .WriteCombinatorialConfiguratorTask());
+            });
+    }
 
-            if (tool.PathExecutable != null)
-                resolvers.Add($"ToolPathResolver.GetPathExecutable({tool.PathExecutable.DoubleQuote()})");
+    private static void WriteGenericTask(this ToolWriter writer)
+    {
+        var tool = writer.Tool;
+        var parameters = new[]
+                         {
+                             "ArgumentStringHandler arguments",
+                             "string workingDirectory = null",
+                             "IReadOnlyDictionary<string, string> environmentVariables = null",
+                             "int? timeout = null",
+                             "bool? logOutput = null",
+                             "bool? logInvocation = null",
+                             "Action<OutputType, string> logger = null",
+                             "Func<IProcess, object> exitHandler = null"
+                         };
+        var arguments = new[]
+                        {
+                            "arguments",
+                            "workingDirectory",
+                            "environmentVariables",
+                            "timeout",
+                            "logOutput",
+                            "logInvocation",
+                            "logger",
+                            "exitHandler"
+                        };
+        var signature = $"IReadOnlyCollection<Output> {tool.Name}({parameters.JoinCommaSpace()})";
+        var invocation = $"new {tool.GetClassName()}().Run({arguments.JoinCommaSpace()})";
+        writer
+            .WriteSummary(tool)
+            .WriteObsoleteAttributeWhenObsolete(tool)
+            .WriteLine($"public static {signature} => {invocation};");
+    }
 
-            if (resolvers.Count == 0)
-                resolvers.Add("GetToolPath()");
+    private static TaskWriter WriteToolSettingsTask(this TaskWriter writer)
+    {
+        var task = writer.Task;
+        var returnType = !task.HasReturnValue()
+            ? "IReadOnlyCollection<Output>"
+            : $"({task.ReturnType} Result, IReadOnlyCollection<Output> Output)";
+        var signature = $"{returnType} {task.GetTaskMethodName()}({task.SettingsClass.Name} options = null)";
+        var invocation = !task.HasReturnValue()
+            ? $"new {task.Tool.GetClassName()}().Run<{task.SettingsClass.Name}>(options)"
+            : $"new {task.Tool.GetClassName()}().Run<{task.SettingsClass.Name}, {task.ReturnType}>(options)";
 
-            Trace.Assert(resolvers.Count == 1, "resolvers.Count == 1");
+        return writer
+            .WriteSummary(task)
+            .WriteRemarks(task)
+            .WriteObsoleteAttributeWhenObsolete(task)
+            .WriteLine($"public static {signature} => {invocation};");
+    }
 
-            return writer
-                .WriteSummary($"Path to the {tool.Name} executable.")
-                .WriteLine($"public static string {tool.Name}Path =>")
-                .WriteLine($"    ToolPathResolver.TryGetEnvironmentExecutable(\"{tool.Name.ToUpperInvariant()}_EXE\") ??")
-                .WriteLine($"    {resolvers.Single()};");
-        }
+    private static TaskWriter WriteConfiguratorTask(this TaskWriter writer)
+    {
+        var task = writer.Task;
+        var returnType = !task.HasReturnValue()
+            ? "IReadOnlyCollection<Output>"
+            : $"({task.ReturnType} Result, IReadOnlyCollection<Output> Output)";
+        var signature = $"{returnType} {task.GetTaskMethodName()}(Configure<{task.SettingsClass.Name}> configurator)";
+        var invocation = !task.HasReturnValue()
+            ? $"new {task.Tool.GetClassName()}().Run<{task.SettingsClass.Name}>(configurator.Invoke(new {task.SettingsClass.Name}()))"
+            : $"new {task.Tool.GetClassName()}().Run<{task.SettingsClass.Name}, {task.ReturnType}>(configurator.Invoke(new {task.SettingsClass.Name}()))";
 
-        private static ToolWriter WriteToolLogger(this ToolWriter writer)
-        {
-            var tool = writer.Tool;
-            var logger = tool.CustomLogger ? "CustomLogger" : "ProcessTasks.DefaultLogger";
-            return writer
-                .WriteLine($"public static Action<OutputType, string> {tool.Name}Logger {{ get; set; }} = {logger};");
-        }
+        return writer
+            .WriteInherit(task)
+            .WriteObsoleteAttributeWhenObsolete(task)
+            .WriteLine($"public static {signature} => {invocation};");
+    }
+
+    private static TaskWriter WriteCombinatorialConfiguratorTask(this TaskWriter writer)
+    {
+        var task = writer.Task;
+
+        var returnType = !task.HasReturnValue()
+            ? $"IEnumerable<({task.SettingsClass.Name} Settings, IReadOnlyCollection<Output> Output)>"
+            : $"IEnumerable<({task.SettingsClass.Name} Settings, {task.ReturnType} Result, IReadOnlyCollection<Output> Output)>";
+
+        var parameters = new[]
+                         {
+                             $"CombinatorialConfigure<{task.SettingsClass.Name}> configurator",
+                             "int degreeOfParallelism = 1",
+                             "bool completeOnFailure = false"
+                         }.JoinCommaSpace();
+        var signature = $"{returnType} {task.GetTaskMethodName()}({parameters})";
+        var invocation = $"configurator.Invoke({task.GetTaskMethodName()}, degreeOfParallelism, completeOnFailure)";
+
+        return writer
+            .WriteInherit(task)
+            .WriteObsoleteAttributeWhenObsolete(task)
+            .WriteLine($"public static {signature} => {invocation};");
     }
 }

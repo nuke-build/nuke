@@ -8,21 +8,20 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Nuke.Common;
 
-namespace Nuke.GlobalTool.Rewriting.Cake
+namespace Nuke.GlobalTool.Rewriting.Cake;
+
+internal class SafeSyntaxRewriter : CSharpSyntaxRewriter
 {
-    internal class SafeSyntaxRewriter : CSharpSyntaxRewriter
+    public override SyntaxNode Visit(SyntaxNode node)
     {
-        public override SyntaxNode Visit(SyntaxNode node)
+        try
         {
-            try
-            {
-                return base.Visit(node);
-            }
-            catch (Exception)
-            {
-                Host.Warning($"Could not handle fragment '{node.ToFullString().Trim()}', skipping ...");
-                return node;
-            }
+            return base.Visit(node);
+        }
+        catch (Exception)
+        {
+            Host.Warning($"Could not handle fragment '{node.ToFullString().Trim()}', skipping ...");
+            return node;
         }
     }
 }

@@ -6,12 +6,11 @@ using System;
 using System.Linq;
 using JetBrains.Annotations;
 
-namespace Nuke.Common.CI.AzurePipelines
+namespace Nuke.Common.CI.AzurePipelines;
+
+[PublicAPI]
+public enum AzurePipelinesCodeCoverageToolType
 {
-    [PublicAPI]
-    public enum AzurePipelinesCodeCoverageToolType
-    {
-        JaCoCo,
-        Cobertura
-    }
+    JaCoCo,
+    Cobertura
 }

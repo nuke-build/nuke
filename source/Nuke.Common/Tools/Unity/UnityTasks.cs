@@ -7,172 +7,135 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using JetBrains.Annotations;
 using Nuke.Common.IO;
 using Nuke.Common.Tooling;
 using Nuke.Common.Tools.Unity.Logging;
 using Nuke.Common.Utilities;
 using Nuke.Utilities.Text.Yaml;
 using Serilog;
+using Serilog.Events;
 
-namespace Nuke.Common.Tools.Unity
+namespace Nuke.Common.Tools.Unity;
+
+partial class UnityTasks
 {
-    public partial class UnityTasks
+    [ThreadStatic]
+    private static FileWatcher s_watcher;
+
+    [ThreadStatic]
+    private static LogParser s_logParser;
+
+    private static bool s_minimalOutput;
+
+    protected override string GetToolPath(ToolOptions options = null)
     {
-        [ThreadStatic]
-        private static FileWatcher s_watcher;
-
-        [ThreadStatic]
-        private static LogParser s_logParser;
-
-        private static bool s_minimalOutput;
-
-        public static string GetToolPath(string hubVersion = null)
+        var unityOptions = options as UnityOptionsBase;
+        var programFiles = EnvironmentInfo.IsWin
+            ? EnvironmentInfo.SpecialFolder(EnvironmentInfo.Is32Bit ? SpecialFolders.ProgramFilesX86 : SpecialFolders.ProgramFiles)
+            : null;
+        return unityOptions?.HubVersion ?? GetEditorVersionFromProject() switch
         {
-            return hubVersion != null
-                ? GetToolPathViaHubVersion(hubVersion)
-                : GetToolPathViaManualInstallation();
-        }
-
-        private static AbsolutePath GetToolPathViaManualInstallation()
-        {
-            return EnvironmentInfo.Platform switch
+            { } version => EnvironmentInfo.Platform switch
             {
-                PlatformFamily.Windows => $@"{GetProgramFiles()}\Unity\Editor\Unity.exe",
-                PlatformFamily.OSX => "/Applications/Unity/Unity.app/Contents/MacOS/Unity",
-                _ => null
-            };
-        }
-
-        private static AbsolutePath GetToolPathViaHubVersion(string version)
-        {
-            return EnvironmentInfo.Platform switch
-            {
-                PlatformFamily.Windows => $@"{GetProgramFiles()}\Unity\Hub\Editor\{version}\Editor\Unity.exe",
+                PlatformFamily.Windows => $@"{programFiles}\Unity\Hub\Editor\{version}\Editor\Unity.exe",
                 PlatformFamily.OSX => $"/Applications/Unity/Hub/Editor/{version}/Unity.app/Contents/MacOS/Unity",
                 _ => throw new Exception($"Cannot determine Unity Hub installation path for '{version}'.")
-            };
-        }
-
-        private static string GetProgramFiles()
-        {
-            return EnvironmentInfo.SpecialFolder(
-                EnvironmentInfo.Is32Bit
-                    ? SpecialFolders.ProgramFilesX86
-                    : SpecialFolders.ProgramFiles);
-        }
-
-        private static void PreProcess(ref UnitySettings unitySettings)
-        {
-            if (unitySettings.ProjectPath == null)
-                Log.Warning("ProjectPath is not set, using last opened/built project");
-
-            DetectUnityVersion(ref unitySettings);
-            PreProcess<UnitySettings>(ref unitySettings);
-        }
-
-        private static void DetectUnityVersion(ref UnitySettings unitySettings)
-        {
-            if (unitySettings.HubVersion != null ||
-                unitySettings.ProjectPath == null)
-                return;
-
-            var editorVersion = ReadUnityEditorVersion(unitySettings.ProjectPath);
-            var hubToolPath = GetToolPathViaHubVersion(editorVersion);
-            if (hubToolPath.Exists())
+            },
+            null => EnvironmentInfo.Platform switch
             {
-                unitySettings.HubVersion = editorVersion;
-                return;
+                PlatformFamily.Windows => $@"{programFiles}\Unity\Editor\Unity.exe",
+                PlatformFamily.OSX => "/Applications/Unity/Unity.app/Contents/MacOS/Unity",
+                _ => null
             }
+        };
 
-            var manualInstallationToolPath = GetToolPathViaManualInstallation();
-            Assert.FileExists(manualInstallationToolPath, $"Required Unity Hub installation for version '{editorVersion}' was not found");
-        }
-
-        private static string ReadUnityEditorVersion(AbsolutePath projectPath)
+        string GetEditorVersionFromProject()
         {
-            var projectVersionFile = projectPath / "ProjectSettings" / "ProjectVersion.txt";
+            if (options is not UnitySettings projectOptions)
+                return null;
+
+            var projectVersionFile = (AbsolutePath)projectOptions.ProjectPath / "ProjectSettings" / "ProjectVersion.txt";
             var properties = projectVersionFile.ReadYaml<Dictionary<string, string>>();
             return properties["m_EditorVersion"];
         }
+    }
 
-        private static void PreProcess<T>(ref T unitySettings)
-            where T : UnityBaseSettings
+    protected override T PreProcess<T>(T options)
+    {
+        var unityOptions = (options as UnityOptionsBase).NotNull();
+        var logFile = (AbsolutePath)unityOptions.LogFile ?? NukeBuild.TemporaryDirectory / "unity.log";
+        logFile.DeleteFile();
+
+        s_minimalOutput = unityOptions.MinimalOutput ?? false;
+        s_logParser = new LogParser(LogLine, LogBlockStart, LogBlockEnd);
+        s_watcher = new FileWatcher(logFile, s_logParser.Log);
+        s_watcher.Start();
+
+        return options;
+    }
+
+    protected override IReadOnlyCollection<Output> Run<T>(T options = null)
+    {
+        try
         {
-            if (File.Exists(unitySettings.GetLogFile()))
-                File.Delete(unitySettings.GetLogFile());
-            s_minimalOutput = unitySettings.MinimalOutput.GetValueOrDefault(defaultValue: false);
-            s_logParser = new LogParser(LogLine, LogBlockStart, LogBlockEnd);
-            s_watcher = new FileWatcher(unitySettings.GetLogFile(), s_logParser.Log);
-            s_watcher.Start();
+            return base.Run<T>(options);
         }
-
-        [CanBeNull]
-        private static IProcess StartProcess(UnityBaseSettings unitySettings)
+        catch (Exception)
         {
-            try
-            {
-                return ProcessTasks.StartProcess(unitySettings);
-            }
-            catch (Exception)
-            {
-                AssertWatcherStopped();
-                throw;
-            }
-        }
-
-        private static void AssertWatcherStopped()
-        {
-            s_watcher?.AssertStopped();
-            s_watcher = null;
-        }
-
-        private static void AssertProcess(IProcess process, UnityBaseSettings settings)
-        {
-            process.AssertWaitForExit();
             AssertWatcherStopped();
-            if (process.ExitCode == 0)
-                return;
+            throw;
+        }
+    }
+
+    protected override Func<ToolOptions, IProcess, object> GetExitHandler(ToolOptions options)
+    {
+        var unityOptions = options as UnityOptionsBase;
+        return (_, p) =>
+        {
+            AssertWatcherStopped();
+            if (p.ExitCode == 0)
+                return null;
 
             var message = new StringBuilder()
-                .AppendLine($"Process '{Path.GetFileName(process.FileName)}' exited with code {process.ExitCode}. Verify the invocation.")
-                .AppendLine($"> {process.FileName.DoubleQuoteIfNeeded()} {process.Arguments}")
+                .AppendLine($"Process '{Path.GetFileName(p.FileName)}' exited with code {p.ExitCode}. Verify the invocation.")
+                .AppendLine($"> {p.FileName.DoubleQuoteIfNeeded()} {p.Arguments}")
                 .ToString();
 
-            if (settings.StableExitCodes.Any(x => x == process.ExitCode))
+            if (unityOptions?.StableExitCodes.Any(x => x == p.ExitCode) ?? false)
                 Log.Warning(message);
             else
                 Assert.Fail(message);
-        }
 
-        private static void LogLine(string message, Logging.LogLevel logLevel)
-        {
-            switch (logLevel)
+            return null;
+        };
+    }
+
+    private static void AssertWatcherStopped()
+    {
+        s_watcher?.AssertStopped();
+        s_watcher = null;
+    }
+
+    private static void LogLine(string message, Logging.LogLevel logLevel)
+    {
+        Log.Write(
+            logLevel switch
             {
-                case Logging.LogLevel.Normal:
-                    if (!s_minimalOutput)
-                        Log.Debug(message);
-                    break;
-                case Logging.LogLevel.Warning:
-                    Log.Warning(message);
-                    break;
-                case Logging.LogLevel.Error:
-                case Logging.LogLevel.Failure:
-                    Log.Error(message);
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(logLevel), logLevel, message: null);
-            }
-        }
+                Logging.LogLevel.Normal => LogEventLevel.Debug,
+                Logging.LogLevel.Warning => LogEventLevel.Warning,
+                Logging.LogLevel.Error or Logging.LogLevel.Failure => LogEventLevel.Error,
+                _ => throw new ArgumentOutOfRangeException(nameof(logLevel), logLevel, null)
+            },
+            message);
+    }
 
-        private static void LogBlockEnd(MatchedBlock block)
-        {
-            Log.Debug("End: {Block}", block.Name.TrimEnd('\r', '\n'));
-        }
+    private static void LogBlockEnd(MatchedBlock block)
+    {
+        Log.Debug("End: {Block}", block.Name.TrimEnd('\r', '\n'));
+    }
 
-        private static void LogBlockStart(MatchedBlock block)
-        {
-            Log.Debug("Start: {Block}", block.Name.TrimEnd('\r', '\n'));
-        }
+    private static void LogBlockStart(MatchedBlock block)
+    {
+        Log.Debug("Start: {Block}", block.Name.TrimEnd('\r', '\n'));
     }
 }

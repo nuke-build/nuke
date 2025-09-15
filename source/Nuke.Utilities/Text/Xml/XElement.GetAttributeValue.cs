@@ -6,13 +6,12 @@ using System;
 using System.Linq;
 using System.Xml.Linq;
 
-namespace Nuke.Common.Utilities
+namespace Nuke.Common.Utilities;
+
+public static partial class XElementExtensions
 {
-    public static partial class XElementExtensions
+    public static string GetAttributeValue(this XElement element, string name)
     {
-        public static string GetAttributeValue(this XElement element, string name)
-        {
-            return element.Attribute(name).NotNull().Value;
-        }
+        return element.Attribute(name).NotNull().Value;
     }
 }

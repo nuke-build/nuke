@@ -6,10 +6,9 @@ using System;
 using System.Linq;
 using Nuke.Common.Utilities;
 
-namespace Nuke.Common.CI
+namespace Nuke.Common.CI;
+
+public abstract class ConfigurationEntity
 {
-    public abstract class ConfigurationEntity
-    {
-        public abstract void Write(CustomFileWriter writer);
-    }
+    public abstract void Write(CustomFileWriter writer);
 }

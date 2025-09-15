@@ -6,14 +6,13 @@ using System;
 using System.Linq;
 using JetBrains.Annotations;
 
-namespace Nuke.Common.CI.TeamCity
+namespace Nuke.Common.CI.TeamCity;
+
+[PublicAPI]
+public enum TeamCityNoDataPublishedAction
 {
-    [PublicAPI]
-    public enum TeamCityNoDataPublishedAction
-    {
-        info,
-        nothing,
-        warning,
-        error
-    }
+    info,
+    nothing,
+    warning,
+    error
 }

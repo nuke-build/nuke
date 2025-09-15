@@ -6,12 +6,11 @@ using System;
 using System.Linq;
 using JetBrains.Annotations;
 
-namespace Nuke.Common.Tooling
+namespace Nuke.Common.Tooling;
+
+[PublicAPI]
+public struct Output
 {
-    [PublicAPI]
-    public struct Output
-    {
-        public OutputType Type;
-        public string Text;
-    }
+    public OutputType Type;
+    public string Text;
 }

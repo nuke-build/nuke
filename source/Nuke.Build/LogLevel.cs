@@ -6,14 +6,13 @@ using System;
 using System.Linq;
 using JetBrains.Annotations;
 
-namespace Nuke.Common
+namespace Nuke.Common;
+
+[PublicAPI]
+public enum LogLevel
 {
-    [PublicAPI]
-    public enum LogLevel
-    {
-        Trace,
-        Normal,
-        Warning,
-        Error
-    }
+    Trace,
+    Normal,
+    Warning,
+    Error
 }

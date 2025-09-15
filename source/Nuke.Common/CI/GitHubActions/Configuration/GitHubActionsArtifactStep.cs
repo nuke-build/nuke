@@ -6,26 +6,31 @@ using System;
 using System.Linq;
 using Nuke.Common.Utilities;
 
-namespace Nuke.Common.CI.GitHubActions.Configuration
+namespace Nuke.Common.CI.GitHubActions.Configuration;
+
+public class GitHubActionsArtifactStep : GitHubActionsStep
 {
-    public class GitHubActionsArtifactStep : GitHubActionsStep
+    public string Name { get; set; }
+    public string Path { get; set; }
+    public string Condition { get; set; }
+
+    public override void Write(CustomFileWriter writer)
     {
-        public string Name { get; set; }
-        public string Path { get; set; }
+        writer.WriteLine("- name: " + $"Publish: {Name}".SingleQuote());
+        writer.WriteLine("  uses: actions/upload-artifact@v4");
 
-        public override void Write(CustomFileWriter writer)
+        using (writer.Indent())
         {
-            writer.WriteLine("- name: " + $"Publish: {Name}".SingleQuote());
-            writer.WriteLine("  uses: actions/upload-artifact@v3");
+            if (!Condition.IsNullOrWhiteSpace())
+            {
+                writer.WriteLine($"if: {Condition}");
+            }
 
+            writer.WriteLine("with:");
             using (writer.Indent())
             {
-                writer.WriteLine("with:");
-                using (writer.Indent())
-                {
-                    writer.WriteLine($"name: {Name}");
-                    writer.WriteLine($"path: {Path}");
-                }
+                writer.WriteLine($"name: {Name}");
+                writer.WriteLine($"path: {Path}");
             }
         }
     }

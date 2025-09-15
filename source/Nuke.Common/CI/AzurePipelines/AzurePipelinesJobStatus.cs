@@ -6,14 +6,13 @@ using System;
 using System.Linq;
 using JetBrains.Annotations;
 
-namespace Nuke.Common.CI.AzurePipelines
+namespace Nuke.Common.CI.AzurePipelines;
+
+[PublicAPI]
+public enum AzurePipelinesJobStatus
 {
-    [PublicAPI]
-    public enum AzurePipelinesJobStatus
-    {
-        Canceled,
-        Failed,
-        Succeeded,
-        SucceededWithIssues
-    }
+    Canceled,
+    Failed,
+    Succeeded,
+    SucceededWithIssues
 }

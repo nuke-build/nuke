@@ -7,23 +7,22 @@ using System.Linq;
 using JetBrains.Annotations;
 using static Nuke.Common.IO.PathConstruction;
 
-namespace Nuke.Common.IO
-{
-    /// <summary>
-    /// Represents a relative path with the Windows separator (backward slash).
-    /// </summary>
-    [PublicAPI]
-    [Serializable]
-    public class WinRelativePath : RelativePath
-    {
-        protected WinRelativePath(string path, char? separator)
-            : base(path, separator)
-        {
-        }
+namespace Nuke.Common.IO;
 
-        public static explicit operator WinRelativePath([CanBeNull] string path)
-        {
-            return new WinRelativePath(NormalizePath(path, WinSeparator), WinSeparator);
-        }
+/// <summary>
+/// Represents a relative path with the Windows separator (backward slash).
+/// </summary>
+[PublicAPI]
+[Serializable]
+public class WinRelativePath : RelativePath
+{
+    protected WinRelativePath(string path, char? separator)
+        : base(path, separator)
+    {
+    }
+
+    public static explicit operator WinRelativePath([CanBeNull] string path)
+    {
+        return new WinRelativePath(NormalizePath(path, WinSeparator), WinSeparator);
     }
 }

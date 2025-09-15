@@ -6,22 +6,21 @@ using System;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace Nuke.Common.Tools.Unity.Logging
+namespace Nuke.Common.Tools.Unity.Logging;
+
+internal class LineMatcher
 {
-    internal class LineMatcher
+    public string RegexPattern { get; }
+    public LogLevel LogLevel { get; }
+
+    public LineMatcher(string regexPattern, LogLevel logLevel)
     {
-        public string RegexPattern { get; }
-        public LogLevel LogLevel { get; }
+        RegexPattern = regexPattern;
+        LogLevel = logLevel;
+    }
 
-        public LineMatcher(string regexPattern, LogLevel logLevel)
-        {
-            RegexPattern = regexPattern;
-            LogLevel = logLevel;
-        }
-
-        public bool Matches(string message)
-        {
-            return Regex.IsMatch(message, RegexPattern);
-        }
+    public bool Matches(string message)
+    {
+        return Regex.IsMatch(message, RegexPattern);
     }
 }
