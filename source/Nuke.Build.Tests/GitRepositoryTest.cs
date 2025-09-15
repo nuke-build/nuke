@@ -54,7 +54,7 @@ public class GitRepositoryTest
     [Fact]
     public void FromDirectoryTest()
     {
-        var repository = GitRepository.FromLocalDirectory(Directory.GetCurrentDirectory()).NotNull();
+        var repository = GitRepository.FromLocalDirectory(Directory.GetCurrentDirectory());
         repository.Endpoint.Should().NotBeNullOrEmpty();
         repository.Identifier.Should().NotBeNullOrEmpty();
         repository.LocalDirectory.Should().NotBeNull();
