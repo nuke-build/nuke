@@ -161,8 +161,8 @@ public class GitRepositoryTest
             File.WriteAllText(gitFile, "invalid content without gitdir prefix");
 
             var act = () => GitRepository.FromLocalDirectory(invalidGitDir);
-            act.Should().Throw<Exception>()
-                .WithMessage("*gitdir:*"); // TODO: More specific exception
+            act.Should().Throw<ArgumentException>()
+                .WithMessage("Couldn't find gitdir: line in *");
         }
         finally
         {
