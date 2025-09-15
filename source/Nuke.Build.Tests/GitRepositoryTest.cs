@@ -92,8 +92,8 @@ public class GitRepositoryTest
         var tempDir = GetTemporaryDirectory();
         const string worktreeName = "nested-worktree";
         var worktreePath = CreateWorktree(tempDir, worktreeName, "git-worktree-support");
-        var nestedPath = Path.Combine(worktreePath, "nested", "deeply", "nested");
-        Directory.CreateDirectory(nestedPath);
+        var nestedPath = worktreePath / "nested" / "deeply" / "nested";
+        nestedPath.CreateDirectory();
 
         try
         {
@@ -135,7 +135,7 @@ public class GitRepositoryTest
 
             repository.Endpoint.Should().Be(mainRepository.Endpoint);
             repository.Identifier.Should().Be(mainRepository.Identifier);
-            repository.LocalDirectory.Should().Be(AbsolutePath.Create(worktreePath));
+            repository.LocalDirectory.Should().Be(worktreePath);
             repository.Branch.Should().BeNull(); // Detached HEAD should have no branch
             repository.Head.Should().Be(commitHash);
             repository.Commit.Should().Be(commitHash);
@@ -151,14 +151,14 @@ public class GitRepositoryTest
     public void FromDirectoryWorktreeInvalidGitFileTest()
     {
         var tempDir = GetTemporaryDirectory();
-        var invalidGitDir = Path.Combine(tempDir, "invalid-git");
-        Directory.CreateDirectory(invalidGitDir);
+        var invalidGitDir = tempDir / "invalid-git";
+        invalidGitDir.CreateDirectory();
 
         try
         {
             // Create an invalid .git file
-            var gitFile = Path.Combine(invalidGitDir, ".git");
-            File.WriteAllText(gitFile, "invalid content without gitdir prefix");
+            var gitFile = invalidGitDir / ".git";
+            gitFile.WriteAllText("invalid content without gitdir prefix");
 
             var act = () => GitRepository.FromLocalDirectory(invalidGitDir);
             act.Should().Throw<ArgumentException>()
@@ -171,16 +171,16 @@ public class GitRepositoryTest
     }
 
     // Helper methods
-    private static string GetTemporaryDirectory()
+    private static AbsolutePath GetTemporaryDirectory()
     {
-        var tempDir = Path.Combine(Path.GetTempPath(), "nuke-test-" + Guid.NewGuid().ToString("N")[..8]);
-        Directory.CreateDirectory(tempDir);
+        var tempDir = AbsolutePath.Create(Path.GetTempPath()) / $"nuke-test-{Guid.NewGuid().ToString("N")[..8]}";
+        tempDir.CreateDirectory();
         return tempDir;
     }
 
-    private static string CreateWorktree(string tempDir, string worktreeName, string branchName)
+    private static AbsolutePath CreateWorktree(AbsolutePath tempDir, string worktreeName, string branchName)
     {
-        var worktreePath = Path.Combine(tempDir, worktreeName);
+        var worktreePath = tempDir / worktreeName;
         var uniqueBranchName = $"{branchName}-test-{Guid.NewGuid().ToString("N")[..8]}";
 
         // Create a new branch from the specified branch and checkout in worktree
@@ -190,9 +190,9 @@ public class GitRepositoryTest
         return worktreePath;
     }
 
-    private static void CleanupWorktree(string worktreePath)
+    private static void CleanupWorktree(AbsolutePath worktreePath)
     {
-        if (!Directory.Exists(worktreePath))
+        if (!worktreePath.DirectoryExists())
             return;
 
         try
@@ -203,18 +203,18 @@ public class GitRepositoryTest
         catch
         {
             // If git worktree remove fails, force delete the directory
-            Directory.Delete(worktreePath, recursive: true);
+            worktreePath.DeleteDirectory();
         }
     }
 
-    private static void CleanupTemporaryDirectory(string tempDir)
+    private static void CleanupTemporaryDirectory(AbsolutePath tempDir)
     {
-        if (!Directory.Exists(tempDir))
+        if (!tempDir.DirectoryExists())
             return;
 
         try
         {
-            Directory.Delete(tempDir, recursive: true);
+            tempDir.DeleteDirectory();
         }
         catch
         {
@@ -222,11 +222,11 @@ public class GitRepositoryTest
         }
     }
 
-    private static void AssertWorktreeRepository(GitRepository worktreeRepo, GitRepository mainRepo, string expectedWorktreePath)
+    private static void AssertWorktreeRepository(GitRepository worktreeRepo, GitRepository mainRepo, AbsolutePath expectedWorktreePath)
     {
         worktreeRepo.Endpoint.Should().Be(mainRepo.Endpoint);
         worktreeRepo.Identifier.Should().Be(mainRepo.Identifier);
-        worktreeRepo.LocalDirectory.Should().Be(AbsolutePath.Create(expectedWorktreePath));
+        worktreeRepo.LocalDirectory.Should().Be(expectedWorktreePath);
         worktreeRepo.Head.Should().NotBeNullOrEmpty();
         worktreeRepo.Commit.Should().NotBeNullOrEmpty();
         worktreeRepo.Tags.Should().NotBeNull();
