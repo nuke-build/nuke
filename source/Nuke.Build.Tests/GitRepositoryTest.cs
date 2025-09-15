@@ -68,27 +68,6 @@ public class GitRepositoryTest
     {
         var tempDir = GetTemporaryDirectory();
         const string worktreeName = "test-worktree";
-        var worktreePath = CreateWorktree(tempDir, worktreeName, "git-worktree-support");
-
-        try
-        {
-            var repository = GitRepository.FromLocalDirectory(worktreePath);
-            var mainRepository = GitRepository.FromLocalDirectory(Directory.GetCurrentDirectory());
-
-            AssertWorktreeRepository(repository, mainRepository, worktreePath);
-        }
-        finally
-        {
-            CleanupWorktree(worktreePath);
-            CleanupTemporaryDirectory(tempDir);
-        }
-    }
-
-    [Fact]
-    public void FromDirectoryWorktreeWithDifferentBranchTest()
-    {
-        var tempDir = GetTemporaryDirectory();
-        const string worktreeName = "test-branch-worktree";
         const string branchName = "develop";
         var worktreePath = CreateWorktree(tempDir, worktreeName, branchName);
 
@@ -98,7 +77,7 @@ public class GitRepositoryTest
             var mainRepository = GitRepository.FromLocalDirectory(Directory.GetCurrentDirectory());
 
             AssertWorktreeRepository(repository, mainRepository, worktreePath);
-            repository.Branch.Should().StartWith($"{branchName}-test-"); // Branch name includes unique suffix
+            repository.Branch.Should().StartWith($"{branchName}-test-"); // Verify branch name resolution
         }
         finally
         {
@@ -183,7 +162,7 @@ public class GitRepositoryTest
 
             var act = () => GitRepository.FromLocalDirectory(invalidGitDir);
             act.Should().Throw<Exception>()
-                .WithMessage("*gitdir:*");
+                .WithMessage("*gitdir:*"); // TODO: More specific exception
         }
         finally
         {
