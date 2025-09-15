@@ -100,6 +100,34 @@ public class GitRepositoryWorktreeTest
         }
     }
 
+    [Fact]
+    public void FromDirectorySiblingWorktreeTest()
+    {
+        var tempDir = GetTemporaryDirectory();
+        const string worktreeName = "sibling-worktree";
+        const string branchName = "git-worktree-support";
+        var siblingWorktreeDir = tempDir / worktreeName;
+        var uniqueBranchName = $"{branchName}-sibling-{Guid.NewGuid().ToString("N")[..8]}";
+
+        try
+        {
+            // Create a worktree in the temp directory (sibling to main repo)
+            ProcessTasks.StartProcess("git", $"worktree add -b {uniqueBranchName} {siblingWorktreeDir} {branchName}", workingDirectory: Directory.GetCurrentDirectory())
+                .AssertZeroExitCode();
+
+            var repository = GitRepository.FromLocalDirectory(siblingWorktreeDir);
+            var mainRepository = GitRepository.FromLocalDirectory(Directory.GetCurrentDirectory());
+
+            AssertWorktreeRepository(repository, mainRepository, siblingWorktreeDir);
+            repository.Branch.Should().StartWith($"{branchName}-sibling-");
+        }
+        finally
+        {
+            CleanupWorktree(siblingWorktreeDir);
+            CleanupTemporaryDirectory(tempDir);
+        }
+    }
+
     // Worktree input validation tests
     [Fact]
     public void FromDirectoryWorktreeInvalidGitFileTest()
@@ -250,33 +278,12 @@ public class GitRepositoryWorktreeTest
 
             var act = () => GitRepository.FromLocalDirectory(invalidGitDir);
             act.Should().Throw<ArgumentException>()
-                .WithMessage("Invalid git directory path: path does not exist or is inaccessible");
+                .WithMessage("Git directory does not exist");
         }
         finally
         {
             CleanupTemporaryDirectory(tempDir);
         }
-    }
-
-    [Theory]
-    // Valid worktree scenarios
-    [InlineData("/Users/dev/myproject/.git", "/Users/dev/myproject/.git/worktrees/feature-branch", true)] // Standard worktree location
-    [InlineData("/home/user/repo/.git", "/home/user/repo/.git/worktrees/hotfix", true)] // Linux worktree
-    [InlineData(@"C:\dev\project\.git", @"C:\dev\project\.git\worktrees\release", true)] // Windows worktree
-    [InlineData("/opt/repos/main/.git", "/opt/repos/main/.git/worktrees/experimental", true)] // Server worktree
-    [InlineData("/home/ci/build/.git", "/home/ci/build/.git/worktrees/pr-123", true)] // CI worktree
-    // Invalid worktree scenarios - security violations
-    [InlineData("/Users/dev/myproject/.git", "/Users/dev/other-project/.git/worktrees/malicious", false)] // Different project
-    [InlineData("/home/user/repo/.git", "/home/attacker/malicious/.git", false)] // Attacker's repository
-    [InlineData("/opt/repos/main/.git", "/etc/passwd", false)] // System file access
-    [InlineData(@"C:\dev\project\.git", @"C:\Windows\System32\config", false)] // Windows system access
-    [InlineData("/home/user/repo/.git", "/home/user/repo/.git/../../../etc/shadow", false)] // Path traversal attempt
-    [InlineData("/Users/dev/project/.git", "/tmp/malicious-worktree", false)] // Outside project scope
-    public void IsPathWithinAllowedScopeTest(string basePath, string targetPath, bool expectedResult)
-    {
-        var result = GitRepository.IsPathWithinAllowedScope(targetPath, basePath);
-
-        result.Should().Be(expectedResult, $"Path '{targetPath}' containment within '{basePath}' should be {expectedResult}");
     }
 
     // Helper methods

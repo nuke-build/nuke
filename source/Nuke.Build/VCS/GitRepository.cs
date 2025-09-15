@@ -161,50 +161,10 @@ public class GitRepository
             throw new ArgumentException("Invalid git directory path: path does not exist or is inaccessible", ex);
         }
 
-        string mainRepoGitDirCanonicalPath;
-        try
-        {
-            var mainRepoGitDir = worktreeGitDir
-                .FindParentOrSelf(x => x.Name == ".git")
-                .NotNull("Invalid worktree configuration: no parent Git directory found");
-            mainRepoGitDirCanonicalPath = Path.GetFullPath(mainRepoGitDir);
-        }
-        catch (Exception ex)
-        {
-            throw new ArgumentException("Invalid git directory path: path does not exist or is inaccessible", ex);
-        }
-
-        if (!IsPathWithinAllowedScope(canonicalPath, mainRepoGitDirCanonicalPath))
-            throw new ArgumentException("Invalid git directory path: outside allowed scope");
-
         if (!worktreeGitDir.Exists())
             throw new ArgumentException("Git directory does not exist");
 
         return worktreeGitDir;
-    }
-
-    internal static bool IsPathWithinAllowedScope(string targetPath, string basePath)
-    {
-        var targetParts = targetPath.Split(PathConstruction.AllSeparators)
-            .Where(p => !string.IsNullOrEmpty(p))
-            .ToArray();
-        var baseParts = basePath.Split(PathConstruction.AllSeparators)
-            .Where(p => !string.IsNullOrEmpty(p))
-            .ToArray();
-
-        if (targetParts.Contains(".."))
-            return false;
-
-        if (targetParts.Length < baseParts.Length)
-            return false;
-
-        for (var i = 0; i < baseParts.Length; i++)
-        {
-            if (!string.Equals(targetParts[i], baseParts[i], StringComparison.OrdinalIgnoreCase))
-                return false;
-        }
-
-        return true;
     }
 
     private static (string Name, string Branch) GetRemoteNameAndBranch(AbsolutePath gitDirectory, [CanBeNull] string branch)
