@@ -15,7 +15,6 @@ namespace Nuke.Common.Tests;
 
 public class GitRepositoryWorktreeTest
 {
-    // Worktree functionality tests
     [Fact]
     public void FromDirectoryWorktreeTest()
     {
@@ -100,7 +99,6 @@ public class GitRepositoryWorktreeTest
         }
     }
 
-    // Worktree input validation tests
     [Fact]
     public void FromDirectoryWorktreeInvalidGitFileTest()
     {
