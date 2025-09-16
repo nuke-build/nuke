@@ -136,7 +136,7 @@ public class GitRepository
 
         if (currentWorktree == null)
         {
-            // This is the only case where we return null - worktree not found in the list
+            // Worktree not found in the list
             // This is expected when we're not actually in a worktree
             return null;
         }
