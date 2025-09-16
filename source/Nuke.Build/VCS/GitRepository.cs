@@ -143,7 +143,7 @@ public class GitRepository
 
         try
         {
-            var mainGitDir = AbsolutePath.Create(currentWorktree.MainGitDirectory);
+            var mainGitDir = currentWorktree.MainGitDirectory;
             var head = currentWorktree.Head;
             return new GitMetadata(worktreeRoot, mainGitDir, head);
         }
@@ -195,17 +195,16 @@ public class GitRepository
         return worktrees;
     }
 
-    private record WorktreeInfo(string Path, string Head, string MainGitDirectory);
+    private record WorktreeInfo(AbsolutePath Path, string Head, AbsolutePath MainGitDirectory);
 
     /// <summary>
     /// Resolves symbolic links to get the real path (for .NET 8 compatibility)
     /// </summary>
-    private static string ResolveSymlinks(string path)
+    private static AbsolutePath ResolveSymlinks(AbsolutePath path)
     {
         try
         {
-            var fullPath = Path.GetFullPath(path);
-            var directoryInfo = new DirectoryInfo(fullPath);
+            var directoryInfo = new DirectoryInfo(path);
 
             // Try to resolve directory symlinks
             if (directoryInfo.Exists && directoryInfo.LinkTarget != null)
@@ -214,8 +213,8 @@ public class GitRepository
             }
 
             // For paths that might have symlinks in parent directories
-            var segments = fullPath.Split(Path.DirectorySeparatorChar, StringSplitOptions.RemoveEmptyEntries);
-            var resolvedPath = Path.IsPathRooted(fullPath) ? Path.DirectorySeparatorChar.ToString() : "";
+            var segments = path.ToString().Split(Path.DirectorySeparatorChar, StringSplitOptions.RemoveEmptyEntries);
+            var resolvedPath = Path.IsPathRooted(path) ? Path.DirectorySeparatorChar.ToString() : "";
 
             foreach (var segment in segments)
             {
@@ -234,8 +233,8 @@ public class GitRepository
         }
         catch
         {
-            // Fallback to GetFullPath if symlink resolution fails
-            return Path.GetFullPath(path);
+            // Fallback to original path if symlink resolution fails
+            return path;
         }
     }
 
