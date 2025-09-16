@@ -100,6 +100,7 @@ public class GitRepositoryWorktreeTest
         }
     }
 
+    // Worktree input validation tests
     [Fact]
     public void FromDirectoryWorktreeInvalidGitFileTest()
     {
