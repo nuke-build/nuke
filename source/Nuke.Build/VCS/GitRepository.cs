@@ -10,6 +10,7 @@ using System.Text.RegularExpressions;
 using JetBrains.Annotations;
 using Nuke.Common.CI;
 using Nuke.Common.IO;
+using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
 
 namespace Nuke.Common.Git;
@@ -83,88 +84,159 @@ public class GitRepository
             return new GitMetadata(rootDirectory, gitDirectory, head);
         }
 
-        rootDirectory = directory.FindParentOrSelf(x => x.ContainsFile(".git"))
-            .NotNull("No parent Git directory or file found");
+        var worktreeInfo = GetWorktreeInfoFromGit(directory);
+        if (worktreeInfo != null)
+            return worktreeInfo;
 
-        const string gitDirPrefix = "gitdir:";
-        var gitFile = rootDirectory / ".git";
-
-        var worktreeGitDirLine = ReadGitFileSecurely(gitFile, gitDirPrefix);
-        var worktreeGitDir = ParseAndValidateWorktreeGitDir(worktreeGitDirLine, gitDirPrefix, rootDirectory);
-
-        var mainWorktreeGitDir = worktreeGitDir
-            .FindParentOrSelf(x => x.Name == ".git")
-            .NotNull("Invalid worktree configuration: no parent Git directory found");
-
-        var worktreeHead = GetHead(worktreeGitDir);
-        return new GitMetadata(rootDirectory, mainWorktreeGitDir, worktreeHead);
+        throw new InvalidOperationException("No Git repository found");
     }
 
-    private static string ReadGitFileSecurely(AbsolutePath gitFile, string expectedPrefix)
+    [CanBeNull]
+    private static GitMetadata GetWorktreeInfoFromGit(AbsolutePath directory)
     {
-        const int maxFileSize = 4096;
+        var worktreeRoot = directory.FindParentOrSelf(x => x.ContainsFile(".git"));
+        if (worktreeRoot == null)
+            return null; // No .git file found - this is expected for non-worktrees
 
-        if (!gitFile.Exists())
-            throw new ArgumentException("Git file does not exist");
-
-        var fileInfo = new FileInfo(gitFile);
-        if (fileInfo.Length > maxFileSize)
-            throw new ArgumentException($"Git file exceeds maximum size of {maxFileSize} bytes");
-
-        var lines = gitFile.ReadAllLines();
-        if (lines.Length == 0)
-            throw new ArgumentException("Git file is empty");
-
-        var targetLine = lines.FirstOrDefault(line =>
-            !string.IsNullOrWhiteSpace(line) &&
-            line.TrimStart().StartsWith(expectedPrefix, StringComparison.OrdinalIgnoreCase));
-
-        if (string.IsNullOrEmpty(targetLine))
-            throw new ArgumentException($"Required '{expectedPrefix}' entry not found in git file");
-
-        return targetLine.Trim();
-    }
-
-    private static AbsolutePath ParseAndValidateWorktreeGitDir(string worktreeGitDirLine, string gitDirPrefix, AbsolutePath rootDirectory)
-    {
-        var gitDirPath = worktreeGitDirLine
-            .Substring(gitDirPrefix.Length)
-            .Trim();
-
-        if (string.IsNullOrWhiteSpace(gitDirPath))
-            throw new ArgumentException("Invalid git directory path: path is empty");
-
-        if (gitDirPath.Contains('\0') || gitDirPath.Any(c => char.IsControl(c) && c != '\t'))
-            throw new ArgumentException("Invalid git directory path: contains invalid characters");
-
-        if (gitDirPath.Contains(".."))
-            throw new ArgumentException("Invalid git directory path: contains path traversal");
-
-        AbsolutePath worktreeGitDir;
+        IProcess process;
         try
         {
-            worktreeGitDir = AbsolutePath.Create(gitDirPath);
+            process = ProcessTasks.StartProcess("git", "worktree list --porcelain", workingDirectory: worktreeRoot, logOutput: false);
+            process.AssertZeroExitCode();
+        }
+        catch (ProcessException)
+        {
+            // Git command failed - could be corrupted repo, not a git repo, etc.
+            // This is expected for directories that don't contain valid git repositories
+            throw new InvalidOperationException("No Git repository found");
+        }
+
+        var output = process.Output.Where(o => o.Type == OutputType.Std).Select(x => x.Text);
+        var worktreeInfo = ParseWorktreeList(output).ToList();
+
+        if (worktreeInfo.Count == 0)
+        {
+            throw new InvalidOperationException("Git worktree list returned no worktrees - this should not happen in a valid git repository");
+        }
+
+        // Use custom symlink resolution for .NET 8 (handles /tmp -> /private/tmp)
+        var localRealPath = ResolveSymlinks(worktreeRoot);
+        var currentWorktree = worktreeInfo.FirstOrDefault(w =>
+        {
+            try
+            {
+                var gitRealPath = ResolveSymlinks(w.Path);
+                return gitRealPath.Equals(localRealPath);
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException($"Failed to resolve symlinks for worktree path comparison. Local: '{worktreeRoot}', Git: '{w.Path}'", ex);
+            }
+        });
+
+        if (currentWorktree == null)
+        {
+            // This is the only case where we return null - worktree not found in the list
+            // This is expected when we're not actually in a worktree
+            return null;
+        }
+
+        try
+        {
+            var mainGitDir = AbsolutePath.Create(currentWorktree.MainGitDirectory);
+            var head = currentWorktree.Head;
+            return new GitMetadata(worktreeRoot, mainGitDir, head);
         }
         catch (Exception ex)
         {
-            throw new ArgumentException("Invalid git directory path: path does not exist or is inaccessible", ex);
+            throw new InvalidOperationException($"Failed to create GitMetadata from worktree info. MainGitDir: '{currentWorktree.MainGitDirectory}', Head: '{currentWorktree.Head}'", ex);
+        }
+    }
+
+    private static List<WorktreeInfo> ParseWorktreeList(IEnumerable<string> porcelainOutput)
+    {
+        var lines = porcelainOutput.ToList();
+        var worktrees = new List<WorktreeInfo>();
+        string mainGitDirectory = null;
+        var i = 0;
+
+        while (i < lines.Count)
+        {
+            if (string.IsNullOrWhiteSpace(lines[i]) || !lines[i].StartsWith("worktree "))
+            {
+                i++;
+                continue;
+            }
+
+            var worktreePath = lines[i].Substring(9); // "worktree ".Length
+            string head = null;
+            string branch = null;
+            var isBare = false;
+            i++;
+
+            while (i < lines.Count && !string.IsNullOrWhiteSpace(lines[i]))
+            {
+                if (lines[i].StartsWith("HEAD "))
+                    head = lines[i].Substring(5);
+                else if (lines[i].StartsWith("branch "))
+                    branch = lines[i].Substring(7);
+                else if (lines[i] == "bare")
+                    isBare = true;
+                i++;
+            }
+
+            // First worktree is always the main repository - its .git directory is the main git directory
+            mainGitDirectory ??= isBare ? worktreePath : Path.Combine(worktreePath, ".git");
+
+            // All worktrees reference the same main git directory
+            worktrees.Add(new WorktreeInfo(worktreePath, branch ?? head, mainGitDirectory));
         }
 
-        string canonicalPath;
+        return worktrees;
+    }
+
+    private record WorktreeInfo(string Path, string Head, string MainGitDirectory);
+
+    /// <summary>
+    /// Resolves symbolic links to get the real path (for .NET 8 compatibility)
+    /// </summary>
+    private static string ResolveSymlinks(string path)
+    {
         try
         {
-            canonicalPath = Path.GetFullPath(worktreeGitDir);
-            worktreeGitDir = AbsolutePath.Create(canonicalPath);
+            var fullPath = Path.GetFullPath(path);
+            var directoryInfo = new DirectoryInfo(fullPath);
+
+            // Try to resolve directory symlinks
+            if (directoryInfo.Exists && directoryInfo.LinkTarget != null)
+            {
+                return Path.GetFullPath(directoryInfo.LinkTarget);
+            }
+
+            // For paths that might have symlinks in parent directories
+            var segments = fullPath.Split(Path.DirectorySeparatorChar, StringSplitOptions.RemoveEmptyEntries);
+            var resolvedPath = Path.IsPathRooted(fullPath) ? Path.DirectorySeparatorChar.ToString() : "";
+
+            foreach (var segment in segments)
+            {
+                resolvedPath = Path.Combine(resolvedPath, segment);
+                if (!Directory.Exists(resolvedPath))
+                    continue;
+
+                var linkTarget = Directory.ResolveLinkTarget(resolvedPath, returnFinalTarget: true);
+                if (linkTarget != null)
+                {
+                    resolvedPath = linkTarget.FullName;
+                }
+            }
+
+            return resolvedPath;
         }
-        catch (Exception ex)
+        catch
         {
-            throw new ArgumentException("Invalid git directory path: path does not exist or is inaccessible", ex);
+            // Fallback to GetFullPath if symlink resolution fails
+            return Path.GetFullPath(path);
         }
-
-        if (!worktreeGitDir.Exists())
-            throw new ArgumentException("Git directory does not exist");
-
-        return worktreeGitDir;
     }
 
     private static (string Name, string Branch) GetRemoteNameAndBranch(AbsolutePath gitDirectory, [CanBeNull] string branch)

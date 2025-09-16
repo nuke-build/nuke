@@ -60,4 +60,23 @@ public class GitRepositoryTest
         repository.Commit.Should().NotBeNullOrEmpty();
         repository.Tags.Should().NotBeNull();
     }
+
+    [Fact]
+    public void FromDirectoryNonGitDirectoryTest()
+    {
+        var tempDir = Path.GetTempPath() + "nuke-test-" + Guid.NewGuid().ToString("N")[..8];
+        Directory.CreateDirectory(tempDir);
+
+        try
+        {
+            var act = () => GitRepository.FromLocalDirectory(tempDir);
+            act.Should().Throw<InvalidOperationException>()
+                .WithMessage("No Git repository found");
+        }
+        finally
+        {
+            if (Directory.Exists(tempDir))
+                Directory.Delete(tempDir, recursive: true);
+        }
+    }
 }

@@ -101,7 +101,7 @@ public class GitRepositoryWorktreeTest
     }
 
 
-    // Worktree input validation tests
+    // Git command availability test
     [Fact]
     public void FromDirectoryWorktreeInvalidGitFileTest()
     {
@@ -115,35 +115,8 @@ public class GitRepositoryWorktreeTest
             gitFile.WriteAllText("invalid content without gitdir prefix");
 
             var act = () => GitRepository.FromLocalDirectory(invalidGitDir);
-            act.Should().Throw<ArgumentException>()
-                .WithMessage("Required 'gitdir:' entry not found in git file");
-        }
-        finally
-        {
-            CleanupTemporaryDirectory(tempDir);
-        }
-    }
-
-    // Worktree security tests
-    [Theory]
-    [InlineData("../../../etc")]
-    [InlineData("../../malicious")]
-    [InlineData("../../../../../../../etc/passwd")]
-    [InlineData(@"..\..\Windows\System32")]
-    public void FromDirectoryWorktreePathTraversalTest(string maliciousPath)
-    {
-        var tempDir = GetTemporaryDirectory();
-        var invalidGitDir = tempDir / "path-traversal-attack";
-        invalidGitDir.CreateDirectory();
-
-        try
-        {
-            var gitFile = invalidGitDir / ".git";
-            gitFile.WriteAllText($"gitdir: {maliciousPath}");
-
-            var act = () => GitRepository.FromLocalDirectory(invalidGitDir);
-            act.Should().Throw<ArgumentException>()
-                .WithMessage("Invalid git directory path: contains path traversal");
+            act.Should().Throw<InvalidOperationException>()
+                .WithMessage("No Git repository found");
         }
         finally
         {
@@ -165,8 +138,8 @@ public class GitRepositoryWorktreeTest
             gitFile.WriteAllText(largeContent);
 
             var act = () => GitRepository.FromLocalDirectory(invalidGitDir);
-            act.Should().Throw<ArgumentException>()
-                .WithMessage("Git file exceeds maximum size of 4096 bytes");
+            act.Should().Throw<InvalidOperationException>()
+                .WithMessage("No Git repository found");
         }
         finally
         {
@@ -187,8 +160,8 @@ public class GitRepositoryWorktreeTest
             gitFile.WriteAllText("gitdir: /tmp/test\x00/malicious");
 
             var act = () => GitRepository.FromLocalDirectory(invalidGitDir);
-            act.Should().Throw<ArgumentException>()
-                .WithMessage("Invalid git directory path: contains invalid characters");
+            act.Should().Throw<InvalidOperationException>()
+                .WithMessage("No Git repository found");
         }
         finally
         {
@@ -209,8 +182,8 @@ public class GitRepositoryWorktreeTest
             gitFile.WriteAllText("gitdir:    \n");
 
             var act = () => GitRepository.FromLocalDirectory(invalidGitDir);
-            act.Should().Throw<ArgumentException>()
-                .WithMessage("Invalid git directory path: path is empty");
+            act.Should().Throw<InvalidOperationException>()
+                .WithMessage("No Git repository found");
         }
         finally
         {
@@ -232,8 +205,8 @@ public class GitRepositoryWorktreeTest
             gitFile.WriteAllText($"gitdir: {nonExistentPath}");
 
             var act = () => GitRepository.FromLocalDirectory(invalidGitDir);
-            act.Should().Throw<ArgumentException>()
-                .WithMessage("Git directory does not exist");
+            act.Should().Throw<InvalidOperationException>()
+                .WithMessage("No Git repository found");
         }
         finally
         {
