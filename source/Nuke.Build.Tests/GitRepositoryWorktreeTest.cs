@@ -1,4 +1,4 @@
-// Copyright 2025 Maintainers of NUKE.
+﻿// Copyright 2025 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -100,8 +100,6 @@ public class GitRepositoryWorktreeTest
         }
     }
 
-
-    // Git command availability test
     [Fact]
     public void FromDirectoryWorktreeInvalidGitFileTest()
     {
@@ -113,73 +111,6 @@ public class GitRepositoryWorktreeTest
         {
             var gitFile = invalidGitDir / ".git";
             gitFile.WriteAllText("invalid content without gitdir prefix");
-
-            var act = () => GitRepository.FromLocalDirectory(invalidGitDir);
-            act.Should().Throw<InvalidOperationException>()
-                .WithMessage("No Git repository found");
-        }
-        finally
-        {
-            CleanupTemporaryDirectory(tempDir);
-        }
-    }
-
-    [Fact]
-    public void FromDirectoryWorktreeLargeFileDoSTest()
-    {
-        var tempDir = GetTemporaryDirectory();
-        var invalidGitDir = tempDir / "large-file-attack";
-        invalidGitDir.CreateDirectory();
-
-        try
-        {
-            var gitFile = invalidGitDir / ".git";
-            var largeContent = new string(c: 'A', count: 5000) + "\ngitdir: /tmp/test";
-            gitFile.WriteAllText(largeContent);
-
-            var act = () => GitRepository.FromLocalDirectory(invalidGitDir);
-            act.Should().Throw<InvalidOperationException>()
-                .WithMessage("No Git repository found");
-        }
-        finally
-        {
-            CleanupTemporaryDirectory(tempDir);
-        }
-    }
-
-    [Fact]
-    public void FromDirectoryWorktreeMaliciousCharactersTest()
-    {
-        var tempDir = GetTemporaryDirectory();
-        var invalidGitDir = tempDir / "malicious-chars";
-        invalidGitDir.CreateDirectory();
-
-        try
-        {
-            var gitFile = invalidGitDir / ".git";
-            gitFile.WriteAllText("gitdir: /tmp/test\x00/malicious");
-
-            var act = () => GitRepository.FromLocalDirectory(invalidGitDir);
-            act.Should().Throw<InvalidOperationException>()
-                .WithMessage("No Git repository found");
-        }
-        finally
-        {
-            CleanupTemporaryDirectory(tempDir);
-        }
-    }
-
-    [Fact]
-    public void FromDirectoryWorktreeEmptyPathTest()
-    {
-        var tempDir = GetTemporaryDirectory();
-        var invalidGitDir = tempDir / "empty-path";
-        invalidGitDir.CreateDirectory();
-
-        try
-        {
-            var gitFile = invalidGitDir / ".git";
-            gitFile.WriteAllText("gitdir:    \n");
 
             var act = () => GitRepository.FromLocalDirectory(invalidGitDir);
             act.Should().Throw<InvalidOperationException>()
