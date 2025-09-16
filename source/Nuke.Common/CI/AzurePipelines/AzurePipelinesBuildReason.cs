@@ -33,5 +33,8 @@ public enum AzurePipelinesBuildReason
     PullRequest,
 
     /// <summary>The build was triggered by a resource trigger or it was triggered by another build.</summary>
-    ResourceTrigger
+    ResourceTrigger,
+
+    /// <summary>Another build triggers the build.</summary>
+    BuildCompletion
 }
