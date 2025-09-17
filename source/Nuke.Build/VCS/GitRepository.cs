@@ -110,7 +110,9 @@ public class GitRepository
     {
         var worktreeRoot = directory.FindParentOrSelf(x => x.ContainsFile(".git"));
         if (worktreeRoot == null)
+        {
             return null; // No .git file found - this is expected for non-worktrees
+        }
 
         var process = ExecuteWorktreeListCommand(worktreeRoot);
 
@@ -134,16 +136,9 @@ public class GitRepository
             return null;
         }
 
-        try
-        {
-            var mainGitDir = currentWorktree.MainGitDirectory;
-            var head = currentWorktree.Head;
-            return new GitMetadata(worktreeRoot, mainGitDir, head);
-        }
-        catch (Exception ex)
-        {
-            throw new InvalidOperationException($"Failed to create GitMetadata from worktree info. MainGitDir: '{currentWorktree.MainGitDirectory}', Head: '{currentWorktree.Head}'", ex);
-        }
+        var mainGitDir = currentWorktree.MainGitDirectory;
+        var head = currentWorktree.Head;
+        return new GitMetadata(worktreeRoot, mainGitDir, head);
     }
 
     private static List<WorktreeInfo> ParseWorktreeList(IEnumerable<string> porcelainOutput)
