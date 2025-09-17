@@ -107,9 +107,9 @@ public class GitRepository
                 throw new InvalidOperationException($"Expected 3 lines from 'git rev-parse --show-toplevel --git-common-dir --symbolic-full-name HEAD' but got {lines.Length} lines: [{string.Join(", ", lines.Select(l => $"'{l}'"))}]");
             }
 
-            var rootDirectory = lines[0];
-            var gitDirectory = lines[1];
-            var head = lines[2];
+            var rootDirectory = lines[0].Trim();
+            var gitDirectory = lines[1].Trim();
+            var head = lines[2].Trim();
 
             // For detached HEAD, --symbolic-full-name HEAD returns "HEAD"
             // In this case, get the actual commit SHA
