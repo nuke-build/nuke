@@ -191,15 +191,8 @@ public class GitRepository
         var localRealPath = GetGitCanonicalPath(worktreeRoot);
         return worktreeInfo.FirstOrDefault(w =>
         {
-            try
-            {
-                var gitRealPath = GetGitCanonicalPath(w.Path);
-                return gitRealPath.Equals(localRealPath, StringComparison.OrdinalIgnoreCase);
-            }
-            catch (Exception ex)
-            {
-                throw new InvalidOperationException($"Failed to resolve Git canonical path for worktree comparison. Local: '{worktreeRoot}', Git: '{w.Path}'", ex);
-            }
+            var gitRealPath = GetGitCanonicalPath(w.Path);
+            return gitRealPath.Equals(localRealPath);
         });
     }
 
@@ -207,7 +200,7 @@ public class GitRepository
     /// Gets Git's canonical path using git rev-parse --show-toplevel
     /// This ensures we get the same path representation that Git uses internally
     /// </summary>
-    private static string GetGitCanonicalPath(AbsolutePath path)
+    private static AbsolutePath GetGitCanonicalPath(AbsolutePath path)
     {
         try
         {
@@ -216,16 +209,14 @@ public class GitRepository
 
             var stdOutput = process.Output
                 .Where(o => o.Type == OutputType.Std)
-                .ToList();
+                .Select(o => o.Text.Trim())
+                .FirstOrDefault();
 
-            var gitPath = stdOutput.Count > 0 ? stdOutput[0].Text.Trim() : null;
-
-            return gitPath ?? path.ToString();
+            return stdOutput ?? path;
         }
-        catch (ProcessException)
+        catch (ProcessException ex)
         {
-            // If git rev-parse fails, fall back to the original path
-            return path.ToString();
+            throw new InvalidOperationException($"Failed to get Git canonical path for '{path}'. Ensure the path is within a Git repository.", ex);
         }
     }
 
