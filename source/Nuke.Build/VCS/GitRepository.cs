@@ -27,6 +27,10 @@ public class GitRepository
 {
     private const string FallbackRemoteName = "origin";
 
+    private static readonly int WorktreePrefixLength = "worktree ".Length;
+    private static readonly int HeadPrefixLength = "HEAD ".Length;
+    private static readonly int BranchPrefixLength = "branch ".Length;
+
     public static GitRepository FromUrl(string url, string branch = null)
     {
         var (protocol, endpoint, identifier) = GetRemoteConnectionFromUrl(url);
@@ -156,7 +160,7 @@ public class GitRepository
                 continue;
             }
 
-            var worktreePath = lines[i].Substring(9); // "worktree ".Length
+            var worktreePath = lines[i].Substring(WorktreePrefixLength);
             string head = null;
             string branch = null;
             var isBare = false;
@@ -165,9 +169,9 @@ public class GitRepository
             while (i < lines.Count && !string.IsNullOrWhiteSpace(lines[i]))
             {
                 if (lines[i].StartsWith("HEAD "))
-                    head = lines[i].Substring(5);
+                    head = lines[i].Substring(HeadPrefixLength);
                 else if (lines[i].StartsWith("branch "))
-                    branch = lines[i].Substring(7);
+                    branch = lines[i].Substring(BranchPrefixLength);
                 else if (lines[i] == "bare")
                     isBare = true;
                 i++;
