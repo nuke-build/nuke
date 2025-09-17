@@ -91,6 +91,20 @@ public class GitRepository
         throw new InvalidOperationException("No Git repository found");
     }
 
+    private static IProcess ExecuteWorktreeListCommand(AbsolutePath workingDirectory)
+    {
+        try
+        {
+            var process = ProcessTasks.StartProcess("git", "worktree list --porcelain", workingDirectory: workingDirectory, logOutput: false);
+            process.AssertZeroExitCode();
+            return process;
+        }
+        catch (ProcessException ex)
+        {
+            throw new InvalidOperationException("No Git repository found", ex);
+        }
+    }
+
     [CanBeNull]
     private static GitMetadata GetWorktreeInfoFromGit(AbsolutePath directory)
     {
@@ -98,41 +112,20 @@ public class GitRepository
         if (worktreeRoot == null)
             return null; // No .git file found - this is expected for non-worktrees
 
-        IProcess process;
-        try
-        {
-            process = ProcessTasks.StartProcess("git", "worktree list --porcelain", workingDirectory: worktreeRoot, logOutput: false);
-            process.AssertZeroExitCode();
-        }
-        catch (ProcessException)
-        {
-            // Git command failed - could be corrupted repo, not a git repo, etc.
-            // This is expected for directories that don't contain valid git repositories
-            throw new InvalidOperationException("No Git repository found");
-        }
+        var process = ExecuteWorktreeListCommand(worktreeRoot);
 
-        var output = process.Output.Where(o => o.Type == OutputType.Std).Select(x => x.Text);
-        var worktreeInfo = ParseWorktreeList(output).ToList();
+        var output = process.Output
+            .Where(o => o.Type == OutputType.Std)
+            .Select(x => x.Text);
+
+        var worktreeInfo = ParseWorktreeList(output);
 
         if (worktreeInfo.Count == 0)
         {
             throw new InvalidOperationException("Git worktree list returned no worktrees - this should not happen in a valid git repository");
         }
 
-        // Use custom symlink resolution for .NET 8 (handles /tmp -> /private/tmp)
-        var localRealPath = ResolveSymlinks(worktreeRoot);
-        var currentWorktree = worktreeInfo.FirstOrDefault(w =>
-        {
-            try
-            {
-                var gitRealPath = ResolveSymlinks(w.Path);
-                return gitRealPath.Equals(localRealPath);
-            }
-            catch (Exception ex)
-            {
-                throw new InvalidOperationException($"Failed to resolve symlinks for worktree path comparison. Local: '{worktreeRoot}', Git: '{w.Path}'", ex);
-            }
-        });
+        var currentWorktree = FindCurrentWorktree(worktreeInfo, worktreeRoot);
 
         if (currentWorktree == null)
         {
@@ -197,9 +190,23 @@ public class GitRepository
 
     private record WorktreeInfo(AbsolutePath Path, string Head, AbsolutePath MainGitDirectory);
 
-    /// <summary>
-    /// Resolves symbolic links to get the real path (for .NET 8 compatibility)
-    /// </summary>
+    private static WorktreeInfo FindCurrentWorktree(List<WorktreeInfo> worktreeInfo, AbsolutePath worktreeRoot)
+    {
+        var localRealPath = ResolveSymlinks(worktreeRoot);
+        return worktreeInfo.FirstOrDefault(w =>
+        {
+            try
+            {
+                var gitRealPath = ResolveSymlinks(w.Path);
+                return gitRealPath.Equals(localRealPath);
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException($"Failed to resolve symlinks for worktree path comparison. Local: '{worktreeRoot}', Git: '{w.Path}'", ex);
+            }
+        });
+    }
+
     private static AbsolutePath ResolveSymlinks(AbsolutePath path)
     {
         try

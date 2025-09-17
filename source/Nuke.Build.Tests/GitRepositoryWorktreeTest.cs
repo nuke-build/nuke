@@ -113,7 +113,8 @@ public class GitRepositoryWorktreeTest
 
             var act = () => GitRepository.FromLocalDirectory(invalidGitDir);
             act.Should().Throw<InvalidOperationException>()
-                .WithMessage("No Git repository found");
+                .WithMessage("No Git repository found")
+                .WithInnerException(typeof(ProcessException));
         }
         finally
         {
@@ -136,7 +137,8 @@ public class GitRepositoryWorktreeTest
 
             var act = () => GitRepository.FromLocalDirectory(invalidGitDir);
             act.Should().Throw<InvalidOperationException>()
-                .WithMessage("No Git repository found");
+                .WithMessage("No Git repository found")
+                .WithInnerException(typeof(ProcessException));
         }
         finally
         {
