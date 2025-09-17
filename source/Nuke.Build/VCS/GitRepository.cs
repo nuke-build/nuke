@@ -187,56 +187,45 @@ public class GitRepository
 
     private static WorktreeInfo FindCurrentWorktree(List<WorktreeInfo> worktreeInfo, AbsolutePath worktreeRoot)
     {
-        var localRealPath = ResolveSymlinks(worktreeRoot);
+        // Use Git's own path resolution for consistency
+        var localRealPath = GetGitCanonicalPath(worktreeRoot);
         return worktreeInfo.FirstOrDefault(w =>
         {
             try
             {
-                var gitRealPath = ResolveSymlinks(w.Path);
-                return gitRealPath.Equals(localRealPath);
+                var gitRealPath = GetGitCanonicalPath(w.Path);
+                return gitRealPath.Equals(localRealPath, StringComparison.OrdinalIgnoreCase);
             }
             catch (Exception ex)
             {
-                throw new InvalidOperationException($"Failed to resolve symlinks for worktree path comparison. Local: '{worktreeRoot}', Git: '{w.Path}'", ex);
+                throw new InvalidOperationException($"Failed to resolve Git canonical path for worktree comparison. Local: '{worktreeRoot}', Git: '{w.Path}'", ex);
             }
         });
     }
 
-    private static AbsolutePath ResolveSymlinks(AbsolutePath path)
+    /// <summary>
+    /// Gets Git's canonical path using git rev-parse --show-toplevel
+    /// This ensures we get the same path representation that Git uses internally
+    /// </summary>
+    private static string GetGitCanonicalPath(AbsolutePath path)
     {
         try
         {
-            var directoryInfo = new DirectoryInfo(path);
+            var process = ProcessTasks.StartProcess("git", "rev-parse --show-toplevel", workingDirectory: path, logOutput: false);
+            process.AssertZeroExitCode();
 
-            // Try to resolve directory symlinks
-            if (directoryInfo.Exists && directoryInfo.LinkTarget != null)
-            {
-                return Path.GetFullPath(directoryInfo.LinkTarget);
-            }
+            var stdOutput = process.Output
+                .Where(o => o.Type == OutputType.Std)
+                .ToList();
 
-            // For paths that might have symlinks in parent directories
-            var segments = path.ToString().Split(Path.DirectorySeparatorChar, StringSplitOptions.RemoveEmptyEntries);
-            var resolvedPath = Path.IsPathRooted(path) ? Path.DirectorySeparatorChar.ToString() : "";
+            var gitPath = stdOutput.Count > 0 ? stdOutput[0].Text.Trim() : null;
 
-            foreach (var segment in segments)
-            {
-                resolvedPath = Path.Combine(resolvedPath, segment);
-                if (!Directory.Exists(resolvedPath))
-                    continue;
-
-                var linkTarget = Directory.ResolveLinkTarget(resolvedPath, returnFinalTarget: true);
-                if (linkTarget != null)
-                {
-                    resolvedPath = linkTarget.FullName;
-                }
-            }
-
-            return resolvedPath;
+            return gitPath ?? path.ToString();
         }
-        catch
+        catch (ProcessException)
         {
-            // Fallback to original path if symlink resolution fails
-            return path;
+            // If git rev-parse fails, fall back to the original path
+            return path.ToString();
         }
     }
 
