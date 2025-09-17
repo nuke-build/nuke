@@ -84,10 +84,7 @@ public class GitRepository
         }
 
         var worktreeInfo = GetWorktreeInfoFromGit(directory);
-        if (worktreeInfo != null)
-            return worktreeInfo;
-
-        throw new InvalidOperationException("No Git repository found");
+        return worktreeInfo ?? throw new InvalidOperationException("No Git repository found");
     }
 
 
@@ -106,7 +103,9 @@ public class GitRepository
                 .ToArray();
 
             if (lines.Length < 3)
-                return null;
+            {
+                throw new InvalidOperationException($"Expected 3 lines from 'git rev-parse --show-toplevel --git-common-dir --symbolic-full-name HEAD' but got {lines.Length} lines: [{string.Join(", ", lines.Select(l => $"'{l}'"))}]");
+            }
 
             var rootDirectory = lines[0];
             var gitDirectory = lines[1];
@@ -132,7 +131,6 @@ public class GitRepository
             throw new InvalidOperationException("Failed to retrieve Git repository information", ex);
         }
     }
-
 
     private static (string Name, string Branch) GetRemoteNameAndBranch(AbsolutePath gitDirectory, [CanBeNull] string branch)
     {
