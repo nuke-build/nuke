@@ -71,7 +71,7 @@ public class GitRepositoryTest
         {
             var act = () => GitRepository.FromLocalDirectory(tempDir);
             act.Should().Throw<InvalidOperationException>()
-                .WithMessage("No Git repository found");
+                .WithMessage("Failed to retrieve Git repository information");
         }
         finally
         {

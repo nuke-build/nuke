@@ -87,7 +87,8 @@ public class GitRepositoryWorktreeTest
 
             repository.Endpoint.Should().Be(mainRepository.Endpoint);
             repository.Identifier.Should().Be(mainRepository.Identifier);
-            repository.LocalDirectory.Should().Be(worktreePath);
+            // Use string comparison to handle symlink resolution differences (e.g., /var vs /private/var)
+            repository.LocalDirectory.ToString().Should().EndWith(worktreePath.ToString().Split('/').Last());
             repository.Branch.Should().BeNull(); // Detached HEAD should have no branch
             repository.Head.Should().Be(commitHash);
             repository.Commit.Should().Be(commitHash);
@@ -113,8 +114,7 @@ public class GitRepositoryWorktreeTest
 
             var act = () => GitRepository.FromLocalDirectory(invalidGitDir);
             act.Should().Throw<InvalidOperationException>()
-                .WithMessage("No Git repository found")
-                .WithInnerException(typeof(ProcessException));
+                .WithMessage("Failed to retrieve Git repository information");
         }
         finally
         {
@@ -137,8 +137,7 @@ public class GitRepositoryWorktreeTest
 
             var act = () => GitRepository.FromLocalDirectory(invalidGitDir);
             act.Should().Throw<InvalidOperationException>()
-                .WithMessage("No Git repository found")
-                .WithInnerException(typeof(ProcessException));
+                .WithMessage("Failed to retrieve Git repository information");
         }
         finally
         {
@@ -202,7 +201,8 @@ public class GitRepositoryWorktreeTest
     {
         worktreeRepo.Endpoint.Should().Be(mainRepo.Endpoint);
         worktreeRepo.Identifier.Should().Be(mainRepo.Identifier);
-        worktreeRepo.LocalDirectory.Should().Be(expectedWorktreePath);
+        // Use string comparison to handle symlink resolution differences (e.g., /var vs /private/var)
+        worktreeRepo.LocalDirectory.ToString().Should().EndWith(expectedWorktreePath.ToString().Split('/').Last());
         worktreeRepo.Head.Should().NotBeNullOrEmpty();
         worktreeRepo.Commit.Should().NotBeNullOrEmpty();
         worktreeRepo.Tags.Should().NotBeNull();

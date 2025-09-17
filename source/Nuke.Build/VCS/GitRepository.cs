@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using JetBrains.Annotations;
@@ -26,10 +25,6 @@ public enum GitProtocol
 public class GitRepository
 {
     private const string FallbackRemoteName = "origin";
-
-    private static readonly int WorktreePrefixLength = "worktree ".Length;
-    private static readonly int HeadPrefixLength = "HEAD ".Length;
-    private static readonly int BranchPrefixLength = "branch ".Length;
 
     public static GitRepository FromUrl(string url, string branch = null)
     {
@@ -95,134 +90,49 @@ public class GitRepository
         throw new InvalidOperationException("No Git repository found");
     }
 
-    private static IProcess ExecuteWorktreeListCommand(AbsolutePath workingDirectory)
-    {
-        try
-        {
-            var process = ProcessTasks.StartProcess("git", "worktree list --porcelain", workingDirectory: workingDirectory, logOutput: false);
-            process.AssertZeroExitCode();
-            return process;
-        }
-        catch (ProcessException ex)
-        {
-            throw new InvalidOperationException("No Git repository found", ex);
-        }
-    }
 
     [CanBeNull]
     private static GitMetadata GetWorktreeInfoFromGit(AbsolutePath directory)
     {
-        var worktreeRoot = directory.FindParentOrSelf(x => x.ContainsFile(".git"));
-        if (worktreeRoot == null)
-        {
-            return null; // No .git file found - this is expected for non-worktrees
-        }
-
-        var process = ExecuteWorktreeListCommand(worktreeRoot);
-
-        var output = process.Output
-            .Where(o => o.Type == OutputType.Std)
-            .Select(x => x.Text);
-
-        var worktreeInfo = ParseWorktreeList(output);
-
-        if (worktreeInfo.Count == 0)
-        {
-            throw new InvalidOperationException("Git worktree list returned no worktrees - this should not happen in a valid git repository");
-        }
-
-        var currentWorktree = FindCurrentWorktree(worktreeInfo, worktreeRoot);
-
-        if (currentWorktree == null)
-        {
-            // Worktree not found in the list
-            // This is expected when we're not actually in a worktree
-            return null;
-        }
-
-        var mainGitDir = currentWorktree.MainGitDirectory;
-        var head = currentWorktree.Head;
-        return new GitMetadata(worktreeRoot, mainGitDir, head);
-    }
-
-    private static List<WorktreeInfo> ParseWorktreeList(IEnumerable<string> porcelainOutput)
-    {
-        var lines = porcelainOutput.ToList();
-        var worktrees = new List<WorktreeInfo>();
-        string mainGitDirectory = null;
-        var i = 0;
-
-        while (i < lines.Count)
-        {
-            if (string.IsNullOrWhiteSpace(lines[i]) || !lines[i].StartsWith("worktree "))
-            {
-                i++;
-                continue;
-            }
-
-            var worktreePath = lines[i].Substring(WorktreePrefixLength);
-            string head = null;
-            string branch = null;
-            var isBare = false;
-            i++;
-
-            while (i < lines.Count && !string.IsNullOrWhiteSpace(lines[i]))
-            {
-                if (lines[i].StartsWith("HEAD "))
-                    head = lines[i].Substring(HeadPrefixLength);
-                else if (lines[i].StartsWith("branch "))
-                    branch = lines[i].Substring(BranchPrefixLength);
-                else if (lines[i] == "bare")
-                    isBare = true;
-                i++;
-            }
-
-            // First worktree is always the main repository - its .git directory is the main git directory
-            mainGitDirectory ??= isBare ? worktreePath : Path.Combine(worktreePath, ".git");
-
-            // All worktrees reference the same main git directory
-            worktrees.Add(new WorktreeInfo(worktreePath, branch ?? head, mainGitDirectory));
-        }
-
-        return worktrees;
-    }
-
-    private record WorktreeInfo(AbsolutePath Path, string Head, AbsolutePath MainGitDirectory);
-
-    private static WorktreeInfo FindCurrentWorktree(List<WorktreeInfo> worktreeInfo, AbsolutePath worktreeRoot)
-    {
-        // Use Git's own path resolution for consistency
-        var localRealPath = GetGitCanonicalPath(worktreeRoot);
-        return worktreeInfo.FirstOrDefault(w =>
-        {
-            var gitRealPath = GetGitCanonicalPath(w.Path);
-            return gitRealPath.Equals(localRealPath);
-        });
-    }
-
-    /// <summary>
-    /// Gets Git's canonical path using git rev-parse --show-toplevel
-    /// This ensures we get the same path representation that Git uses internally
-    /// </summary>
-    private static AbsolutePath GetGitCanonicalPath(AbsolutePath path)
-    {
         try
         {
-            var process = ProcessTasks.StartProcess("git", "rev-parse --show-toplevel", workingDirectory: path, logOutput: false);
+            // Get all information in one call
+            var process = ProcessTasks.StartProcess("git", "rev-parse --show-toplevel --git-common-dir --symbolic-full-name HEAD", workingDirectory: directory, logOutput: false);
             process.AssertZeroExitCode();
 
-            var stdOutput = process.Output
+            var lines = process.Output
                 .Where(o => o.Type == OutputType.Std)
                 .Select(o => o.Text.Trim())
-                .FirstOrDefault();
+                .ToArray();
 
-            return stdOutput ?? path;
+            if (lines.Length < 3)
+                return null;
+
+            var rootDirectory = lines[0];
+            var gitDirectory = lines[1];
+            var head = lines[2];
+
+            // For detached HEAD, --symbolic-full-name HEAD returns "HEAD"
+            // In this case, get the actual commit SHA
+            if (head == "HEAD")
+            {
+                var commitProcess = ProcessTasks.StartProcess("git", "rev-parse HEAD", workingDirectory: directory, logOutput: false);
+                commitProcess.AssertZeroExitCode();
+
+                head = commitProcess.Output
+                    .Where(o => o.Type == OutputType.Std)
+                    .Select(o => o.Text.Trim())
+                    .FirstOrDefault();
+            }
+
+            return new GitMetadata(rootDirectory, gitDirectory, head);
         }
         catch (ProcessException ex)
         {
-            throw new InvalidOperationException($"Failed to get Git canonical path for '{path}'. Ensure the path is within a Git repository.", ex);
+            throw new InvalidOperationException("Failed to retrieve Git repository information", ex);
         }
     }
+
 
     private static (string Name, string Branch) GetRemoteNameAndBranch(AbsolutePath gitDirectory, [CanBeNull] string branch)
     {
