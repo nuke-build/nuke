@@ -32,7 +32,31 @@ NUKE brings your build automation to an even level with every other .NET project
 
 ## Example
 
-<p align="center"><img width="800px" src="https://github.com/nuke-build/nuke/raw/develop/images/example-1.png" /></p>
+```C#
+class Build : NukeBuild
+{
+    public static int Main () => Execute<Build>(x => x.Compile);
+    [Solution] readonly Solution Solution;
+    [GitVersion] readonly GitVersion GitVersion;
+    
+    AbsolutePath OutputDirectory => RootDirectory / "output";
+    
+    Target Clean => _ => _
+        .Executes(() =>
+        {
+            OutputDirectory.CreateOrCleanDirectory();
+        });
+    
+    Target Compile => _ => _
+        .DependsOn(Clean)
+        .Executes(() =>
+        {
+            DotNetTasks.DotNetBuild(s => s
+                .SetProjectFile(Solution)
+                .SetVersion(GitVersion.NuGetVersionV2));
+        });
+}
+```
 
 ## Build Status
 
