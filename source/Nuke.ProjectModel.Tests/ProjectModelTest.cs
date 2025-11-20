@@ -20,7 +20,7 @@ public class ProjectModelTest
     [Fact]
     public void ProjectTest()
     {
-        var solution = SolutionModelTasks.ParseSolution(SolutionFile);
+        var solution = SolutionFile.ReadSolution();
         var project = solution.Projects.Single(x => x.Name == "Nuke.ProjectModel");
 
         var action = new Action(() => project.GetMSBuildProject());
@@ -35,7 +35,7 @@ public class ProjectModelTest
     [Fact]
     public void MSBuildProjectTest()
     {
-        var solution = SolutionModelTasks.ParseSolution(SolutionFile);
+        var solution = SolutionFile.ReadSolution();
         var project = solution.Projects.Single(x => x.Name == "Nuke.ProjectModel");
 
         var msbuildProject = project.GetMSBuildProject(targetFramework: "net8.0");

@@ -28,60 +28,39 @@ namespace Nuke.Common.ProjectModel;
 /// </example>
 [PublicAPI]
 [UsedImplicitly(ImplicitUseKindFlags.Assign)]
-public class SolutionAttribute : ParameterAttribute
+public class SolutionAttribute(string relativePath)
+    : ParameterAttribute(GetDescription(relativePath))
 {
-    private readonly string _relativePath;
+    private static string GetDescription(string relativePath)
+    {
+        return "Path to a solution file that is automatically loaded."
+               + (relativePath != null ? $" Default is {relativePath}." : string.Empty);
+    }
 
     public SolutionAttribute()
         : this(relativePath: null)
     {
     }
 
-    public SolutionAttribute(string relativePath)
-        : base("Path to a solution file that is automatically loaded."
-               + (relativePath != null ? $" Default is {relativePath}." : string.Empty))
-    {
-        _relativePath = relativePath;
-    }
-
     public override bool List { get; set; }
     public bool GenerateProjects { get; set; }
-    public bool SuppressBuildProjectCheck { get; set; }
 
     public override object GetValue(MemberInfo member, object instance)
     {
         var solutionFile = TryGetSolutionFileFromNukeFile() ??
                            GetSolutionFileFromParametersFile(member);
-        var deserializer = typeof(SolutionSerializer).GetMethod(nameof(SolutionSerializer.DeserializeFromFile)).NotNull()
+        var deserializer = typeof(SolutionModelExtensions).GetMethods()
+            .Single(x => x.Name == nameof(SolutionModelExtensions.ReadSolution) && x.ContainsGenericParameters)
             .MakeGenericMethod(member.GetMemberType());
-        var solution = ((Solution)deserializer.Invoke(obj: null, new object[] { solutionFile })).NotNull();
-
-        if (!SuppressBuildProjectCheck)
-        {
-            var buildProject = solution.AllProjects.SingleOrDefault(x => x.Directory.Equals(Build.BuildProjectDirectory));
-            var buildProjectConfigurations = buildProject?.Configurations.Where(x => x.Key.Contains("Build")).ToList();
-
-            if (buildProject != null && buildProjectConfigurations.Any())
-            {
-                Log.Warning(
-                    "Solution {Solution} has active build configurations for the build project.\n" +
-                    $"Either enable {nameof(SuppressBuildProjectCheck)} on {{Member}} or remove the following entries from the solution file:\n" +
-                    "{Entries}",
-                    solution,
-                    member.GetDisplayName(),
-                    buildProjectConfigurations.Select(x => $"  - {buildProject.ProjectId.ToString("B").ToUpper()}.{x.Key} = {x.Value}").JoinNewLine());
-            }
-        }
-
-        return solution;
+        return ((Solution)deserializer.Invoke(obj: null, [solutionFile])).NotNull();
     }
 
     // TODO: allow wildcard matching? [Solution("nuke-*.sln")] -- no globbing?
     // TODO: for just [Solution] without parameter being passed, do wildcard search?
     private AbsolutePath GetSolutionFileFromParametersFile(MemberInfo member)
     {
-        return _relativePath != null
-            ? Build.RootDirectory / _relativePath
+        return relativePath != null
+            ? Build.RootDirectory / relativePath
             : ParameterService.GetParameter<AbsolutePath>(member).NotNull($"No solution file defined for '{member.Name}'.");
     }
 
