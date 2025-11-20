@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+- Added support for .NET 10
+- Added support for slnx solution files
+- Updated dependencies
+- Removed automatic PowerShell/Pwsh argument positioning
 
 ## [9.0.4] / 2025-01-15
 - Security: Fixed output filter from `ArgumentStringHandler`
