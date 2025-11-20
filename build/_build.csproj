@@ -4,7 +4,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <LangVersion>preview</LangVersion>
     <RootNamespace></RootNamespace>
     <NoWarn>CS0649;CS0169</NoWarn>
@@ -36,7 +36,7 @@
 <!--      <NukeVersion>9999.0.0</NukeVersion>-->
 <!--    </NukeExternalFiles>-->
 <!--  </ItemGroup>-->
-  
+
   <!-- Test properties for source generators -->
 <!--  <PropertyGroup>-->
 <!--    <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>-->
@@ -55,7 +55,7 @@
   <ItemGroup>
     <PackageReference Include="linqtotwitter" Version="6.15.0" />
     <PackageReference Include="MQTTnet" Version="4.3.7.1207" />
-    <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="2.1.4" />
+    <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="2.1.7" />
     <PackageDownload Include="Codecov.Tool" Version="[1.13.0]" />
     <PackageDownload Include="GitVersion.Tool" Version="[5.12.0]" />
     <PackageDownload Include="JetBrains.ReSharper.GlobalTools" Version="[2023.2.3]" />
