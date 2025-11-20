@@ -34,7 +34,7 @@ using Nuke.Components;
     SkipTags = true,
     InvokedTargets = new[] { nameof(ITest.Test), nameof(IPack.Pack) },
     Secrets = new string[0])]
-[AppVeyorSecret(nameof(PublicNuGetApiKey), "AzhHrKZGYyWnvMtPg06Q7PMJPp47dl5NxAHaE9ZB9tjIWVqmySx3F26YtVhRSPGa")]
+[AppVeyorSecret(nameof(PublicNuGetApiKey), "Fh8WVVqYaEyQutEwTfVrUTEzc287b4utnOzc77wYmOh3kyZ9wyojoncGxytOvt6M")]
 [AppVeyorSecret(ICreateGitHubRelease.GitHubRelease + nameof(ICreateGitHubRelease.GitHubToken), "a5UfxXiDEere9GkCCN9TUUq2+8QHAJoeVpZudQZXdWyloZWE5xKOkqzpxdMoYDPSxrVbWxjXbk1Xe9p0OydwuGVnr/3DC//BguNeGtFddbyMWlAiX36XvD1ZGEgP+ZIN")]
 [AppVeyorSecret(ISignPackages.SignPath + nameof(ISignPackages.ApiToken), "uQTH2MxpqiqWTy7EJkjtNc43ipG17EUOQN99QsODRNgtNEcikDaP0t4ylekK/ibn")]
 [AppVeyorSecret(IHazTwitterCredentials.Twitter + nameof(IHazTwitterCredentials.ConsumerKey), "T61zL4r+xtyj7b0aOGYCsyixrXHooXE759T8z3M67Lw=")]

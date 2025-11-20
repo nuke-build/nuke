@@ -35,7 +35,7 @@ artifacts:
 
 environment:
   PublicNuGetApiKey:
-    secure: AzhHrKZGYyWnvMtPg06Q7PMJPp47dl5NxAHaE9ZB9tjIWVqmySx3F26YtVhRSPGa
+    secure: Fh8WVVqYaEyQutEwTfVrUTEzc287b4utnOzc77wYmOh3kyZ9wyojoncGxytOvt6M
   GitHubReleaseGitHubToken:
     secure: a5UfxXiDEere9GkCCN9TUUq2+8QHAJoeVpZudQZXdWyloZWE5xKOkqzpxdMoYDPSxrVbWxjXbk1Xe9p0OydwuGVnr/3DC//BguNeGtFddbyMWlAiX36XvD1ZGEgP+ZIN
   SignPathApiToken:
