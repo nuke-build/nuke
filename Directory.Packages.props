@@ -53,6 +53,11 @@
     <PackageVersion Include="Microsoft.CodeAnalysis.Workspaces.Common" Version="4.12.0" />
     <PackageVersion Include="Microsoft.CodeAnalysis.Workspaces.MSBuild" Version="4.12.0" />
   </ItemGroup>
+  <!-- Solution Model -->
+  <ItemGroup>
+    <PackageVersion Include="matkoch.Microsoft.VisualStudio.SolutionPersistence" Version="1.0.61" />
+    <PackageVersion Include="Scriban" Version="6.2.1" />
+  </ItemGroup>
   <!-- MSBuild (Nuke.ProjectModel + Nuke.MSBuildTasks) -->
   <ItemGroup>
     <PackageVersion Include="Microsoft.Build.Locator" Version="1.7.8" />

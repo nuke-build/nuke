@@ -1,0 +1,38 @@
+﻿<Solution>
+  <Folder Name="/misc/">
+    <File Path="CHANGELOG.md" />
+    <File Path="LICENSE" />
+    <File Path="README.md" />
+    <File Path="CONTRIBUTING.md" />
+    <File Path="CODE_OF_CONDUCT.md" />
+  </Folder>
+  <Project Path="build\_build.csproj">
+    <Configuration Solution="Debug|Any CPU" Project="Debug|Any CPU|NoBuild" />
+    <Configuration Solution="Release|Any CPU" Project="Debug|Any CPU|NoBuild" />
+  </Project>
+  <Project Path="source\Nuke.Build.Shared\Nuke.Build.Shared.csproj" Type="Classic C#" />
+  <Project Path="source\Nuke.Build.Tests\Nuke.Build.Tests.csproj" Type="Classic C#" />
+  <Project Path="source\Nuke.Build\Nuke.Build.csproj" Type="Classic C#" />
+  <Project Path="source\Nuke.Common.Tests\Nuke.Common.Tests.csproj" />
+  <Project Path="source\Nuke.Common\Nuke.Common.csproj" />
+  <Project Path="source\Nuke.Components\Nuke.Components.csproj" Type="Classic C#" />
+  <Project Path="source\Nuke.GlobalTool.Tests\Nuke.GlobalTool.Tests.csproj" Type="Classic C#" />
+  <Project Path="source\Nuke.GlobalTool\Nuke.GlobalTool.csproj" Type="Classic C#" />
+  <Project Path="source\Nuke.MSBuildTasks\Nuke.MSBuildTasks.csproj" Type="Classic C#" />
+  <Project Path="source\Nuke.ProjectModel.Tests\Nuke.ProjectModel.Tests.csproj" Type="Classic C#" />
+  <Project Path="source\Nuke.ProjectModel\Nuke.ProjectModel.csproj" Type="Classic C#" />
+  <Project Path="source\Nuke.SolutionModel.Tests\Nuke.SolutionModel.Tests.csproj" Type="Classic C#" />
+  <Project Path="source\Nuke.SolutionModel\Nuke.SolutionModel.csproj" Type="Classic C#" />
+  <Project Path="source\Nuke.SourceGenerators.Tests\Nuke.SourceGenerators.Tests.csproj" Type="Classic C#" />
+  <Project Path="source\Nuke.SourceGenerators\Nuke.SourceGenerators.csproj" Type="Classic C#" />
+  <Project Path="source\Nuke.Tooling.Generator\Nuke.Tooling.Generator.csproj" />
+  <Project Path="source\Nuke.Tooling.Tests\Nuke.Tooling.Tests.csproj" Type="Classic C#" />
+  <Project Path="source\Nuke.Tooling\Nuke.Tooling.csproj" Type="Classic C#" />
+  <Project Path="source\Nuke.Utilities.IO.Compression\Nuke.Utilities.IO.Compression.csproj" Type="Classic C#" />
+  <Project Path="source\Nuke.Utilities.IO.Globbing\Nuke.Utilities.IO.Globbing.csproj" Type="Classic C#" />
+  <Project Path="source\Nuke.Utilities.Net\Nuke.Utilities.Net.csproj" Type="Classic C#" />
+  <Project Path="source\Nuke.Utilities.Tests\Nuke.Utilities.Tests.csproj" Type="Classic C#" />
+  <Project Path="source\Nuke.Utilities.Text.Json\Nuke.Utilities.Text.Json.csproj" Type="Classic C#" />
+  <Project Path="source\Nuke.Utilities.Text.Yaml\Nuke.Utilities.Text.Yaml.csproj" Type="Classic C#" />
+  <Project Path="source\Nuke.Utilities\Nuke.Utilities.csproj" Type="Classic C#" />
+</Solution>

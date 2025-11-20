@@ -19,14 +19,18 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="matkoch.Microsoft.VisualStudio.SolutionPersistence" PrivateAssets="all" GeneratePathProperty="true" />
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp" VersionOverride="4.7.0" PrivateAssets="all" />
     <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" PrivateAssets="all" />
     <PackageReference Include="Newtonsoft.Json" PrivateAssets="all" GeneratePathProperty="true" />
+    <PackageReference Include="Scriban" PrivateAssets="all" GeneratePathProperty="true" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="$(Pkgmatkoch_Microsoft_VisualStudio_SolutionPersistence)\lib\netstandard2.0\*.*" CopyToOutputDirectory="PreserveNewest" Visible="false" />
     <None Include="$(PkgNewtonsoft_Json)\lib\netstandard2.0\*.*" CopyToOutputDirectory="PreserveNewest" Visible="false" />
     <None Include="$(PkgJetBrains_Annotations)\lib\netstandard2.0\*.*" CopyToOutputDirectory="PreserveNewest" Visible="false" />
+    <None Include="$(PkgScriban)\lib\netstandard2.0\*.*" CopyToOutputDirectory="PreserveNewest" Visible="false" />
   </ItemGroup>
 
   <PropertyGroup>
@@ -41,8 +45,10 @@
       <TargetPathWithTargetPlatformMoniker Include="$(MSBuildProjectDirectory)\bin\$(Configuration)\$(TargetFramework)\Nuke.Utilities.dll" IncludeRuntimeDependency="false" />
       <TargetPathWithTargetPlatformMoniker Include="$(MSBuildProjectDirectory)\bin\$(Configuration)\$(TargetFramework)\Nuke.Utilities.IO.Globbing.dll" IncludeRuntimeDependency="false" />
 
+      <TargetPathWithTargetPlatformMoniker Include="$(Pkgmatkoch_Microsoft_VisualStudio_SolutionPersistence)\lib\$(TargetFramework)\*.dll" IncludeRuntimeDependency="false" />
       <TargetPathWithTargetPlatformMoniker Include="$(PkgNewtonsoft_Json)\lib\$(TargetFramework)\*.dll" IncludeRuntimeDependency="false" />
       <TargetPathWithTargetPlatformMoniker Include="$(PkgJetBrains_Annotations)\lib\$(TargetFramework)\*.dll" IncludeRuntimeDependency="false" />
+      <TargetPathWithTargetPlatformMoniker Include="$(PkgScriban)\lib\$(TargetFramework)\*.dll" IncludeRuntimeDependency="false" />
     </ItemGroup>
   </Target>
 

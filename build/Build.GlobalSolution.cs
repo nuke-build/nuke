@@ -15,7 +15,6 @@ using Nuke.Common.Tools.GitHub;
 using Nuke.Common.Utilities;
 using Nuke.Utilities.Text.Yaml;
 using static Nuke.Common.ControlFlow;
-using static Nuke.Common.ProjectModel.SolutionModelTasks;
 using static Nuke.Common.Tools.Git.GitTasks;
 
 partial class Build
@@ -50,32 +49,6 @@ partial class Build
                     SuppressErrors(() => Git($"remote add origin {origin}", repositoryDirectory));
                     Git($"remote set-url origin {origin}", repositoryDirectory);
                 }
-            }
-        });
-
-    [UsedImplicitly]
-    Target GenerateGlobalSolution => _ => _
-        .DependsOn(CheckoutExternalRepositories)
-        .Executes(() =>
-        {
-            var global = CreateSolution(
-                solutionFile: GlobalSolution,
-                solutions: new[] { Solution }.Concat(ExternalSolutions),
-                folderNameProvider: x => x.Name.TrimStart("nuke-"));
-            global.Save();
-
-            if ((RootDirectory / $"{Solution.FileName}.DotSettings").FileExists())
-            {
-                (RootDirectory / $"{Solution.FileName}.DotSettings").Copy(
-                    target: RootDirectory / $"{global.FileName}.DotSettings",
-                    policy: ExistsPolicy.FileOverwrite);
-            }
-
-            if ((RootDirectory / $"{Solution.FileName}.DotSettings.user").FileExists())
-            {
-                (RootDirectory / $"{Solution.FileName}.DotSettings.user").Copy(
-                    target: RootDirectory / $"{global.FileName}.DotSettings.user",
-                    policy: ExistsPolicy.FileOverwrite);
             }
         });
 }

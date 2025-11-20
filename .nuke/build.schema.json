@@ -59,7 +59,6 @@
         "CreateGitHubRelease",
         "DeletePackages",
         "DownloadLicenses",
-        "GenerateGlobalSolution",
         "GeneratePublicApi",
         "GenerateTools",
         "Hotfix",
