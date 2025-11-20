@@ -55,14 +55,14 @@ public static class DelegateHelper
         var newDictionary = dictionary?.ToDictionary(x => x.Key, x => x.Value) ?? new Dictionary<string, object>();
         var valueHashSet = new HashSet<TValue>(values);
         var collection = ParseCollection<TValue>(dictionary, key, separator);
-        collection.RemoveAll(x => valueHashSet.Contains((TValue)x));
+        collection.RemoveAll(x => valueHashSet.Contains(x));
         newDictionary[key] = CollectionToString(collection, separator);
         return newDictionary;
     }
 
     private static List<TValue> ParseCollection<TValue>(IReadOnlyDictionary<string, object> dictionary, string key, string separator)
     {
-        return (dictionary.TryGetValue(key, out var value)
+        return (dictionary?.TryGetValue(key, out var value) ?? false
                 ? ((string)value).Split([separator], StringSplitOptions.RemoveEmptyEntries)
                 : [])
             .Select(ReflectionUtility.Convert<TValue>).ToList();

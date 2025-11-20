@@ -105,14 +105,12 @@
             "name": "File",
             "type": "string",
             "format": "-File  {value}",
-            "position": 1,
             "help": "If the value of File is <c>-</c>, the command text is read from standard input. Running <c>pwsh -File -</c> without redirected standard input starts a regular session. This is the same as not specifying the File parameter at all.<para/>This is the default parameter if no parameters are present but values are present in the command line. The specified script runs in the local scope (\"dot-sourced\"), so that the functions and variables that the script creates are available in the current session. Enter the script file path and any parameters. File must be the last parameter in the command, because all characters typed after the File parameter name are interpreted as the script file path followed by the script parameters."
           },
           {
             "name": "FileArguments",
             "type": "List<string>",
             "format": "{value}",
-            "position": 2,
             "help": "Arguments passed in when using the <c>-File</c> option."
           },
           {

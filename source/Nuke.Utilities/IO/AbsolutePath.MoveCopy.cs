@@ -142,6 +142,7 @@ partial class AbsolutePathExtensions
         bool createDirectories = true)
     {
         Assert.True(source.DirectoryExists() || source.FileExists());
+        Assert.True(source.DirectoryExists() || (excludeDirectory == null && excludeFile == null));
 
         if (source.DirectoryExists())
             return CopyDirectory(source, target, policy, excludeDirectory, excludeFile, createDirectories);
