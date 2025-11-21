@@ -165,7 +165,8 @@ public class ConfigurationGenerationTest
                     JobConcurrencyCancelInProgress = true,
                     JobConcurrencyGroup = "custom-job-group",
                     EnvironmentName = "environment-name",
-                    EnvironmentUrl = "environment-url"
+                    EnvironmentUrl = "environment-url",
+                    SetupDotNetVersions = new [] { "8.0", "9.0", "10.0" }
                 }
             );
 
