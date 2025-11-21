@@ -17,7 +17,7 @@ public class GitHubActionsArtifactStep : GitHubActionsStep
     public override void Write(CustomFileWriter writer)
     {
         writer.WriteLine("- name: " + $"Publish: {Name}".SingleQuote());
-        writer.WriteLine("  uses: actions/upload-artifact@v4");
+        writer.WriteLine("  uses: actions/upload-artifact@v5");
 
         using (writer.Indent())
         {
