@@ -117,7 +117,7 @@ public static class Assert
     }
 
     /// <summary>
-    /// Asserts that the string is not <c>null</c> or has only whitespace characters with an optional exception message. If no message is provided, the argument expression is used.
+    /// Asserts that the string is not <c>null</c>, empty or has only whitespace characters with an optional exception message. If no message is provided, the argument expression is used.
     /// </summary>
     [ContractAnnotation("str: null => halt")]
     public static string NotNullOrWhiteSpace(
@@ -128,7 +128,7 @@ public static class Assert
         string argumentExpression = null)
     {
         if (string.IsNullOrWhiteSpace(str))
-            throw new ArgumentException(message ?? "Expected string to be not null or whitespace", message == null ? argumentExpression : null);
+            throw new ArgumentException(message ?? "Expected string to be not null, empty or whitespace", message == null ? argumentExpression : null);
         return str;
     }
 
