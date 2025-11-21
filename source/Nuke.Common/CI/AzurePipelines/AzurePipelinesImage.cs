@@ -15,13 +15,14 @@ namespace Nuke.Common.CI.AzurePipelines;
 [PublicAPI]
 public enum AzurePipelinesImage
 {
+    [EnumValue("windows-2025")] Windows2025,
     [EnumValue("windows-2022")] Windows2022,
     [EnumValue("windows-2019")] Windows2019,
+    [EnumValue("ubuntu-24.04")] Ubuntu2404,
     [EnumValue("ubuntu-22.04")] Ubuntu2204,
-    [EnumValue("ubuntu-20.04")] Ubuntu2004,
+    [EnumValue("macOS-15")] MacOs15,
+    [EnumValue("macOS-14")] MacOs14,
     [EnumValue("macOS-13")] MacOs13,
-    [EnumValue("macOS-12")] MacOs12,
-    [EnumValue("macOS-11")] MacOs11,
     [EnumValue("windows-latest")] WindowsLatest,
     [EnumValue("ubuntu-latest")] UbuntuLatest,
     [EnumValue("macOS-latest")] MacOsLatest
