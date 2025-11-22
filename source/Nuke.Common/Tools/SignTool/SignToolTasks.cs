@@ -1,10 +1,9 @@
-﻿// Copyright 2023 Maintainers of NUKE.
+// Copyright 2025 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
-using System.Linq;
-using Nuke.Common.IO;
+using System.Runtime.InteropServices;
 using Nuke.Common.Tooling;
 
 namespace Nuke.Common.Tools.SignTool;
@@ -13,24 +12,17 @@ partial class SignToolTasks
 {
     protected override string GetToolPath(ToolOptions options = null)
     {
-        var programDirectory = EnvironmentInfo.SpecialFolder(
-            EnvironmentInfo.Is64Bit
-                ? SpecialFolders.ProgramFilesX86
-                : SpecialFolders.ProgramFiles).NotNull();
+        var architecture = RuntimeInformation.OSArchitecture switch
+        {
+            Architecture.Arm64 => "arm64",
+            Architecture.X86 => "x86",
+            Architecture.X64 => "x64",
+            _ => throw new ArgumentException("Unsupported architecture")
+        };
 
-        var platformIdentifier = EnvironmentInfo.Is64Bit ? "x64" : "x86";
-
-        return new[]
-            {
-                programDirectory / "Windows Kits" / "10" / "bin" / "10.0.15063.0",
-                programDirectory / "Windows Kits" / "10" / "App Certification Kit",
-                programDirectory / "Windows Kits" / "10" / "bin" / platformIdentifier,
-                programDirectory / "Windows Kits" / "8.1" / "bin" / platformIdentifier,
-                programDirectory / "Windows Kits" / "8.0" / "bin" / platformIdentifier,
-                programDirectory / "Microsoft SDKs" / "Windows" / "v7.1A" / "Bin"
-            }
-            .Select(x => x / "signtool.exe")
-            .WhereFileExists()
-            .FirstOrDefault();
+        return NuGetToolPathResolver.GetPackageExecutable(
+            packageId: PackageId,
+            packageExecutable: PackageExecutable,
+            framework: architecture);
     }
 }
