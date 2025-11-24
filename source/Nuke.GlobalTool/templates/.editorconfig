@@ -9,3 +9,8 @@ csharp_style_expression_bodied_methods = true:silent
 csharp_style_expression_bodied_properties = true:warning
 csharp_style_expression_bodied_indexers = true:warning
 csharp_style_expression_bodied_accessors = true:warning
+
+dotnet_diagnostic.IDE0055.severity = none
+dotnet_diagnostic.IDE0052.severity = none
+dotnet_diagnostic.IDE0051.severity = none
+dotnet_diagnostic.IDE0044.severity = none
