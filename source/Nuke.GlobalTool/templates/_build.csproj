@@ -9,6 +9,8 @@
     <NukeScriptDirectory>_SCRIPT_DIRECTORY_</NukeScriptDirectory>
     <NukeTelemetryVersion>_TELEMETRY_VERSION_</NukeTelemetryVersion>
     <IsPackable>false</IsPackable>
+    <ManagePackageVersionsCentrally>false</ManagePackageVersionsCentrally>
+    <UseArtifactsOutput>false</UseArtifactsOutput>
   </PropertyGroup>
 
   <ItemGroup>

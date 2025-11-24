@@ -8,6 +8,8 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Xml;
+using System.Xml.Linq;
 using JetBrains.Annotations;
 using Nuke.Common;
 using Nuke.Common.Execution;
@@ -27,7 +29,7 @@ partial class Program
 {
     // ReSharper disable InconsistentNaming
 
-    private const string TARGET_FRAMEWORK = "net8.0";
+    private const string TARGET_FRAMEWORK = "net10.0";
     private const string PROJECT_KIND = "9A19103F-16F7-4668-BE54-9A1E7A4F7556";
 
     // ReSharper disable once CognitiveComplexity
@@ -84,7 +86,7 @@ partial class Program
             "Which solution should be the default?",
             choices: new DirectoryInfo(rootDirectory)
                 .EnumerateFiles("*", SearchOption.AllDirectories)
-                .Where(x => x.FullName.EndsWithOrdinalIgnoreCase(".sln"))
+                .Where(x => x.FullName.EndsWithOrdinalIgnoreCase(".sln") || x.FullName.EndsWithOrdinalIgnoreCase(".slnx"))
                 .OrderByDescending(x => x.FullName)
                 .Select(x => (x, rootDirectory.GetRelativePathTo(x.FullName).ToString()))
                 .Concat((null, "None")).ToArray())?.FullName;
@@ -110,10 +112,22 @@ partial class Program
 
         if (solutionFile != null)
         {
-            var solutionFileContent = solutionFile.ReadAllLines().ToList();
             var buildProjectFileRelative = solutionFile.Parent.GetWinRelativePathTo(buildProjectFile);
-            UpdateSolutionFileContent(solutionFileContent, buildProjectFileRelative, buildProjectGuid, buildProjectName);
-            solutionFile.WriteAllLines(solutionFileContent, Encoding.UTF8);
+            if (solutionFile.Extension.EqualsOrdinalIgnoreCase(".slnx"))
+            {
+                var solutionDocument = XDocument.Load(solutionFile);
+                UpdateSolutionXmlFileContent(solutionDocument, buildProjectFileRelative);
+
+                var settings = new XmlWriterSettings { OmitXmlDeclaration = true, Indent = true };
+                using var writer = XmlWriter.Create(solutionFile, settings);
+                solutionDocument.Save(writer);
+            }
+            else
+            {
+                var solutionFileContent = solutionFile.ReadAllLines().ToList();
+                UpdateSolutionFileContent(solutionFileContent, buildProjectFileRelative, buildProjectGuid, buildProjectName);
+                solutionFile.WriteAllLines(solutionFileContent, Encoding.UTF8);
+            }
         }
 
         buildProjectFile.WriteAllLines(
@@ -186,11 +200,26 @@ partial class Program
             "EndProject");
     }
 
+    internal static void UpdateSolutionXmlFileContent(XDocument content, string buildProjectFileRelative)
+    {
+        var solutionElement = content.Root;
+        Assert.True(solutionElement?.Name == "Solution", "Could not find a root 'Solution' element in solution file");
+
+        // file uses forward slashes for paths on every platform 
+        var path = buildProjectFileRelative.Replace(oldChar: '\\', newChar: '/');
+
+        if (solutionElement.Elements("Project").Any(x => x.GetAttributeValue("Path").EqualsOrdinalIgnoreCase(path)))
+        {
+            return;
+        }
+
+        solutionElement.Add(new XElement("Project", new XAttribute("Path", path)));
+    }
+    
     private static string[] GetTemplate(string templateName)
     {
         return ResourceUtility.GetResourceAllLines<Program>($"templates.{templateName}");
     }
-
 
     private static void WriteBuildScripts(
         AbsolutePath scriptDirectory,
