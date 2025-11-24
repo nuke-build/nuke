@@ -155,7 +155,9 @@ public class UpdateSolutionFileContentTests
         """
         <Solution>
           <Project Path="TestProject1/TestProject1.csproj" />
-          <Project Path="RELATIVE" />
+          <Project Path="RELATIVE">
+            <Build Project="false" />
+          </Project>
         </Solution>
         """)]
     public Task TestXml(int number, string input, string expected)

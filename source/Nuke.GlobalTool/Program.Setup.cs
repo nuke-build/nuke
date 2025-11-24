@@ -213,7 +213,9 @@ partial class Program
             return;
         }
 
-        solutionElement.Add(new XElement("Project", new XAttribute("Path", path)));
+        var projectElement = new XElement("Project", new XAttribute("Path", path));
+        projectElement.Add(new XElement("Build", new XAttribute("Project", value: false)));
+        solutionElement.Add(projectElement);
     }
     
     private static string[] GetTemplate(string templateName)
