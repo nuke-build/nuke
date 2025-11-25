@@ -1,0 +1,214 @@
+{
+  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.Tooling.Generator/schema.json",
+  "references": [
+    "https://raw.githubusercontent.com/stryker-mutator/stryker-net/master/src/Stryker.CLI/Stryker.CLI/Program.cs"
+  ],
+  "name": "Stryker",
+  "officialUrl": "https://stryker-mutator.io/docs/stryker-net/configuration",
+  "help": "Stryker.NET offers you mutation testing for your .NET Core and .NET Framework projects. It allows you to test your tests by temporarily inserting bugs. Stryker.NET is installed using NuGet.  New to Stryker.NET? Begin with our guide on <a href='https://stryker-mutator.io/docs/stryker-net/Getting-started'>getting started</a>",
+  "nugetPackageId": "dotnet-stryker",
+  "packageExecutable": "Stryker.CLI.dll",
+  "customLogger": true,
+  "tasks": [
+    {
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "ConfigFile",
+            "type": "string",
+            "format": "--config-file {value}",
+            "default": "\"stryker-config.json\"",
+            "help": "Path / Name of the configuration file. You can specify a custom path to the config file. For example if you want to add the stryker config section to your appsettings file. The section should still be called <c>stryker-config</c>."
+          },
+          {
+            "name": "Solution",
+            "type": "string",
+            "format": "--solution {value}",
+            "help": "The solution path can be supplied to help with dependency resolution. If stryker is ran from the solution file location the solution file will be analyzed and all projects in the solution will be tested by stryker."
+          },
+          {
+            "name": "Project",
+            "type": "string",
+            "format": "--project {value}",
+            "help": "The project file name is required when your test project has more than one project reference. Stryker can currently mutate one project under test for 1..N test projects but not 1..N projects under test for one test project.<br /><i>Do not pass a path to this option. Pass the project file <strong>name</strong> as it appears in your test project's references</i>"
+          },
+          {
+            "name": "TestProjects",
+            "type": "List<string>",
+            "format": "--test-project {value}",
+            "help": "When you have multiple test projects covering one project under test you may specify all relevant test projects in the config file. You must run stryker from the project under test instead of the test project directory when using multiple test projects."
+          },
+          {
+            "name": "Mutate",
+            "type": "List<string>",
+            "format": "--mutate {value}",
+            "help": "<p>With <c>mutate</c> you configure the subset of files to use for mutation testing. Only source files part of your project will be taken into account. When this option is not specified the whole project will be mutated. You can add an <c>!</c> in front of the pattern to exclude instead of include matching files. This can be used to for example ignore generated files while mutating.</p><p>When only exclude patterns are provided, all files will be included that do not match any exclude pattern. If both include and exclude patterns are provided, only the files that match an include pattern but not also an exclude pattern will be included. The order of the patterns is irrelevant.</p><p>The patterns support <a href=\"https://en.wikipedia.org/wiki/Glob_(programming)\">globbing syntax</a> to allow wildcards.</p><p><strong>Example</strong> :</p><table><thead><tr><th>Patterns</th><th>File</th><th>Will be mutated</th></tr></thead><tbody><tr><td>null</td><td>MyFolder/MyFactory.cs</td><td>Yes</td></tr><tr><td>'**/*.*'</td><td>MyFolder/MyFactory.cs</td><td>Yes</td></tr><tr><td>'!**/MyFactory.cs'</td><td>MyFolder/MyFactory.cs</td><td>No</td></tr></tbody></table><p>To allow more fine-grained filtering you can also specify the span of text that should be in- or excluded. A span is defined by the indices of the first character and the last character. <code>dotnet stryker -m \"MyFolder/MyService.cs{10..100}\"</code></p>"
+          },
+          {
+            "name": "Configuration",
+            "type": "string",
+            "format": "--configuration {value}",
+            "help": "Allows you to specify the build configuration to use when building the project. This can be useful when you want to test the release build of your project."
+          },
+          {
+            "name": "TargetFramework",
+            "type": "string",
+            "format": "--target-framework {value}",
+            "help": "Randomly selected. If the project targets multiple frameworks, this way you can specify the particular framework to build against. If you specify a non-existent target, Stryker will build the project against a random one (or the only one if so)."
+          },
+          {
+            "name": "ProjectInfoVersion",
+            "type": "string",
+            "format": "--version {value}",
+            "help": "The version of the report. This should be filled with the branch name, git tag or git sha (although no validation is done). You can override a report of a specific version, like docker tags. Slashes in the version should not be encoded. For example, it's valid to use \"feat/logging\"."
+          },
+          {
+            "name": "MutationLevel",
+            "type": "StrykerMutationLevel",
+            "default": "StrykerMutationLevel.Standard",
+            "help": "Stryker supports multiple <a href=\"https://stryker-mutator.io/docs/stryker-net/configuration/#mutation-level-level\">mutation level</a>s. Each level comes with a specific set of mutations. Each level contains the mutations of the levels below it. By setting the level to Complete you will get all possible mutations and thus the strictest mutation test. This comes at the price of longer runtime as more mutations will be generated and tested."
+          },
+          {
+            "name": "Reporters",
+            "type": "List<StrykerReporter>",
+            "format": "--reporter {value}",
+            "default": "new List<StrykerReporter>() { StrykerReporter.Html, StrykerReporter.Progress }"
+          },
+          {
+            "name": "OpenReport",
+            "type": "StrykerOpenReport",
+            "format": "--open-report:{value}",
+            "default": "StrykerOpenReport.Html",
+            "help": "When this option is passed, generated reports should open in the browser automatically once Stryker starts testing mutants, and will update the report till Stryker is done. Both html and dashboard reports can be opened automatically."
+          },
+          {
+            "name": "Concurrency",
+            "type": "uint",
+            "format": "--concurrency {value}",
+            "help": "Change the amount of concurrent workers Stryker uses for the mutation testrun. Defaults to using half your logical (virtual) processor count.<p><strong>Example<strong>: an intel i7 quad-core with hyperthreading has 8 logical cores and 4 physical cores. Stryker will use 4 concurrent workers when using the default.</p>"
+          },
+          {
+            "name": "BreakAt",
+            "type": "uint",
+            "format": "--break-at {value}",
+            "default": "0",
+            "help": "Must be less than or equal to threshold low. When threshold break is set to anything other than 0 and the mutation score is lower than the threshold Stryker will exit with a non-zero code. This can be used in a CI pipeline to fail the pipeline when your mutation score is not sufficient."
+          },
+          {
+            "name": "ThresholdHigh",
+            "type": "short",
+            "format": "--threshold-high {value}",
+            "default": "80",
+            "help": "Minimum good mutation score. Must be higher than or equal to threshold low. Must be higher than 0."
+          },
+          {
+            "name": "ThresholdLow",
+            "type": "short",
+            "format": "--threshold-low {value}",
+            "default": "60",
+            "help": "Minimum acceptable mutation score. Must be less than or equal to threshold high and more than or equal to threshold break."
+          },
+          {
+            "name": "Output",
+            "type": "string",
+            "format": "--output {value}",
+            "help": "Changes the output path for Stryker logs and reports. This can be an absolute or relative path."
+          },
+          {
+            "name": "DisableBail",
+            "type": "bool",
+            "format": "--disable-bail",
+            "help": "Stryker aborts a unit testrun for a mutant as soon as one test fails because this is enough to confirm the mutant is killed. This can reduce the total runtime but also means you miss information about individual unit tests (e.g. if a unit test does not kill any mutants and is therefore useless). You can disable this behavior and run all unit tests for a mutant to completion. This can be especially useful when you want to find useless unit tests."
+          },
+          {
+            "name": "Since",
+            "type": "string",
+            "format": "--since:{value}",
+            "help": "<p>Use git information to test only code changes since the given target. Stryker will only report on mutants within the changed code. All other mutants will not have a result.</p><p>If you wish to test only changed sources and tests but would like to have a complete mutation report see with-baseline.</p><p>Set the diffing target on the command line by passing a committish with the since flag in the format <c>--since:<committish></c>. Set the diffing target in the config file by setting the since target option.</p><p><i>* For changes on test project files all mutants covered by tests in that file will be seen as changed.</i></p>"
+          },
+          {
+            "name": "Verbosity",
+            "type": "StrykerVerbosity",
+            "format": "--verbosity {value}",
+            "default": "StrykerVerbosity.Trace",
+            "help": "Change the console <c>verbosity</c> of Stryker when you want more or less details about the mutation testrun."
+          },
+          {
+            "name": "LogToFile",
+            "type": "bool",
+            "format": "--log-to-file",
+            "noArgument": true,
+            "help": "When creating an issue on github you can include a logfile so the issue can be diagnosed easier.<p><i>File logging always uses loglevel trace.</i></p>"
+          },
+          {
+            "name": "DevMode",
+            "type": "bool",
+            "format": "--dev-mode",
+            "noArgument": true,
+            "help": "Stryker will not gracefully recover from compilation errors, but instead crash immediately. Used during development to quickly diagnose errors.<p>Also enables more debug logs not generally useful to normal users.</p>"
+          },
+          {
+            "name": "DashboardApiKey",
+            "type": "string",
+            "format": "--dashboard-api-key {value}",
+            "help": "The API key for authentication with the Stryker dashboard.<br />Get your api key at the <a href=\"https://dashboard.stryker-mutator.io/\">stryker dashboard</a>. To keep your api key safe, store it in an encrypted variable in your pipeline."
+          },
+          {
+            "name": "MsBuildPath",
+            "type": "string",
+            "format": "--msbuild-path {value}",
+            "help": "By default, Stryker tries to auto-discover msbuild on your system. If Stryker fails to discover msbuild you may supply the path to msbuild manually with this option."
+          },
+          {
+            "name": "BreakOnInitialTestFailure",
+            "type": "bool",
+            "format": "--break-on-initial-test-failure",
+            "noArgument": true,
+            "help": "Instruct Stryker to break execution when at least one test failed on initial test run."
+          }
+        ]
+      }
+    }
+  ],
+  "enumerations": [
+    {
+      "name": "StrykerMutationLevel",
+      "values": [
+        "Basic",
+        "Standard",
+        "Advanced",
+        "Complete"
+      ]
+    },
+    {
+      "name": "StrykerReporter",
+      "values": [
+        "All",
+        "Html",
+        "Progress",
+        "Dashboard",
+        "Cleartext",
+        "CleartextTree",
+        "Dots",
+        "Json"
+      ]
+    },
+    {
+      "name": "StrykerOpenReport",
+      "values": [
+        "Html",
+        "Dashboard"
+      ]
+    },
+    {
+      "name": "StrykerVerbosity",
+      "values": [
+        "Error",
+        "Warning",
+        "Info",
+        "Debug",
+        "Trace"
+      ]
+    }
+  ]
+}
