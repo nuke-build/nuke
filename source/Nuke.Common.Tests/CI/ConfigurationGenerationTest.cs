@@ -16,6 +16,7 @@ using Nuke.Common.CI.GitHubActions;
 using Nuke.Common.CI.TeamCity;
 using Nuke.Common.Execution;
 using Nuke.Common.IO;
+using Nuke.Common.Tests.AzurePipelinesAttributes;
 using Nuke.Common.Tooling;
 using VerifyXunit;
 using Xunit;
@@ -224,6 +225,7 @@ public class ConfigurationGenerationTest
 
         public AbsolutePath TestResultDirectory => OutputDirectory / "test-results";
 
+        [AzureDevOpsDownloadSecureFileStep("securefile.zip")]
         public Target Test => _ => _
             .DependsOn(Compile)
             .Produces(TestResultDirectory / "*.trx")
