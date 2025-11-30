@@ -34,8 +34,22 @@ internal class Solution(SolutionModel model, AbsolutePath path) : Nuke.Common.Pr
     public Nuke.Common.ProjectModel.Project Nuke_Utilities_Text_Json => this.GetProject("Nuke.Utilities.Text.Json");
     public Nuke.Common.ProjectModel.Project Nuke_Utilities_Text_Yaml => this.GetProject("Nuke.Utilities.Text.Yaml");
 
+    public _Issue1570 Issue1570 => new(this.GetSolutionFolder("Issue1570").GetModel(), this);
     public _misc misc => new(this.GetSolutionFolder("misc").GetModel(), this);
 
+    internal class _Issue1570(SolutionFolderModel model, Nuke.Common.ProjectModel.Solution solution) : Nuke.Common.ProjectModel.SolutionFolder(model, solution)
+    {
+        public Nuke.Common.ProjectModel.Project TestApp1 => this.GetProject("TestApp1");
+    
+        public __Nested Nested => new(this.GetSolutionFolder("Nested").GetModel(), solution);
+    
+        internal class __Nested(SolutionFolderModel model, Nuke.Common.ProjectModel.Solution solution) : Nuke.Common.ProjectModel.SolutionFolder(model, solution)
+        {
+            public Nuke.Common.ProjectModel.Project TestProject2 => this.GetProject("TestProject2");
+        
+        
+        }
+    }
     internal class _misc(SolutionFolderModel model, Nuke.Common.ProjectModel.Solution solution) : Nuke.Common.ProjectModel.SolutionFolder(model, solution)
     {
     
