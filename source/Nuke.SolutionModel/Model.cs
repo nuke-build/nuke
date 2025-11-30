@@ -111,8 +111,8 @@ public class SolutionFolder(SolutionFolderModel model, Solution solution) : Solu
 {
     public SolutionFolderModel GetModel() => model;
 
-    public IReadOnlyCollection<Project> Projects => Solution.AllProjects.Where(x => x.Parent == this).ToList();
-    public IReadOnlyCollection<SolutionFolder> SolutionFolders => Solution.AllSolutionFolders.Where(x => x.Parent == this).ToList();
+    public IReadOnlyCollection<Project> Projects => Solution.AllProjects.Where(x => x.Parent is SolutionFolder sf && sf.GetModel() == GetModel()).ToList();
+    public IReadOnlyCollection<SolutionFolder> SolutionFolders => Solution.AllSolutionFolders.Where(x => x.Parent is SolutionFolder sf && sf.GetModel() == GetModel()).ToList();
 }
 
 [PublicAPI]

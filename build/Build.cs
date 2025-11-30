@@ -68,6 +68,9 @@ partial class Build
     AbsolutePath OutputDirectory => RootDirectory / "output";
     AbsolutePath SourceDirectory => RootDirectory / "source";
 
+    AbsolutePath TestProject1Path => Solution.Issue1570.TestApp1.Directory;
+    AbsolutePath TestProject2Path => Solution.Issue1570.Nested.TestProject2.Directory;
+
     const string MasterBranch = "master";
     const string DevelopBranch = "develop";
     const string ReleaseBranchPrefix = "release";
@@ -193,6 +196,14 @@ partial class Build
         {
             SuppressErrors(() => DotNet($"tool uninstall -g {Solution.Nuke_GlobalTool.Name}"), logWarning: false);
             DotNet($"tool install -g {Solution.Nuke_GlobalTool.Name} --add-source {OutputDirectory} --version {DefaultDeploymentVersion}");
+        });
+
+    Target Issue1570 => _ => _
+        .DependsOn<IRestore>()
+        .Executes(() =>
+        {
+            Console.WriteLine(TestProject1Path);
+            Console.WriteLine(TestProject2Path);
         });
 
     T From<T>()
