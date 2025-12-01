@@ -224,6 +224,119 @@
                 "name": "SymbolPackageFormat",
                 "type": "MSBuildSymbolPackageFormat",
                 "help": "Format for packaging symbols."
+              },
+              {
+                "name": "PublishProfile",
+                "type": "string",
+                "help": "Name of ClickOnce publication .pubxml file found in project properties folder."
+              },
+              {
+                "name": "PublishDir",
+                "type": "string",
+                "help": "Path of publication directory."
+              },
+              {
+                "name": "RuntimeIdentifiers",
+                "type": "RuntimeIdentifiers",
+                "help": "<p>RuntimeIdentifiers of RFID see <a href=\"https://learn.microsoft.com/en-us/dotnet/core/rid-catalog#using-rids\">.NET RID Catalog</a></p>"
+              },
+              {
+                "name": "UpdateUrl",
+                "type": "string",
+                "help": "Optional. Set its value if different from InstallURL."
+              },
+              {
+                "name": "BootstrapperEnabled",
+                "type": "bool",
+                "help": "<p>Determines whether to generate the setup.exe bootstrapper.<a href=\"https://learn.microsoft.com/en-us/visualstudio/deployment/building-clickonce-applications-from-the-command-line?view=vs-2022\">Build ClickOnce applications from the command line</a></p>"
+              },
+              {
+                "name": "GenerateManifests",
+                "type": "bool",
+                "help": "GenerateManifests and SignManifests must be true to work."
+              },
+              {
+                "name": "Platform",
+                "type": "Platform",
+                "help": "<p>Output assembly platform <a href=\"https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/compiler-options/output\">C# Compiler Options that control compiler output</a></p>"
+              },
+              {
+                "name": "TargetFramework",
+                "type": "TargetFramework",
+                "help": "<p>Set TargetFramework of output assembly. <a href=\"https://learn.microsoft.com/en-us/dotnet/standard/frameworks\">Target frameworks in SDK-style projects</a></p>"
+              },
+              {
+                "name": "ApplicationVersion",
+                "type": "string"
+              },
+              {
+                "name": "ApplicationRevision",
+                "type": "string"
+              },
+              {
+                "name": "CreateWebPageOnPublish",
+                "type": "bool"
+              },
+              {
+                "name": "Install",
+                "type": "bool",
+                "help": "<p>Determines whether the application is an installed application or a run-from-Web application <a href=\"https://learn.microsoft.com/en-us/visualstudio/deployment/building-dotnet-clickonce-applications-from-the-command-line?view=vs-2022\">Build .NET ClickOnce applications from the command line</a></p>"
+              },
+              {
+                "name": "InstallFrom",
+                "type": "InstallFrom",
+                "help": "<p>Possible installation source <a href=\"https://learn.microsoft.com/en-us/dotnet/api/microsoft.visualstudio.managedinterfaces.publish.installfrom?view=visualstudiosdk-2022\">InstallFrom Enum</a></p>"
+              },
+              {
+                "name": "MapFileExtensions",
+                "type": "bool",
+                "help": "<p>Optional. Defaults to false. If true, all files in the deployment must have a \".deploy\" extension. <a href=\"https://learn.microsoft.com/en-us/dotnet/api/microsoft.build.tasks.deployment.manifestutilities.deploymanifest.mapfileextensions?view=msbuild-17-netcore\">DeployManifest.MapFileExtensions Property</a> </p>"
+              },
+              {
+                "name": "OpenBrowserOnPublish",
+                "type": "bool",
+                "help": "<p> <a href=\"https://learn.microsoft.com/es-es/dotnet/api/microsoft.visualstudio.managedinterfaces.publish.ipublishproperties3.openbrowseronpublish?view=visualstudiosdk-2022#microsoft-visualstudio-managedinterfaces-publish-ipublishproperties3-openbrowseronpublish\" >OpenBrowserOnPublish</a></p>"
+              },
+              {
+                "name": "PublishProtocol",
+                "type": "string",
+                "help": "Default is \"ClickOnce\""
+              },
+              {
+                "name": "PublishReadyToRun",
+                "type": "bool"
+              },
+              {
+                "name": "PublishSingleFile",
+                "type": "bool"
+              },
+              {
+                "name": "SelfContained",
+                "type": "bool"
+              },
+              {
+                "name": "SignManifests",
+                "type": "bool"
+              },
+              {
+                "name": "SkipPublishVerification",
+                "type": "bool"
+              },
+              {
+                "name": "UpdateEnabled",
+                "type": "bool"
+              },
+              {
+                "name": "ManifestKeyFile",
+                "type": "string"
+              },
+              {
+                "name": "CreateDesktopShortcut",
+                "type": "bool"
+              },
+              {
+                "name": "UpdateRequired", 
+                "type": "bool"
               }
             ]
           },
@@ -317,6 +430,93 @@
       "values": [
         "symbols.nupkg",
         "snupkg"
+      ]
+    },
+    {
+      "name": "RuntimeIdentifiers",
+      "values": [
+        "android-arm64",
+        "android-arm",
+        "android-x64",
+        "android-x86",
+        "ios-arm64",
+        "iossimulator-arm64",
+        "iossimulator-x64",
+        "linux-x64",
+        "linux-musl-x64",
+        "linux-musl-arm64",
+        "linux-arm",
+        "linux-arm64",
+        "linux-bionic-arm64",
+        "linux-loongarch64",
+        "osx-arm64",
+        "osx-x64",
+        "win-arm64",
+        "win-x64",
+        "win-x86"
+      ]
+    },
+    {
+      "name": "Platform",
+      "values": [
+        "anycpu",
+        "anycpu32bitpreferred",
+        "arm",
+        "Itanium",
+        "x64",
+        "x86"
+      ]
+    },
+    {
+      "name": "TargetFramework",
+      "values": [
+        "NETFRAMEWORK",
+        "NET481",
+        "NET48",
+        "NET472",
+        "NET471",
+        "NET47",
+        "NET462",
+        "NET461",
+        "NET46",
+        "NET452",
+        "NET451",
+        "NET45",
+        "NET40",
+        "NET35",
+        "NET20",
+        "NETSTANDARD",
+        "NETSTANDARD2_1",
+        "NETSTANDARD2_0",
+        "NETSTANDARD1_6",
+        "NETSTANDARD1_5",
+        "NETSTANDARD1_4",
+        "NETSTANDARD1_3",
+        "NETSTANDARD1_2",
+        "NETSTANDARD1_1",
+        "NETSTANDARD1_0",
+        "NET",
+        "NET9_0",
+        "NET8_0",
+        "NET7_0",
+        "NET6_0",
+        "NET5_0",
+        "NETCOREAPP",
+        "NETCOREAPP3_1",
+        "NETCOREAPP3_0",
+        "NETCOREAPP2_2",
+        "NETCOREAPP2_1",
+        "NETCOREAPP2_0",
+        "NETCOREAPP1_1",
+        "NETCOREAPP1_0"
+      ]
+    },
+    {
+      "name": "InstallFrom",
+      "values": [
+        "Web",
+        "Unc",
+        "Disk"
       ]
     }
   ]
