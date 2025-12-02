@@ -63,6 +63,12 @@ stages:
               key: $(Agent.OS) | nuget-packages | **/global.json, **/*.csproj, **/Directory.Packages.props
               restoreKeys: $(Agent.OS) | nuget-packages
               path: $(HOME)/.nuget/packages
+          - task: NuGetAuthenticate@1
+            displayName: 'NuGet Authenticate'
+          - task: npmAuthenticate@0
+            displayName: 'npm Authenticate .npmrc'
+            inputs:
+              workingFile: '.npmrc'
           - task: CmdLine@2
             displayName: 'Run: Restore'
             inputs:
@@ -96,6 +102,12 @@ stages:
               key: $(Agent.OS) | nuget-packages | **/global.json, **/*.csproj, **/Directory.Packages.props
               restoreKeys: $(Agent.OS) | nuget-packages
               path: $(HOME)/.nuget/packages
+          - task: NuGetAuthenticate@1
+            displayName: 'NuGet Authenticate'
+          - task: npmAuthenticate@0
+            displayName: 'npm Authenticate .npmrc'
+            inputs:
+              workingFile: '.npmrc'
           - task: CmdLine@2
             displayName: 'Run: Compile'
             inputs:
@@ -131,6 +143,12 @@ stages:
               key: $(Agent.OS) | nuget-packages | **/global.json, **/*.csproj, **/Directory.Packages.props
               restoreKeys: $(Agent.OS) | nuget-packages
               path: $(HOME)/.nuget/packages
+          - task: NuGetAuthenticate@1
+            displayName: 'NuGet Authenticate'
+          - task: npmAuthenticate@0
+            displayName: 'npm Authenticate .npmrc'
+            inputs:
+              workingFile: '.npmrc'
           - task: CmdLine@2
             displayName: 'Run: Test'
             inputs:
@@ -164,6 +182,12 @@ stages:
               key: $(Agent.OS) | nuget-packages | **/global.json, **/*.csproj, **/Directory.Packages.props
               restoreKeys: $(Agent.OS) | nuget-packages
               path: $(HOME)/.nuget/packages
+          - task: NuGetAuthenticate@1
+            displayName: 'NuGet Authenticate'
+          - task: npmAuthenticate@0
+            displayName: 'npm Authenticate .npmrc'
+            inputs:
+              workingFile: '.npmrc'
           - task: CmdLine@2
             displayName: 'Run: Coverage'
             inputs:
@@ -203,6 +227,12 @@ stages:
               key: $(Agent.OS) | nuget-packages | **/global.json, **/*.csproj, **/Directory.Packages.props
               restoreKeys: $(Agent.OS) | nuget-packages
               path: $(USERPROFILE)/.nuget/packages
+          - task: NuGetAuthenticate@1
+            displayName: 'NuGet Authenticate'
+          - task: npmAuthenticate@0
+            displayName: 'npm Authenticate .npmrc'
+            inputs:
+              workingFile: '.npmrc'
           - task: CmdLine@2
             displayName: 'Run: Restore'
             inputs:
@@ -236,6 +266,12 @@ stages:
               key: $(Agent.OS) | nuget-packages | **/global.json, **/*.csproj, **/Directory.Packages.props
               restoreKeys: $(Agent.OS) | nuget-packages
               path: $(USERPROFILE)/.nuget/packages
+          - task: NuGetAuthenticate@1
+            displayName: 'NuGet Authenticate'
+          - task: npmAuthenticate@0
+            displayName: 'npm Authenticate .npmrc'
+            inputs:
+              workingFile: '.npmrc'
           - task: CmdLine@2
             displayName: 'Run: Compile'
             inputs:
@@ -271,6 +307,12 @@ stages:
               key: $(Agent.OS) | nuget-packages | **/global.json, **/*.csproj, **/Directory.Packages.props
               restoreKeys: $(Agent.OS) | nuget-packages
               path: $(USERPROFILE)/.nuget/packages
+          - task: NuGetAuthenticate@1
+            displayName: 'NuGet Authenticate'
+          - task: npmAuthenticate@0
+            displayName: 'npm Authenticate .npmrc'
+            inputs:
+              workingFile: '.npmrc'
           - task: CmdLine@2
             displayName: 'Run: Test'
             inputs:
@@ -304,6 +346,12 @@ stages:
               key: $(Agent.OS) | nuget-packages | **/global.json, **/*.csproj, **/Directory.Packages.props
               restoreKeys: $(Agent.OS) | nuget-packages
               path: $(USERPROFILE)/.nuget/packages
+          - task: NuGetAuthenticate@1
+            displayName: 'NuGet Authenticate'
+          - task: npmAuthenticate@0
+            displayName: 'npm Authenticate .npmrc'
+            inputs:
+              workingFile: '.npmrc'
           - task: CmdLine@2
             displayName: 'Run: Coverage'
             inputs:

@@ -117,6 +117,10 @@ public class AzurePipelinesAttribute : ChainedConfigurationAttributeBase
     public string[] ImportVariableGroups { get; set; } = new string[0];
     public string[] ImportSecrets { get; set; } = new string[0];
     public bool EnableAccessToken { get; set; }
+    
+    public bool EnableNuGetAuthenticate { get; set; }
+    public bool EnableNpmAuthenticate { get; set; }
+    public string NpmrcPath { get; set; } = ".npmrc";
 
     public override CustomFileWriter CreateWriter(StreamWriter streamWriter)
     {
@@ -249,6 +253,16 @@ public class AzurePipelinesAttribute : ChainedConfigurationAttributeBase
                                  Path = cachePath
                              };
             }
+        }
+
+        if (EnableNuGetAuthenticate)
+        {
+            yield return new AzurePipelinesNuGetAuthenticateStep();
+        }
+
+        if (EnableNpmAuthenticate && !string.IsNullOrEmpty(NpmrcPath))
+        {
+            yield return new AzurePipelinesNpmAuthenticateStep{ NpmrcPath = NpmrcPath };
         }
 
         string GetArtifactPath(AbsolutePath path)
