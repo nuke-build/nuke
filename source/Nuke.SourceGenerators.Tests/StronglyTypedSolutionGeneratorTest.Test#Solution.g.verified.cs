@@ -4,6 +4,7 @@
 using Microsoft.VisualStudio.SolutionPersistence.Model;
 using Nuke.Common.ProjectModel;
 using Nuke.Common.IO;
+using System.Runtime.CompilerServices;
 
 internal class Solution(SolutionModel model, AbsolutePath path) : Nuke.Common.ProjectModel.Solution(model, path)
 {
@@ -34,7 +35,7 @@ internal class Solution(SolutionModel model, AbsolutePath path) : Nuke.Common.Pr
     public Nuke.Common.ProjectModel.Project Nuke_Utilities_Text_Json => this.GetProject("Nuke.Utilities.Text.Json");
     public Nuke.Common.ProjectModel.Project Nuke_Utilities_Text_Yaml => this.GetProject("Nuke.Utilities.Text.Yaml");
 
-    public _misc misc => new(this.GetSolutionFolder("misc").GetModel(), this);
+    public _misc misc => Unsafe.As<_misc>(this.GetSolutionFolder("misc"));
 
     internal class _misc(SolutionFolderModel model, Nuke.Common.ProjectModel.Solution solution) : Nuke.Common.ProjectModel.SolutionFolder(model, solution)
     {

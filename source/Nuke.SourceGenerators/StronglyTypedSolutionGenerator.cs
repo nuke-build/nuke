@@ -61,6 +61,7 @@ public class StronglyTypedSolutionGenerator : ISourceGenerator
                     using Microsoft.VisualStudio.SolutionPersistence.Model;
                     using Nuke.Common.ProjectModel;
                     using Nuke.Common.IO;
+                    using System.Runtime.CompilerServices;
 
                     {declaration}
                     """);
@@ -108,7 +109,7 @@ public class StronglyTypedSolutionGenerator : ISourceGenerator
                         {{~ end ~}}
 
                         {{~ for folder in folders ~}}
-                            public {{ folder.type_name }} {{ folder.escaped_name }} => new(this.GetSolutionFolder("{{ folder.name }}").GetModel(), {{ solution_reference }});
+                            public {{ folder.type_name }} {{ folder.escaped_name }} => Unsafe.As<{{ folder.type_name }}>(this.GetSolutionFolder("{{ folder.name }}"));
                         {{~ end ~}}
 
                         {{~ for declaration in declarations ~}}
