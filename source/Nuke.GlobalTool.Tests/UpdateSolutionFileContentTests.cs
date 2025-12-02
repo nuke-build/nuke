@@ -3,8 +3,11 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Xml;
+using System.Xml.Linq;
 using Nuke.Common.Utilities;
 using VerifyXunit;
 using Xunit;
@@ -138,6 +141,37 @@ public class UpdateSolutionFileContentTests
         Program.UpdateSolutionFileContent(content, "RELATIVE", "GUID", "NAME");
 
         return Verifier.Verify(expected)
+            .UseParameters(number);
+    }
+
+    [Theory]
+    [InlineData(
+        1,
+        """
+        <Solution>
+          <Project Path="TestProject1/TestProject1.csproj" />
+        </Solution>
+        """,
+        """
+        <Solution>
+          <Project Path="TestProject1/TestProject1.csproj" />
+          <Project Path="RELATIVE">
+            <Build Project="false" />
+          </Project>
+        </Solution>
+        """)]
+    public Task TestXml(int number, string input, string expected)
+    {
+        var content = XDocument.Load(new StringReader(input));
+        Program.UpdateSolutionXmlFileContent(content, "RELATIVE");
+        
+        var settings = new XmlWriterSettings { OmitXmlDeclaration = true, Indent = true };
+        var stringStream = new StringWriter();
+        using var writer = XmlWriter.Create(stringStream, settings);
+        content.Save(writer);
+        writer.Flush();
+
+        return Verifier.Verify(stringStream.ToString())
             .UseParameters(number);
     }
 }
