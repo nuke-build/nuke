@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+
+## [10.1.0] / 2025-12-02
 - Fixed solution folders in `StronglyTypedSolutionGenerator`
 - Fixed MSBuild target packaging for .NET 10
 - Fixed GitHub Actions versions
@@ -1225,8 +1227,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git
 - Fixed background color in console output
 
-[vNext]: https://github.com/nuke-build/nuke/compare/10.0.1...HEAD
-[10.0.1]: https://github.com/nuke-build/nuke/compare/10.0.0...10.0.1
+[vNext]: https://github.com/nuke-build/nuke/compare/10.1.0...HEAD
+[10.1.0]: https://github.com/nuke-build/nuke/compare/10.0.0...10.1.0
 [10.0.0]: https://github.com/nuke-build/nuke/compare/9.0.4...10.0.0
 [9.0.4]: https://github.com/nuke-build/nuke/compare/9.0.3...9.0.4
 [9.0.3]: https://github.com/nuke-build/nuke/compare/9.0.2...9.0.3
