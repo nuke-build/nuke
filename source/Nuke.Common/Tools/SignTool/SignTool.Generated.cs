@@ -20,9 +20,12 @@ namespace Nuke.Common.Tools.SignTool;
 /// <summary><p>Sign Tool is a command-line tool that digitally signs files, verifies signatures in files, and time-stamps files.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/framework/tools/signtool-exe">official website</a>.</p></summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-public partial class SignToolTasks : ToolTasks
+[NuGetTool(Id = PackageId, Executable = PackageExecutable)]
+public partial class SignToolTasks : ToolTasks, IRequireNuGetPackage
 {
     public static string SignToolPath { get => new SignToolTasks().GetToolPathInternal(); set => new SignToolTasks().SetToolPath(value); }
+    public const string PackageId = "Microsoft.Windows.SDK.BuildTools";
+    public const string PackageExecutable = "signtool.exe";
     /// <summary><p>Sign Tool is a command-line tool that digitally signs files, verifies signatures in files, and time-stamps files.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/framework/tools/signtool-exe">official website</a>.</p></summary>
     public static IReadOnlyCollection<Output> SignTool(ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Func<IProcess, object> exitHandler = null) => new SignToolTasks().Run(arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger, exitHandler);
     /// <summary><p>Use the <c>sign</c> command to sign files using embedded signatures. Signing protects a file from tampering, and allows users to verify the signer (you) based on a signing certificate. The options below allow you to specify signing parameters and to select the signing certificate you wish to use.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/framework/tools/signtool-exe">official website</a>.</p></summary>
