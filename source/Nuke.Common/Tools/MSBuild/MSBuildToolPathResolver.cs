@@ -40,6 +40,17 @@ public static class MSBuildToolPathResolver
         var instances = new List<Instance>();
 
         instances.AddRange(
+            from version in new[] { MSBuildVersion.VS2026 }
+            from platform in s_platforms
+            from edition in typeof(VisualStudioEdition).GetEnumValues<VisualStudioEdition>()
+            // is this relevant for 2026?
+            // let folder = version == MSBuildVersion.VS2022 && edition != VisualStudioEdition.BuildTools
+            //     ? SpecialFolders.ProgramFiles
+            //     : SpecialFolders.ProgramFilesX86
+            let folder = SpecialFolders.ProgramFiles
+            select GetFromVs2026Instance(version, platform, edition, folder));
+        
+        instances.AddRange(
             from version in new[] { MSBuildVersion.VS2022, MSBuildVersion.VS2019, MSBuildVersion.VS2017 }
             from platform in s_platforms
             from edition in typeof(VisualStudioEdition).GetEnumValues<VisualStudioEdition>()
@@ -63,6 +74,26 @@ public static class MSBuildToolPathResolver
             .ToList();
 
         return filteredInstances.Select(x => x.ToolPath);
+    }
+    
+    private static Instance GetFromVs2026Instance(
+        MSBuildVersion version,
+        MSBuildPlatform platform,
+        VisualStudioEdition edition,
+        SpecialFolders specialFolder)
+    {
+        // introduce another mapping method?
+        // var versionDirectoryName = version.ToString().TrimStart("VS");
+        var basePath = Path.Combine(
+            EnvironmentInfo.SpecialFolder(specialFolder).NotNull(),
+            $@"Microsoft Visual Studio\18\{edition}\MSBuild\{GetVersionFolder(version)}\Bin");
+
+        return new Instance(
+            version,
+            platform,
+            platform == MSBuildPlatform.x64
+                ? Path.Combine(basePath, "amd64")
+                : basePath);
     }
 
     private static Instance GetFromVs2017Instance(
@@ -105,6 +136,9 @@ public static class MSBuildToolPathResolver
             MSBuildVersion.VS2013 => "12.0",
             MSBuildVersion.VS2015 => "14.0",
             MSBuildVersion.VS2017 => "15.0",
+            // correct?
+            MSBuildVersion.VS2019 => "16.0",
+            MSBuildVersion.VS2022 => "17.0",
             _ => "Current"
         };
     }
