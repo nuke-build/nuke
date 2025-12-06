@@ -1,4 +1,4 @@
-// Copyright 2023 Maintainers of NUKE.
+﻿// Copyright 2023 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -9,6 +9,7 @@ using System.Text.RegularExpressions;
 using JetBrains.Annotations;
 using Nuke.Common.CI;
 using Nuke.Common.IO;
+using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
 
 namespace Nuke.Common.Git;
@@ -46,27 +47,89 @@ public class GitRepository
     /// </summary>
     public static GitRepository FromLocalDirectory(AbsolutePath directory)
     {
-        var rootDirectory = directory.FindParentOrSelf(x => x.ContainsDirectory(".git")).NotNull($"No parent Git directory for '{directory}'");
-        var gitDirectory = rootDirectory / ".git";
+        var metadata = GetGitMetadata(directory);
 
-        var head = GetHead(gitDirectory);
+        var head = metadata.Head;
         var branch = (GetBranchFromCI() ?? GetHeadIfAttached(head))?.TrimStart("refs/heads/").TrimStart("origin/");
-        var commit = GetCommitFromCI() ?? GetCommitFromHead(gitDirectory, head);
-        var tags = GetTagsFromCommit(gitDirectory, commit);
-        var (remoteName, remoteBranch) = GetRemoteNameAndBranch(gitDirectory, branch);
-        var (protocol, endpoint, identifier) = GetRemoteConnectionFromConfig(gitDirectory, remoteName ?? FallbackRemoteName);
+        var commit = GetCommitFromCI() ?? GetCommitFromHead(metadata.GitDirectory, head);
+        var tags = GetTagsFromCommit(metadata.GitDirectory, commit);
+        var (remoteName, remoteBranch) = GetRemoteNameAndBranch(metadata.GitDirectory, branch);
+        var (protocol, endpoint, identifier) = GetRemoteConnectionFromConfig(metadata.GitDirectory, remoteName ?? FallbackRemoteName);
 
         return new GitRepository(
             protocol,
             endpoint,
             identifier,
             branch,
-            rootDirectory,
+            metadata.RootDirectory,
             head,
             commit,
             tags,
             remoteName,
             remoteBranch);
+    }
+
+    /// <summary>
+    /// Obtains information from a local git repository.
+    /// </summary>
+    private static GitMetadata GetGitMetadata(AbsolutePath directory)
+    {
+        var rootDirectory = directory.FindParentOrSelf(x => x.ContainsDirectory(".git"));
+
+        if (rootDirectory is not null)
+        {
+            var gitDirectory = rootDirectory / ".git";
+            var head = GetHead(gitDirectory);
+            return new GitMetadata(rootDirectory, gitDirectory, head);
+        }
+
+        var worktreeInfo = GetWorktreeInfoFromGit(directory);
+        return worktreeInfo ?? throw new InvalidOperationException("No Git repository found");
+    }
+
+
+    [CanBeNull]
+    private static GitMetadata GetWorktreeInfoFromGit(AbsolutePath directory)
+    {
+        try
+        {
+            // Get all information in one call
+            var process = ProcessTasks.StartProcess("git", "rev-parse --show-toplevel --git-common-dir --symbolic-full-name HEAD", workingDirectory: directory, logOutput: false);
+            process.AssertZeroExitCode();
+
+            var lines = process.Output
+                .Where(o => o.Type == OutputType.Std)
+                .Select(o => o.Text.Trim())
+                .ToArray();
+
+            if (lines.Length < 3)
+            {
+                throw new InvalidOperationException($"Expected 3 lines from 'git rev-parse --show-toplevel --git-common-dir --symbolic-full-name HEAD' but got {lines.Length} lines: [{string.Join(", ", lines.Select(l => $"'{l}'"))}]");
+            }
+
+            var rootDirectory = lines[0].Trim();
+            var gitDirectory = lines[1].Trim();
+            var head = lines[2].Trim();
+
+            // For detached HEAD, --symbolic-full-name HEAD returns "HEAD"
+            // In this case, get the actual commit SHA
+            if (head == "HEAD")
+            {
+                var commitProcess = ProcessTasks.StartProcess("git", "rev-parse HEAD", workingDirectory: directory, logOutput: false);
+                commitProcess.AssertZeroExitCode();
+
+                head = commitProcess.Output
+                    .Where(o => o.Type == OutputType.Std)
+                    .Select(o => o.Text.Trim())
+                    .FirstOrDefault();
+            }
+
+            return new GitMetadata(rootDirectory, gitDirectory, head);
+        }
+        catch (ProcessException ex)
+        {
+            throw new InvalidOperationException("Failed to retrieve Git repository information", ex);
+        }
     }
 
     private static (string Name, string Branch) GetRemoteNameAndBranch(AbsolutePath gitDirectory, [CanBeNull] string branch)
@@ -282,4 +345,6 @@ public class GitRepository
     {
         return (Protocol == GitProtocol.Https ? HttpsUrl : SshUrl).TrimEnd(".git");
     }
+
+    private record GitMetadata(AbsolutePath RootDirectory, AbsolutePath GitDirectory, string Head);
 }
