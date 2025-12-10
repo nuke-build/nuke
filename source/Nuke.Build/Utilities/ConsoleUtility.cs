@@ -55,7 +55,8 @@ public class ConsoleUtility
             key = Console.ReadKey(intercept: true);
             if (ConsoleKey.A <= key.Key && key.Key <= ConsoleKey.Z
                 || ConsoleKey.D0 <= key.Key && key.Key <= ConsoleKey.D9
-                || new[] { '.', '/', '\\', '_', '-' }.Any(x => x == key.KeyChar))
+                || new[] { '.', '/', '\\', '_', '-' }.Any(x => x == key.KeyChar)
+                || char.IsLetterOrDigit(key.KeyChar))
                 input.Append(key.KeyChar);
             else if (key.Key == ConsoleKey.Backspace && input.Length > 0)
                 input.Remove(input.Length - 1, length: 1);
