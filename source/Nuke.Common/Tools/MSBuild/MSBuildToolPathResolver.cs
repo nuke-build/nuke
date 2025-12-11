@@ -40,12 +40,10 @@ public static class MSBuildToolPathResolver
         var instances = new List<Instance>();
 
         instances.AddRange(
-            from version in new[] { MSBuildVersion.VS2022, MSBuildVersion.VS2019, MSBuildVersion.VS2017 }
+            from version in new[] { MSBuildVersion.VS2026, MSBuildVersion.VS2022, MSBuildVersion.VS2019, MSBuildVersion.VS2017 }
             from platform in s_platforms
             from edition in typeof(VisualStudioEdition).GetEnumValues<VisualStudioEdition>()
-            let folder = version == MSBuildVersion.VS2022 && edition != VisualStudioEdition.BuildTools
-                ? SpecialFolders.ProgramFiles
-                : SpecialFolders.ProgramFilesX86
+            let folder = GetProgramFilesFolder(version, edition)
             select GetFromVs2017Instance(version, platform, edition, folder));
 
         instances.AddRange(
@@ -71,10 +69,9 @@ public static class MSBuildToolPathResolver
         VisualStudioEdition edition,
         SpecialFolders specialFolder)
     {
-        var versionDirectoryName = version.ToString().TrimStart("VS");
         var basePath = Path.Combine(
             EnvironmentInfo.SpecialFolder(specialFolder).NotNull(),
-            $@"Microsoft Visual Studio\{versionDirectoryName}\{edition}\MSBuild\{GetVersionFolder(version)}\Bin");
+            $@"Microsoft Visual Studio\{GetVisualStudioFolder(version)}\{edition}\MSBuild\{GetVersionFolder(version)}\Bin");
 
         return new Instance(
             version,
@@ -96,6 +93,33 @@ public static class MSBuildToolPathResolver
             platform == MSBuildPlatform.x64
                 ? Path.Combine(basePath, "amd64")
                 : basePath);
+    }
+
+    private static SpecialFolders GetProgramFilesFolder(MSBuildVersion version, VisualStudioEdition edition)
+    {
+        if (edition == VisualStudioEdition.BuildTools)
+        {
+            return SpecialFolders.ProgramFilesX86;
+        }
+
+        return version switch
+        {
+            MSBuildVersion.VS2013 => SpecialFolders.ProgramFilesX86,
+            MSBuildVersion.VS2015 => SpecialFolders.ProgramFilesX86,
+            MSBuildVersion.VS2017 => SpecialFolders.ProgramFilesX86,
+            MSBuildVersion.VS2019 => SpecialFolders.ProgramFilesX86,
+            // Versions VS2022+ are 64-bit
+            _ => SpecialFolders.ProgramFiles
+        };
+    }
+
+    private static string GetVisualStudioFolder(MSBuildVersion version)
+    {
+        return version switch
+        {
+            MSBuildVersion.VS2026 => "18",
+            _ => version.ToString().TrimStart("VS")
+        };
     }
 
     private static string GetVersionFolder(MSBuildVersion version)
