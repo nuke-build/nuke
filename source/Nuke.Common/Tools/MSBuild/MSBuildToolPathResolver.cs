@@ -40,7 +40,7 @@ public static class MSBuildToolPathResolver
         var instances = new List<Instance>();
 
         instances.AddRange(
-            from version in new[] { MSBuildVersion.VS2022, MSBuildVersion.VS2019, MSBuildVersion.VS2017 }
+            from version in new[] { MSBuildVersion.VS2026, MSBuildVersion.VS2022, MSBuildVersion.VS2019, MSBuildVersion.VS2017 }
             from platform in s_platforms
             from edition in typeof(VisualStudioEdition).GetEnumValues<VisualStudioEdition>()
             let folder = version == MSBuildVersion.VS2022 && edition != VisualStudioEdition.BuildTools
