@@ -69,10 +69,9 @@ public static class MSBuildToolPathResolver
         VisualStudioEdition edition,
         SpecialFolders specialFolder)
     {
-        var versionDirectoryName = version.ToString().TrimStart("VS");
         var basePath = Path.Combine(
             EnvironmentInfo.SpecialFolder(specialFolder).NotNull(),
-            $@"Microsoft Visual Studio\{versionDirectoryName}\{edition}\MSBuild\{GetVersionFolder(version)}\Bin");
+            $@"Microsoft Visual Studio\{GetVisualStudioFolder(version)}\{edition}\MSBuild\{GetVersionFolder(version)}\Bin");
 
         return new Instance(
             version,
@@ -111,6 +110,15 @@ public static class MSBuildToolPathResolver
             MSBuildVersion.VS2019 => SpecialFolders.ProgramFilesX86,
             // Versions VS2022+ are 64-bit
             _ => SpecialFolders.ProgramFiles
+        };
+    }
+
+    private static string GetVisualStudioFolder(MSBuildVersion version)
+    {
+        return version switch
+        {
+            MSBuildVersion.VS2026 => "18",
+            _ => version.ToString().TrimStart("VS")
         };
     }
 
